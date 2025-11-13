@@ -1,0 +1,22 @@
+//src/styles/variables/_zindex.scss
+// 🧭 层级变量管理
+
+$zindex-dropdown: 1000 !default;
+$zindex-sticky: 1020 !default;
+$zindex-fixed: 1030 !default;
+$zindex-modal-backdrop: 1040 !default;
+$zindex-modal: 1050 !default;
+$zindex-popover: 1060 !default;
+$zindex-tooltip: 1070 !default;
+$zindex-toast: 1080 !default;
+
+:root {
+  --zindex-dropdown: #{$zindex-dropdown};
+  --zindex-sticky: #{$zindex-sticky};
+  --zindex-fixed: #{$zindex-fixed};
+  --zindex-modal-backdrop: #{$zindex-modal-backdrop};
+  --zindex-modal: #{$zindex-modal};
+  --zindex-popover: #{$zindex-popover};
+  --zindex-tooltip: #{$zindex-tooltip};
+  --zindex-toast: #{$zindex-toast};
+}

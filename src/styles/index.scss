@@ -1,0 +1,21 @@
+//src/styles/index.scss
+// 📌 样式主入口，统一导入所有模块
+
+// 1.变量系统
+@import './variables/index';
+
+// 2.基础样式
+@import './reset';
+@import './common';
+@import './utilities';
+@import './animations';
+@import './mixins';
+
+// 3.组件样式
+@import './components/button';
+@import './components/card';
+@import './components/table';
+@import './components/form';
+
+// 4.主题
+@import './theme/index';

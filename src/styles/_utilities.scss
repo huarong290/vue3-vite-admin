@@ -1,0 +1,128 @@
+//src/styles/_utilities.scss
+
+// 🛠️ 工具类样式
+
+// 边距工具类
+@each $size, $value in $spacing-sizes {
+  .m-#{$size} {
+    margin: #{$value};
+  }
+  .mt-#{$size} {
+    margin-top: #{$value};
+  }
+  .mr-#{$size} {
+    margin-right: #{$value};
+  }
+  .mb-#{$size} {
+    margin-bottom: #{$value};
+  }
+  .ml-#{$size} {
+    margin-left: #{$value};
+  }
+  .mx-#{$size} {
+    margin-left: #{$value};
+    margin-right: #{$value};
+  }
+  .my-#{$size} {
+    margin-top: #{$value};
+    margin-bottom: #{$value};
+  }
+
+  .p-#{$size} {
+    padding: #{$value};
+  }
+  .pt-#{$size} {
+    padding-top: #{$value};
+  }
+  .pr-#{$size} {
+    padding-right: #{$value};
+  }
+  .pb-#{$size} {
+    padding-bottom: #{$value};
+  }
+  .pl-#{$size} {
+    padding-left: #{$value};
+  }
+  .px-#{$size} {
+    padding-left: #{$value};
+    padding-right: #{$value};
+  }
+  .py-#{$size} {
+    padding-top: #{$value};
+    padding-bottom: #{$value};
+  }
+}
+
+// 字体大小工具类
+@each $size, $value in $font-sizes {
+  .text-#{$size} {
+    font-size: #{$value};
+  }
+}
+
+// 字体权重工具类
+.font-light {
+  font-weight: 300;
+}
+.font-normal {
+  font-weight: 400;
+}
+.font-medium {
+  font-weight: 500;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+// 文本装饰
+.underline {
+  text-decoration: underline;
+}
+.line-through {
+  text-decoration: line-through;
+}
+.no-underline {
+  text-decoration: none;
+}
+
+// 溢出处理
+.overflow-hidden {
+  overflow: hidden;
+}
+.overflow-auto {
+  overflow: auto;
+}
+.overflow-x-auto {
+  overflow-x: auto;
+}
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+// 定位工具类
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.fixed {
+  position: fixed;
+}
+.sticky {
+  position: sticky;
+}
+
+// 光标工具类
+.cursor-pointer {
+  cursor: pointer;
+}
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+.cursor-default {
+  cursor: default;
+}

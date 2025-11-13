@@ -1,8 +1,17 @@
 //src/main.ts
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
 import { sayHello } from '@/utils/hello'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import router from './router'
+
+// 引入全局样式
+import '@/styles/index.scss'
 
 console.log(sayHello('World'))
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(ElementPlus)
+
+app.use(router)
+app.mount('#app')
