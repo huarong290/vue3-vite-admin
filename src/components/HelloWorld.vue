@@ -1,14 +1,7 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-
-defineProps<{ msg: string }>()
-
-const count = ref(0)
-</script>
-
+<!--src/components/HelloWorld.vue-->
 <template>
   <h1>{{ msg }}</h1>
-
+  <h2>{{ message }}</h2>
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
     <p>
@@ -30,7 +23,14 @@ const count = ref(0)
   </p>
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { sayHello } from '@/utils/hello'
+defineProps<{ msg: string }>()
 
+const count = ref(0)
+const message = ref(sayHello('Vue3 + Vite'))
+</script>
 <style scoped>
 .read-the-docs {
   color: #888;

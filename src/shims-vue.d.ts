@@ -9,7 +9,7 @@ declare module '*.vue' {
 }
 
 // 如果还是无法识别 @，可以尝试添加以下声明
-declare module '@/*' {
-    const value: unknown
-    export default value
-}
+// declare module '@/*' {
+//     const value: unknown
+//     export default value
+// }
