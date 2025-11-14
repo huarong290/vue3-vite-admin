@@ -1,18 +1,42 @@
 <!--src/components/layout/AppHeader.vue-->
 <template>
-  <el-row class="app-header" align="middle">
-    <el-col :span="24">
-      <h1>后台系统</h1>
-    </el-col>
-  </el-row>
+  <div class="header">
+    <!--  按钮图标根据折叠状态切换 -->
+    <el-button
+        class="menu-toggle"
+        :icon="isCollapse ? 'Expand' : 'Fold'"
+        circle
+        @click="$emit('toggle-menu')"
+    />
+    <div class="header-right">
+      <span>欢迎使用系统</span>
+    </div>
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{ isCollapse: boolean }>()
+</script>
 
-<style scoped>
+<style scoped lang="scss">
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 16px;
   color: #fff;
-  background: #409eff; /* Element Plus 默认主题色 */
-  padding: 1rem;
+
+  .menu-toggle {
+    display: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .menu-toggle {
+      // 移动端显示菜单按钮
+      display: inline-flex;
+    }
+  }
 }
 </style>
+

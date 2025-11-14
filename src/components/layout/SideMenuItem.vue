@@ -2,7 +2,13 @@
 <template>
   <!-- 有子路由时递归渲染 -->
   <el-sub-menu v-if="hasChildren" :index="routeKey()">
-    <template #title>{{ route.meta?.title }}</template>
+    <template #title>
+      <!--  图标加动画 -->
+      <el-icon v-if="route.meta?.icon" class="menu-icon" :class="{ animate: collapse }">
+        <component :is="route.meta.icon" />
+      </el-icon>
+      <span>{{ route.meta?.title }}</span>
+    </template>
     <SideMenuItem
         v-for="child in visibleChildren"
         :key="childKey(child)"
@@ -10,16 +16,26 @@
     />
   </el-sub-menu>
 
-  <!-- 普通菜单项 -->
-  <el-menu-item v-else-if="!route.meta?.hiddenInMenu" :index="routeIndex()">
-    {{ route.meta?.title }}
-  </el-menu-item>
+  <!-- 普通菜单项 + tooltip -->
+  <el-tooltip
+      v-else-if="!route.meta?.hiddenInMenu"
+      :content="route.meta?.title"
+      placement="right"
+      :disabled="!collapse"
+  >
+    <el-menu-item :index="routeIndex()">
+      <el-icon v-if="route.meta?.icon" class="menu-icon" :class="{ animate: collapse }">
+        <component :is="route.meta.icon" />
+      </el-icon>
+      <span>{{ route.meta?.title }}</span>
+    </el-menu-item>
+  </el-tooltip>
 </template>
 
 <script setup lang="ts">
 import { useRouter, type RouteRecordRaw } from 'vue-router'
 
-const props = defineProps<{ route: RouteRecordRaw }>()
+const props = defineProps<{ route: RouteRecordRaw; collapse?: boolean }>()
 const router = useRouter()
 
 // 是否有子路由
@@ -50,5 +66,13 @@ function routeIndex() {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.menu-icon {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.menu-icon.animate {
+  transform: rotate(20deg) scale(1.2);
+}
+</style>
 

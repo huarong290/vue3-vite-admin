@@ -6,17 +6,18 @@ import RoleList from '@/views/system/role/RoleList.vue'
 import RoleDetail from '@/views/system/role/RoleDetail.vue'
 import MenuPage from '@/views/system/menu/MenuPage.vue'
 
+import { User, Setting, Menu as MenuIcon,UserFilled,Avatar } from '@element-plus/icons-vue'
 const systemRoutes: RouteRecordRaw = {
     path: '/system',
     name: 'System',
     component: RouterView, // 中间层用 RouterView
-    meta: { title: '系统管理' },
+    meta: { title: '系统管理', icon: Setting },
     children: [
         {
             path: 'user',
             name: 'User',
             component: RouterView,
-            meta: { title: '用户管理' },
+            meta: { title: '用户管理', icon: User },
             children: [
                 {
                     path: 'list',
@@ -36,13 +37,13 @@ const systemRoutes: RouteRecordRaw = {
             path: 'role',
             name: 'Role',
             component: RouterView,
-            meta: { title: '角色管理' },
+            meta: { title: '角色管理', icon: Avatar },
             children: [
                 {
                     path: 'list',
                     name: 'RoleList',
                     component: RoleList,
-                    meta: { title: '角色列表' }
+                    meta: { title: '角色列表', icon: UserFilled }
                 },
                 {
                     path: 'detail',
@@ -56,7 +57,7 @@ const systemRoutes: RouteRecordRaw = {
             path: 'menu',
             name: 'MenuPage',
             component: MenuPage,
-            meta: { title: '菜单管理' }
+            meta: { title: '菜单管理', icon: MenuIcon }
         }
     ]
 }
