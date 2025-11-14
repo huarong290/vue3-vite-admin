@@ -1,10 +1,22 @@
 //src/styles/theme/_dark.scss
 // 🌚 暗黑主题变量
 [data-theme='dark'] {
+  --color-primary: #337ecc;
+  --color-success: #529b2e;
+  --color-warning: #b88230;
+  --color-danger: #c45656;
+  --color-info: #73767a;
+  --color-primary-rgb: 51, 126, 204;
+
   --color-bg-body: #111827;
   --color-bg-container: #1f2937;
+
   --color-text-primary: #f9fafb;
   --color-text-secondary: #d1d5db;
+
   --color-border-light: #374151;
   --color-border-base: #4b5563;
+
+  --color-hover: rgba(51, 126, 204, 0.1);
+  --color-active: rgba(51, 126, 204, 0.2);
 }

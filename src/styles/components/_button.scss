@@ -32,8 +32,7 @@
   border-color: var(--color-primary);
 
   &:hover:not(:disabled) {
-    background-color: darken($color-primary, 10%);
-    border-color: darken($color-primary, 10%);
+    filter: brightness(0.9);
   }
 }
 
@@ -54,8 +53,7 @@
   border-color: var(--color-success);
 
   &:hover:not(:disabled) {
-    background-color: darken($color-success, 10%);
-    border-color: darken($color-success, 10%);
+    filter: brightness(0.9);
   }
 }
 

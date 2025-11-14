@@ -1,14 +1,22 @@
-<!--src/components/layout/AppBreadcrumb.vue-->
+<!--src/components/layout/AppBreadcrumb.role-->
 <template>
-  <div class="breadcrumb-container">
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item v-if="$route.name">{{ $route.name }}</el-breadcrumb-item>
-    </el-breadcrumb>
-  </div>
+  <el-breadcrumb separator="/">
+    <el-breadcrumb-item v-for="(r, i) in breadcrumbRoutes" :key="i">
+      <router-link v-if="r.path" :to="r.path">{{ r.meta.title }}</router-link>
+      <span v-else>{{ r.meta.title }}</span>
+    </el-breadcrumb-item>
+  </el-breadcrumb>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const breadcrumbRoutes = computed(() => {
+  return route.matched.filter((r) => r.meta && r.meta.title)
+})
 </script>
 
 <style lang="scss" scoped>

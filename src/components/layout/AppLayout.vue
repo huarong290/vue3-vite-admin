@@ -1,4 +1,4 @@
-<!--src/components/layout/AppLayout.vue-->
+<!--src/components/layout/AppLayout.role-->
 <template>
   <el-container class="layout">
     <!-- Header -->
@@ -14,7 +14,7 @@
 
       <!-- Main Content -->
       <el-main class="layout-main">
-       <app-breadcrumb class="layout-breadcrumb"></app-breadcrumb>
+        <app-breadcrumb class="layout-breadcrumb"></app-breadcrumb>
         <div class="layout-content">
           <router-view v-slot="{ Component }">
             <transition name="fade" mode="out-in">

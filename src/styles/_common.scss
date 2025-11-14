@@ -1,12 +1,33 @@
 //src/styles/_common.scss
-// 🧱 通用基础样式
 
-// 布局类
+// 🌍 通用基础样式
+// 说明：定义全局基础样式和常用工具类
+
+@use './variables/index' as *;
+
+/* 布局类 */
 .container {
   width: 100%;
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding: 0 var(--spacing-md);
+}
+
+/* 响应式容器 */
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+@media (min-width: 1024px) {
+  .container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1200px;
+  }
 }
 
 .page-container {
@@ -16,7 +37,7 @@
   box-shadow: var(--box-shadow-sm);
 }
 
-// 文本工具类
+/* 文本工具类 */
 .text-center {
   text-align: center;
 }
@@ -42,8 +63,11 @@
 .text-muted {
   color: var(--color-text-secondary);
 }
+.text-inverse {
+  color: var(--color-text-inverse);
+}
 
-// 背景色类
+/* 背景色类 */
 .bg-primary {
   background-color: var(--color-primary);
 }
@@ -56,8 +80,14 @@
 .bg-danger {
   background-color: var(--color-danger);
 }
+.bg-white {
+  background-color: var(--color-white);
+}
+.bg-black {
+  background-color: var(--color-black);
+}
 
-// 显示隐藏类
+/* 显示隐藏类 */
 .hidden {
   display: none;
 }
@@ -71,7 +101,7 @@
   display: flex;
 }
 
-// 弹性布局工具类
+/* 弹性布局工具类 */
 .flex-center {
   display: flex;
   align-items: center;
@@ -87,4 +117,24 @@
 .flex-column {
   display: flex;
   flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+.items-end {
+  align-items: flex-end;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.justify-end {
+  justify-content: flex-end;
 }

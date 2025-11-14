@@ -1,4 +1,4 @@
-<!--src/views/HomePage.vue-->
+<!--src/views/HomePage.role-->
 <template>
   <div class="home-page">
     <el-card class="welcome-card">
@@ -14,9 +14,7 @@
         <div class="quick-actions">
           <h3>快速导航</h3>
           <div class="action-buttons">
-            <el-button type="primary" @click="$router.push('/about')">
-              关于页面
-            </el-button>
+            <el-button type="primary" @click="$router.push('/about')"> 关于页面 </el-button>
           </div>
         </div>
 
@@ -34,8 +32,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 .home-page {

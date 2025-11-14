@@ -1,12 +1,19 @@
 //src/styles/_animations.scss
-// 🎞️ 动画效果
 
-// 淡入淡出
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
+// 🎞️ 动画效果
+// 说明：提供常用过渡和动画工具类，支持 Vue/React 过渡类和通用类
+
+:root {
+  --animation-fast: 0.3s;
+  --animation-normal: 1s;
+  --animation-slow: 2s;
 }
 
+// 淡入淡出（Vue/React 过渡类）
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--animation-fast) ease;
+}
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
@@ -15,14 +22,12 @@
 // 滑动动画
 .slide-up-enter-active,
 .slide-up-leave-active {
-  transition: all 0.3s ease-out;
+  transition: all var(--animation-fast) ease-out;
 }
-
 .slide-up-enter-from {
   opacity: 0;
   transform: translateY(20px);
 }
-
 .slide-up-leave-to {
   opacity: 0;
   transform: translateY(-20px);
@@ -31,9 +36,8 @@
 // 缩放动画
 .scale-enter-active,
 .scale-leave-active {
-  transition: all 0.3s ease;
+  transition: all var(--animation-fast) ease;
 }
-
 .scale-enter-from,
 .scale-leave-to {
   opacity: 0;
@@ -49,9 +53,8 @@
     transform: rotate(360deg);
   }
 }
-
 .animate-spin {
-  animation: spin 1s linear infinite;
+  animation: spin var(--animation-normal) linear infinite;
 }
 
 // 脉动动画
@@ -64,7 +67,37 @@
     opacity: 0.5;
   }
 }
-
 .animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse var(--animation-slow) cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+// 弹跳动画
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-bounce {
+  animation: bounce var(--animation-normal) ease-in-out infinite;
+}
+
+// 抖动动画
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+.animate-shake {
+  animation: shake var(--animation-fast) ease-in-out infinite;
 }

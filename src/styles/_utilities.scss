@@ -1,9 +1,10 @@
 //src/styles/_utilities.scss
-
 // 🛠️ 工具类样式
+@use './variables/spacing' as spacing;
+@use './variables/fonts' as fonts;
 
 // 边距工具类
-@each $size, $value in $spacing-sizes {
+@each $size, $value in spacing.$spacing-sizes {
   .m-#{$size} {
     margin: #{$value};
   }
@@ -54,7 +55,7 @@
 }
 
 // 字体大小工具类
-@each $size, $value in $font-sizes {
+@each $size, $value in fonts.$font-sizes {
   .text-#{$size} {
     font-size: #{$value};
   }

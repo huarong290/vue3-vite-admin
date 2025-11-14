@@ -1,10 +1,22 @@
 //src/styles/theme/_light.scss
 // 🌞 明亮主题变量（默认）
 [data-theme='light'] {
+  --color-primary: #409eff;
+  --color-success: #67c23a;
+  --color-warning: #e6a23c;
+  --color-danger: #f56c6c;
+  --color-info: #909399;
+  --color-primary-rgb: 64, 158, 255;
+
   --color-bg-body: #f8f9fa;
   --color-bg-container: #ffffff;
+
   --color-text-primary: #1f2937;
   --color-text-secondary: #6b7280;
+
   --color-border-light: #e5e7eb;
   --color-border-base: #d1d5db;
+
+  --color-hover: rgba(64, 158, 255, 0.1);
+  --color-active: rgba(64, 158, 255, 0.2);
 }

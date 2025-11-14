@@ -1,4 +1,4 @@
-<!--src/components/layout/AppHeader.vue-->
+<!--src/components/layout/AppHeader.role-->
 <template>
   <el-row class="app-header" align="middle">
     <el-col :span="24">
@@ -7,18 +7,12 @@
   </el-row>
 </template>
 
-
-
-<script setup lang="ts">
-
-</script>
-
-
+<script setup lang="ts"></script>
 
 <style scoped>
 .header {
   color: #fff;
-  background: #409EFF; /* Element Plus 默认主题色 */
+  background: #409eff; /* Element Plus 默认主题色 */
   padding: 1rem;
 }
 </style>

@@ -1,21 +1,22 @@
 //src/styles/index.scss
 // 📌 样式主入口，统一导入所有模块
+// 使用 Dart Sass 新规范：@use 替代 @import
 
-// 1.变量系统
-@import './variables/index';
+// 1.变量系统（统一管理颜色、字体、间距、层级、断点）
+@use './variables/index' as *;
 
-// 2.基础样式
-@import './reset';
-@import './common';
-@import './utilities';
-@import './animations';
-@import './mixins';
+// 2.基础样式（全局 reset、通用样式、工具类、动画、mixin）
+@use './reset';
+@use './common';
+@use './utilities';
+@use './animations';
+@use './mixins';
 
-// 3.组件样式
-@import './components/button';
-@import './components/card';
-@import './components/table';
-@import './components/form';
+// 3.组件样式（按需维护：按钮、卡片、表格、表单）
+@use './components/button';
+@use './components/card';
+@use './components/table';
+@use './components/form';
 
-// 4.主题
-@import './theme/index';
+// 4.主题（light/dark 等主题变量覆盖）
+@use './theme/index';

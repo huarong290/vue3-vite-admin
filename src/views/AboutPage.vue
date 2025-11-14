@@ -1,4 +1,4 @@
-<!--src/views/AboutPage.vue-->
+<!--src/views/AboutPage.role-->
 <template>
   <div class="about-page">
     <el-card>
@@ -25,12 +25,7 @@
 
         <div class="tech-stack">
           <h3>技术栈</h3>
-          <el-tag
-              v-for="tech in techStack"
-              :key="tech"
-              type="primary"
-              class="tech-tag"
-          >
+          <el-tag v-for="tech in techStack" :key="tech" type="primary" class="tech-tag">
             {{ tech }}
           </el-tag>
         </div>
@@ -40,10 +35,7 @@
 </template>
 
 <script setup lang="ts">
-const techStack = [
-  'Vue 3', 'TypeScript', 'Element Plus',
-  'Vue Router', 'SCSS', 'Vite'
-]
+const techStack = ['Vue 3', 'TypeScript', 'Element Plus', 'Vue Router', 'SCSS', 'Vite']
 </script>
 
 <style lang="scss" scoped>

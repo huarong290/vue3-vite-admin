@@ -14,7 +14,7 @@
   }
 
   th {
-    background-color: var(--color-gray-50);
+    background-color: var(--color-bg-container);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-secondary);
   }
@@ -23,17 +23,17 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: var(--color-gray-50);
+      background-color: var(--color-hover);
     }
   }
 }
 
 .table-striped {
   tbody tr:nth-child(even) {
-    background-color: var(--color-gray-50);
+    background-color: var(--color-bg-body);
 
     &:hover {
-      background-color: var(--color-gray-100);
+      background-color: var(--color-hover);
     }
   }
 }

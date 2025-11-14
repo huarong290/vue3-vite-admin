@@ -1,6 +1,8 @@
 //src/styles/variables/_spacing.scss
 // 📏 间距变量系统
+@use 'sass:map';
 
+// 间距映射
 $spacing-sizes: (
   '0': 0,
   '1': 0.25rem,
@@ -31,22 +33,22 @@ $spacing-sizes: (
 // 容器最大宽度
 $container-max-width: 1200px !default;
 
-// 边框圆角
-$border-radius-sm: 0.25rem !default; // 4px
-$border-radius-base: 0.375rem !default; // 6px
-$border-radius-lg: 0.5rem !default; // 8px
-$border-radius-xl: 0.75rem !default; // 12px
+// 圆角
+$border-radius-sm: 0.25rem !default;
+$border-radius-base: 0.375rem !default;
+$border-radius-lg: 0.5rem !default;
+$border-radius-xl: 0.75rem !default;
 
 // 阴影
-$box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !default;
+$box-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05) !default;
 $box-shadow-base:
-  0 1px 3px 0 rgba(0, 0, 0, 0.1),
-  0 1px 2px 0 rgba(0, 0, 0, 0.06) !default;
+  0 1px 3px rgba(0, 0, 0, 0.1),
+  0 1px 2px rgba(0, 0, 0, 0.06) !default;
 $box-shadow-lg:
-  0 10px 15px -3px rgba(0, 0, 0, 0.1),
-  0 4px 6px -2px rgba(0, 0, 0, 0.05) !default;
+  0 10px 15px rgba(0, 0, 0, 0.1),
+  0 4px 6px rgba(0, 0, 0, 0.05) !default;
 
-// CSS 自定义属性
+// CSS 自定义属性输出
 :root {
   @each $name, $size in $spacing-sizes {
     --spacing-#{$name}: #{$size};
@@ -63,10 +65,3 @@ $box-shadow-lg:
   --box-shadow-base: #{$box-shadow-base};
   --box-shadow-lg: #{$box-shadow-lg};
 }
-
-// 简写变量
-$spacing-xs: map-get($spacing-sizes, '2'); // 8px
-$spacing-sm: map-get($spacing-sizes, '4'); // 16px
-$spacing-md: map-get($spacing-sizes, '6'); // 24px
-$spacing-lg: map-get($spacing-sizes, '8'); // 32px
-$spacing-xl: map-get($spacing-sizes, '12'); // 48px

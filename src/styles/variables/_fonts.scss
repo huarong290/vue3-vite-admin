@@ -1,14 +1,15 @@
 //src/styles/variables/_fonts.scss
 // 🔤 字体变量系统
+@use 'sass:map';
 
 // 字体族
 $font-family-base:
   -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
-  'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-  'Segoe UI Emoji', 'Segoe UI Symbol' !default;
+  'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif !default;
+
 $font-family-mono: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace' !default;
 
-// 字体大小
+// 字体大小映射
 $font-sizes: (
   'xs': 0.75rem,
   // 12px
@@ -41,7 +42,7 @@ $font-weight-medium: 500 !default;
 $font-weight-semibold: 600 !default;
 $font-weight-bold: 700 !default;
 
-// CSS 自定义属性
+// CSS 自定义属性输出
 :root {
   --font-family-base: #{$font-family-base};
   --font-family-mono: #{$font-family-mono};

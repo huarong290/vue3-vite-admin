@@ -26,7 +26,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { sayHello } from '@/utils/hello'
-defineProps<{ msg: string }>()
+defineProps({
+  msg: {
+    type: String,
+    required: true
+  }
+})
 
 const count = ref(0)
 const message = ref(sayHello('Vue3 + Vite'))

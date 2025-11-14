@@ -1,22 +1,63 @@
 //src/styles/variables/_zindex.scss
-// 🧭 层级变量管理
+// 📐 层级变量管理（完整版本）
+// 说明：同时提供 Sass 层面的 map/变量，和运行时可用的 CSS 变量。
+// 使用场景：组件内部用 var(--zindex-xxx)，Sass 工具或 mixin 可用 $zindex-xxx。
 
-$zindex-dropdown: 1000 !default;
-$zindex-sticky: 1020 !default;
-$zindex-fixed: 1030 !default;
-$zindex-modal-backdrop: 1040 !default;
-$zindex-modal: 1050 !default;
-$zindex-popover: 1060 !default;
-$zindex-tooltip: 1070 !default;
-$zindex-toast: 1080 !default;
+@use 'sass:map';
 
+// 1) 层级映射（根据常见 UI 层级从低到高排列）
+$zindex-levels: (
+  // 基础内容层
+  'base': 1,
+
+  // 浮动元素（下拉、悬浮菜单）
+  'dropdown': 1000,
+
+  // 粘性定位（sticky header）
+  'sticky': 1020,
+
+  // 固定定位（fixed header / sidebar）
+  'fixed': 1030,
+
+  // 模态遮罩层（backdrop）
+  'modal-backdrop': 1040,
+
+  // 模态对话框（modal）
+  'modal': 1050,
+
+  // 气泡层（popover）
+  'popover': 1060,
+
+  // 提示层（tooltip）
+  'tooltip': 1070,
+
+  // 通知层（toast / notification）
+  'notification': 1080,
+
+  // 辅助层（比如命令面板、全局搜索）
+  'command-panel': 1090,
+
+  // 最高优先层（紧急覆盖）
+  'max': 9999
+) !default;
+
+// 2) 输出为 CSS 变量（运行时使用 var(--zindex-xxx)）
 :root {
-  --zindex-dropdown: #{$zindex-dropdown};
-  --zindex-sticky: #{$zindex-sticky};
-  --zindex-fixed: #{$zindex-fixed};
-  --zindex-modal-backdrop: #{$zindex-modal-backdrop};
-  --zindex-modal: #{$zindex-modal};
-  --zindex-popover: #{$zindex-popover};
-  --zindex-tooltip: #{$zindex-tooltip};
-  --zindex-toast: #{$zindex-toast};
+  @each $name, $level in $zindex-levels {
+    --zindex-#{$name}: #{$level};
+  }
 }
+
+// 3) 简写变量（Sass 层使用）
+// 说明：在 mixin 或函数中直接使用，避免每次从 map 里取。
+$zindex-base: map.get($zindex-levels, 'base');
+$zindex-dropdown: map.get($zindex-levels, 'dropdown');
+$zindex-sticky: map.get($zindex-levels, 'sticky');
+$zindex-fixed: map.get($zindex-levels, 'fixed');
+$zindex-modal-backdrop: map.get($zindex-levels, 'modal-backdrop');
+$zindex-modal: map.get($zindex-levels, 'modal');
+$zindex-popover: map.get($zindex-levels, 'popover');
+$zindex-tooltip: map.get($zindex-levels, 'tooltip');
+$zindex-notification: map.get($zindex-levels, 'notification');
+$zindex-command-panel: map.get($zindex-levels, 'command-panel');
+$zindex-max: map.get($zindex-levels, 'max');

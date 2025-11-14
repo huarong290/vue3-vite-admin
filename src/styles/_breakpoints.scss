@@ -1,10 +1,17 @@
 //src/styles/_breakpoints.scss
 // 📱 响应式断点配置
+// 推荐写法：只存数值（px），在 mixin 中拼接 min/max-width，更灵活
+
 $breakpoints: (
-  'xs': 'screen and (max-width: 575px)',
-  'sm': 'screen and (min-width: 576px)',
-  'md': 'screen and (min-width: 768px)',
-  'lg': 'screen and (min-width: 992px)',
-  'xl': 'screen and (min-width: 1200px)',
-  'xxl': 'screen and (min-width: 1600px)'
+  'xs': 575px,
+  // 手机竖屏
+  'sm': 576px,
+  // 手机横屏 / 小平板
+  'md': 768px,
+  // 平板
+  'lg': 992px,
+  // 小桌面
+  'xl': 1200px,
+  // 大桌面
+  'xxl': 1600px // 超大屏
 ) !default;
