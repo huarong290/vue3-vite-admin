@@ -1,4 +1,4 @@
-<!--src/components/layout/AppLayout.role-->
+<!--src/components/layout/AppLayout.vue-->
 <template>
   <el-container class="layout">
     <!-- Header -->
@@ -9,7 +9,7 @@
     <el-container class="layout-body">
       <!-- Sidebar -->
       <el-aside width="200px" class="layout-sidebar">
-        <AppSidebar />
+        <AppSideMenu />
       </el-aside>
 
       <!-- Main Content -->
@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import AppHeader from '@/components/layout/AppHeader.vue'
-import AppSidebar from '@/components/layout/AppSidebar.vue'
+import AppSideMenu from '@/components/layout/AppSideMenu.vue'
 import AppBreadcrumb from '@/components/layout/AppBreadcrumb.vue'
 </script>
 

@@ -1,4 +1,4 @@
-<!--src/components/layout/AppHeader.role-->
+<!--src/components/layout/AppHeader.vue-->
 <template>
   <el-row class="app-header" align="middle">
     <el-col :span="24">
