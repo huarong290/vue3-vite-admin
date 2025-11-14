@@ -20,11 +20,7 @@
       <el-main class="layout-main">
         <app-breadcrumb class="layout-breadcrumb" />
         <div class="layout-content">
-          <router-view v-slot="{ Component }">
-            <transition name="fade" mode="out-in">
-              <component :is="Component" />
-            </transition>
-          </router-view>
+          <router-view />
         </div>
       </el-main>
     </el-container>

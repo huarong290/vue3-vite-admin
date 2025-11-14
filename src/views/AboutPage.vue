@@ -1,4 +1,4 @@
-<!--src/views/AboutPage.role-->
+<!--src/views/AboutPage.vue-->
 <template>
   <div class="about-page">
     <el-card>
