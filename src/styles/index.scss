@@ -17,6 +17,8 @@
 @use './components/card';
 @use './components/table';
 @use './components/form';
-
+@use './components/layout';
+@use './components/header';
+@use './components/menu';
 // 4.主题（light/dark 等主题变量覆盖）
 @use './theme/index';

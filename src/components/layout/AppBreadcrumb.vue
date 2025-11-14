@@ -3,10 +3,7 @@
   <el-breadcrumb separator="/">
     <el-breadcrumb-item v-for="(r, i) in breadcrumbRoutes" :key="i">
       <!-- 最后一级只显示文本，不可点击 -->
-      <router-link
-          v-if="r.path && i < breadcrumbRoutes.length - 1"
-          :to="r.path"
-      >
+      <router-link v-if="r.path && i < breadcrumbRoutes.length - 1" :to="r.path">
         {{ r.meta.title }}
       </router-link>
       <span v-else>{{ r.meta.title }}</span>

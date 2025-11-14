@@ -1,0 +1,20 @@
+// src/styles/components/_menu.scss
+
+.sidebar-menu {
+  border: none;
+  height: 100%;
+
+  :deep(.el-menu-item) {
+    height: 48px;
+    line-height: 48px;
+    margin: 0;
+
+    &.is-active {
+      background-color: var(--color-hover);
+    }
+
+    &:hover {
+      background-color: var(--color-hover);
+    }
+  }
+}

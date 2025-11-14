@@ -5,7 +5,7 @@
     <!--  过渡动画 -->
     <transition name="fade" mode="out-in">
       <!--  缓存功能（可选），只缓存指定页面 -->
-      <keep-alive >
+      <keep-alive>
         <component :is="Component" />
       </keep-alive>
     </transition>
@@ -19,6 +19,4 @@
 <style lang="scss">
 // 引入全局样式
 @use '@/styles/index.scss' as *;
-
 </style>
-

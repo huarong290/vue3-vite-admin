@@ -9,19 +9,15 @@
       </el-icon>
       <span>{{ route.meta?.title }}</span>
     </template>
-    <SideMenuItem
-        v-for="child in visibleChildren"
-        :key="childKey(child)"
-        :route="child"
-    />
+    <SideMenuItem v-for="child in visibleChildren" :key="childKey(child)" :route="child" />
   </el-sub-menu>
 
   <!-- 普通菜单项 + tooltip -->
   <el-tooltip
-      v-else-if="!route.meta?.hiddenInMenu"
-      :content="route.meta?.title"
-      placement="right"
-      :disabled="!collapse"
+    v-else-if="!route.meta?.hiddenInMenu"
+    :content="route.meta?.title"
+    placement="right"
+    :disabled="!collapse"
   >
     <el-menu-item :index="routeIndex()">
       <el-icon v-if="route.meta?.icon" class="menu-icon" :class="{ animate: collapse }">
@@ -42,8 +38,8 @@ const router = useRouter()
 const hasChildren = !!props.route.children && props.route.children.length > 0
 
 // 过滤掉 hiddenInMenu 的子路由
-const visibleChildren: RouteRecordRaw[] = (props.route.children as RouteRecordRaw[] || []).filter(
-    (c) => c.meta?.title && !c.meta?.hiddenInMenu
+const visibleChildren: RouteRecordRaw[] = ((props.route.children as RouteRecordRaw[]) || []).filter(
+  (c) => c.meta?.title && !c.meta?.hiddenInMenu
 )
 
 // 子路由 key
@@ -68,11 +64,12 @@ function routeIndex() {
 
 <style scoped lang="scss">
 .menu-icon {
-  transition: transform 0.3s ease, color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
 }
 
 .menu-icon.animate {
   transform: rotate(20deg) scale(1.2);
 }
 </style>
-

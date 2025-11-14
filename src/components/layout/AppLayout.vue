@@ -3,10 +3,10 @@
   <el-container class="layout" @click="handleOutsideClick">
     <!-- 左侧导航栏 -->
     <el-aside
-        :class="{ open: isMobileMenuOpen }"
-        :width="isCollapse ? '64px' : '200px'"
-        class="layout-aside"
-        ref="asideRef"
+      :class="{ open: isMobileMenuOpen }"
+      :width="isCollapse ? '64px' : '200px'"
+      class="layout-aside"
+      ref="asideRef"
     >
       <AppSideMenu :collapse="isCollapse" />
     </el-aside>
@@ -54,10 +54,10 @@ function handleResize() {
 
 function handleOutsideClick(e: MouseEvent) {
   if (
-      window.innerWidth <= 768 &&
-      isMobileMenuOpen.value &&
-      asideRef.value &&
-      !asideRef.value.contains(e.target as Node)
+    window.innerWidth <= 768 &&
+    isMobileMenuOpen.value &&
+    asideRef.value &&
+    !asideRef.value.contains(e.target as Node)
   ) {
     isMobileMenuOpen.value = false
   }
@@ -73,52 +73,18 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
-.layout {
-  height: 100vh;
-  position: relative;
-
-  &-aside {
-    background: var(--color-bg-container);
-    border-right: 1px solid var(--color-border-light);
-    transition: all 0.3s ease;
+/*  只保留局部样式：移动端遮罩效果 */
+@media screen and (max-width: 768px) {
+  .layout-aside {
+    position: absolute;
+    z-index: 1000;
+    height: 100vh;
+    transform: translateX(-100%);
   }
 
-  &-header {
-    height: 60px;
-    background: var(--color-primary);
-    padding: 0;
-  }
-
-  &-main {
-    background: var(--color-bg-body);
-    padding: 0;
-  }
-
-  &-breadcrumb {
-    padding: var(--spacing-4);
-    background: var(--color-bg-container);
-    border-bottom: 1px solid var(--color-border-light);
-  }
-
-  &-content {
-    padding: var(--spacing-4);
-    min-height: calc(100vh - 120px);
-  }
-
-  @media screen and (max-width: 768px) {
-    &-aside {
-      position: absolute;
-      z-index: 1000;
-      height: 100vh;
-      transform: translateX(-100%);
-    }
-
-    &-aside.open {
-      transform: translateX(0);
-      //  移动端遮罩效果
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
-    }
+  .layout-aside.open {
+    transform: translateX(0);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15); // 移动端遮罩效果
   }
 }
 </style>
-

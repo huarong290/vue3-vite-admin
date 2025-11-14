@@ -7,3 +7,4 @@
 @use './spacing' as *; //管理间距、圆角、阴影
 @use './zindex' as *; //管理层级
 @use '../breakpoints' as *; //管理响应式断点
+@use './_animations.scss' as *; //管理动画时长变量
