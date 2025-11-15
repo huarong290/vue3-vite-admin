@@ -1,10 +1,14 @@
 // src/styles/components/_layout.scss
 @use '@/styles/variables/_index.scss' as *;
+
 // 1.基础布局
 .layout {
   height: 100vh;
   position: relative;
   background-color: var(--color-bg-body);
+  // ⚠️ 默认跟随 light/dark 模式
+  //  如果在 theme.ts 的 setPrimaryColor 里启用 updateBackground = true，
+  //    这里的 var(--color-bg-body) 会被 JS 动态覆盖，从而跟随选色器变化
   color: var(--color-text-primary);
   transition:
     background-color 0.3s ease,
@@ -13,7 +17,9 @@
 
 // 2.侧边栏基础样式
 .layout-aside {
-  background: var(--color-bg-container); //  改为容器背景色
+  background: var(--color-bg-container);
+  // ⚠️ 默认跟随 light/dark 模式
+  //  可选：在 setPrimaryColor 里动态覆盖 var(--color-bg-container)，让容器背景跟随选色器
   border-right: 1px solid var(--color-border-light);
   transition:
     width 0.3s ease,
@@ -28,6 +34,8 @@
 // 3.头部基础样式
 .layout-header {
   background-color: var(--color-bg-container);
+  // ⚠️ 默认跟随 light/dark 模式
+  //  可选：在 setPrimaryColor 里动态覆盖 var(--color-bg-container)，让头部背景跟随选色器
   border-bottom: 1px solid var(--color-border-light);
   box-shadow: var(--box-shadow-sm);
   transition:
@@ -39,6 +47,8 @@
 .layout-main {
   flex: 1;
   background-color: var(--color-bg-body);
+  // ⚠️ 默认跟随 light/dark 模式
+  //  可选：在 setPrimaryColor 里动态覆盖 var(--color-bg-body)，让主体背景跟随选色器
   color: var(--color-text-primary);
   padding: var(--spacing-4);
   transition:
@@ -50,6 +60,8 @@
 .layout-breadcrumb {
   padding: var(--spacing-3) var(--spacing-4);
   background-color: var(--color-bg-body);
+  // ⚠️ 默认跟随 light/dark 模式
+  //  可选：在 setPrimaryColor 里动态覆盖 var(--color-bg-body)，让面包屑背景跟随选色器
   border-bottom: 1px solid var(--color-border-light);
   margin-bottom: var(--spacing-3);
 }
@@ -57,6 +69,8 @@
 // 6.内容区域
 .layout-content {
   background-color: var(--color-bg-container);
+  // ⚠️ 默认跟随 light/dark 模式
+  //  可选：在 setPrimaryColor 里动态覆盖 var(--color-bg-container)，让内容区背景跟随选色器
   border-radius: var(--border-radius-base);
   box-shadow: var(--box-shadow-sm);
   padding: var(--spacing-4);

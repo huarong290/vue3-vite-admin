@@ -3,22 +3,48 @@
 .sidebar-menu {
   border: none;
   height: 100%;
-  background-color: var(--color-bg-container); //  使用语义化变量改为容器背景色
+  background-color: var(--color-bg-container); //  容器背景色，跟随主题切换
+  /* 菜单项样式 */
   :deep(.el-menu-item) {
     height: 48px;
     line-height: 48px;
     margin: 0;
     color: var(--color-text-primary); //  使用语义化文本色
+    /* 激活状态 */
     &.is-active {
-      background-color: var(--color-hover); //  激活时文字用主色
+      background-color: var(--color-hover); //  激活时使用 active 背景色，跟随选色器
+      color: var(--color-primary); // 激活文字颜色跟随主色
     }
-
+    /* hover 状态 */
     &:hover {
-      background-color: var(--color-hover);
+      background-color: var(--color-hover); // hover 背景色跟随选色器
+      color: var(--color-primary); // hover 文字颜色跟随主色
     }
   }
 
+  /* 子菜单标题样式 */
   :deep(.el-sub-menu__title) {
     color: var(--color-text-primary); //  子菜单标题文字颜色
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+
+    &:hover {
+      background-color: var(--color-hover); //  hover 背景色跟随选色器
+      color: var(--color-primary); // hover 文字颜色跟随主色
+    }
+  }
+  /* 子菜单展开时的样式 */
+  :deep(.el-sub-menu.is-opened > .el-sub-menu__title) {
+    background-color: var(--color-active); //  展开时背景色跟随选色器
+    color: var(--color-primary); //  展开时文字颜色跟随主色
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* 菜单分组标题 */
+  :deep(.el-menu-item-group__title) {
+    color: var(--color-text-secondary); //  次文本色，跟随主题切换
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-2) var(--spacing-4);
   }
 }

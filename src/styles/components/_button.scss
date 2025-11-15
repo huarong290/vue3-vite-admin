@@ -18,7 +18,7 @@
 
   &:focus {
     outline: none;
-    /* 使用 color-mix 让阴影跟随主题色 */
+    /*  优化：使用 color-mix，让阴影跟随选色器的主色 */
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
 
@@ -28,28 +28,43 @@
   }
 }
 
-/* 语义化按钮类型 */
+/*  语义化按钮类型，全部跟随选色器的主色 */
+
+/* 主按钮 */
 .btn-primary {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary); //  主色
   color: var(--color-white);
   border-color: var(--color-primary);
 
   &:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-primary) 90%, white);
+    background-color: var(--color-hover); //  hover 跟随选色器生成的 hover 色
+    border-color: var(--color-hover);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--color-active); //  active 跟随选色器生成的 active 色
+    border-color: var(--color-active);
   }
 }
 
+/* 默认按钮 */
 .btn-default {
   background-color: var(--color-white);
   color: var(--color-text-primary);
   border-color: var(--color-border-base);
 
   &:hover:not(:disabled) {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    border-color: var(--color-primary); //  hover 边框跟随主色
+    color: var(--color-primary); // hover 文字跟随主色
+  }
+
+  &:active:not(:disabled) {
+    border-color: var(--color-active); //  active 边框跟随主色
+    color: var(--color-active); //  active 文字跟随主色
   }
 }
 
+/* 成功按钮 */
 .btn-success {
   background-color: var(--color-success);
   color: var(--color-white);
@@ -57,6 +72,55 @@
 
   &:hover:not(:disabled) {
     background-color: color-mix(in srgb, var(--color-success) 90%, white);
+  }
+
+  &:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-success) 80%, black);
+  }
+}
+
+/* 警告按钮 */
+.btn-warning {
+  background-color: var(--color-warning);
+  color: var(--color-white);
+  border-color: var(--color-warning);
+
+  &:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-warning) 90%, white);
+  }
+
+  &:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-warning) 80%, black);
+  }
+}
+
+/* 危险按钮 */
+.btn-danger {
+  background-color: var(--color-danger);
+  color: var(--color-white);
+  border-color: var(--color-danger);
+
+  &:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-danger) 90%, white);
+  }
+
+  &:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-danger) 80%, black);
+  }
+}
+
+/* 信息按钮 */
+.btn-info {
+  background-color: var(--color-info);
+  color: var(--color-white);
+  border-color: var(--color-info);
+
+  &:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-info) 90%, white);
+  }
+
+  &:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-info) 80%, black);
   }
 }
 
@@ -89,7 +153,7 @@
     }
 
     &:not(:first-child) {
-      border-left: none; /* 更语义化，避免负 margin */
+      border-left: none; /*  更语义化，避免负 margin */
     }
   }
 }

@@ -1,9 +1,10 @@
 <template>
   <div class="theme-demo">
-    <!-- 头部：主题切换器 -->
+    <!-- 头部：主题切换器 + 设置面板 -->
     <header class="demo-header">
       <h2>🎨 Theme Demo</h2>
-      <ThemeSwitcher />
+      <!-- 直接集成 ThemeSettings -->
+      <ThemeSettings />
     </header>
 
     <!-- 按钮演示 -->
@@ -38,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import ThemeSwitcher from '@/components/theme-switcher/ThemeSwitcher.vue'
+import ThemeSettings from "@/components/theme-settings/ThemeSettings.vue";
 
 const tableData = [
   { name: '张三', age: 28, role: '开发工程师' },
@@ -48,29 +49,19 @@ const tableData = [
 </script>
 
 <style scoped lang="scss">
-.theme-demo {
-  padding: var(--spacing-6);
 
-  .demo-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-6);
-    border-bottom: 1px solid var(--color-border-light);
-    padding-bottom: var(--spacing-4);
+/* ✅ Scoped 样式时的覆盖示例 */
+.demo-card {
+  max-width: 400px;
+  background-color: var(--color-bg-container);
+  color: var(--color-text-primary);
+
+  :deep(h4) {
+    color: var(--color-text-primary);
   }
 
-  .demo-section {
-    margin-bottom: var(--spacing-6);
-
-    h3 {
-      margin-bottom: var(--spacing-3);
-      color: var(--color-text-primary);
-    }
-  }
-
-  .demo-card {
-    max-width: 400px;
+  :deep(p) {
+    color: var(--color-text-secondary);
   }
 }
 </style>

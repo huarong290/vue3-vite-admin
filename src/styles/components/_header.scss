@@ -1,6 +1,7 @@
 // src/styles/components/_header.scss
 
 // 📌 全局 Header 样式
+// 📌 全局 Header 样式
 @use '@/styles/variables/_index.scss' as *;
 
 .header {
@@ -9,6 +10,9 @@
   justify-content: space-between;
   padding: var(--spacing-2) var(--spacing-4);
   background-color: var(--color-bg-container);
+  // ⚠️ 默认跟随 light/dark 模式
+  //  如果在 setPrimaryColor 中启用 updateBackground = true，
+  //    这里的 var(--color-bg-container) 会被 JS 动态覆盖，从而跟随选色器变化
   border-bottom: 1px solid var(--color-border-light);
   box-shadow: var(--box-shadow-sm);
   transition:
@@ -26,7 +30,7 @@
 
     span {
       font-size: var(--font-size-sm);
-      color: var(--color-text-secondary);
+      color: var(--color-text-secondary); //  跟随 light/dark 模式
     }
 
     .el-button {
@@ -35,12 +39,25 @@
         background-color 0.2s ease;
 
       &:hover {
-        color: var(--color-primary);
+        color: var(--color-primary); //  优化：hover 时文字颜色跟随选色器的主色
+        border-color: var(--color-primary); //  优化：边框颜色也跟随主色
+      }
+
+      &.is-active {
+        background-color: var(--color-active); //  优化：激活状态背景跟随选色器
+        color: var(--color-white);
       }
     }
 
     .el-color-picker {
       margin-left: var(--spacing-2);
+      //  选色器本身的边框和高亮跟随主色
+      .el-color-picker__trigger {
+        border-color: var(--color-primary);
+        &:hover {
+          border-color: var(--color-active);
+        }
+      }
     }
   }
 }

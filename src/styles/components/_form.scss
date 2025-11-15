@@ -9,24 +9,25 @@
   padding: var(--spacing-2) var(--spacing-3);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
-  color: var(--color-text-primary);
-  background-color: var(--color-bg-container);
+  color: var(--color-text-primary); //  跟随 light/dark 模式
+  background-color: var(--color-bg-container); //  跟随 light/dark 模式
   border: 1px solid var(--color-border-base);
   border-radius: var(--border-radius-base);
   transition: all 0.2s ease-in-out;
 
   &::placeholder {
-    color: var(--color-text-secondary);
+    color: var(--color-text-secondary); //  跟随 light/dark 模式
   }
 
   &:focus {
     outline: none;
-    border-color: var(--color-primary);
+    border-color: var(--color-primary); //  优化：边框颜色跟随选色器主色
+    /*  优化：使用 color-mix，让阴影跟随选色器主色 */
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
 
   &:disabled {
-    background-color: var(--color-disabled);
+    background-color: var(--color-disabled); //  跟随 light/dark 模式
     color: var(--color-text-disabled);
     cursor: not-allowed;
   }
@@ -43,7 +44,7 @@
   font-size: var(--font-size-base);
 }
 
-/* 选择器 */
+/* 下拉选择器 */
 .select-control {
   @extend .form-control;
   appearance: none;
@@ -62,11 +63,12 @@
     margin-bottom: var(--spacing-2);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
-    color: var(--color-text-secondary);
+    color: var(--color-text-secondary); //  跟随 light/dark 模式
   }
 }
 
 /* 校验状态 */
+/* 校验状态颜色跟随选色器的语义色 */
 .form-control.is-valid {
   border-color: var(--color-success);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-success) 20%, transparent);

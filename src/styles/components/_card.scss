@@ -2,14 +2,15 @@
 
 // 🧾 卡片组件样式
 @use '@/styles/variables/_index.scss' as *;
-
+/* 自定义卡片组件 */
 .card {
-  background: var(--color-bg-container);
+  background: var(--color-bg-container); //  跟随 light/dark 模式或选色器覆盖
   border-radius: var(--border-radius-lg);
   box-shadow: var(--box-shadow-sm);
   border: 1px solid var(--color-border-light);
   overflow: hidden;
   transition: all 0.3s ease;
+  color: var(--color-text-primary);
 }
 
 .card-header {
@@ -19,45 +20,56 @@
   .card-title {
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-text-primary);
+    color: var(--color-text-primary); //  跟随 light/dark 模式
     margin: 0;
   }
 
   .card-subtitle {
     font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
+    color: var(--color-text-secondary); //  跟随 light/dark 模式
     margin-top: var(--spacing-1);
   }
 }
 
 .card-body {
   padding: 0 var(--spacing-4) var(--spacing-4);
-
+  color: var(--color-text-primary);
   &:first-child {
     padding-top: var(--spacing-4);
+  }
+  p {
+    color: var(--color-text-secondary); //  段落文字用次要颜色
   }
 }
 
 .card-footer {
   padding: var(--spacing-4);
-  background-color: var(--color-bg-container); //  保持和卡片主体一致
+  background-color: var(--color-bg-container); //  跟随 light/dark 模式或选色器覆盖
   border-top: 1px solid var(--color-border-light);
+  color: var(--color-text-secondary); //  底部文字颜色明确指定
 }
 
-// 卡片变体
+/* 卡片变体 */
 .card-bordered {
-  border: 1px solid var(--color-border-base);
+  border: 1px solid var(--color-border-base); //  跟随 light/dark 模式
 }
 
 .card-shadow {
   box-shadow: var(--box-shadow-base);
 }
 
+/*  优化：hover 效果跟随选色器的主色 */
 .card-hover {
   transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: var(--box-shadow-lg);
-    border-color: var(--color-primary); //  跟随主题色变化
+    box-shadow: var(--box-shadow-lg); //  阴影加深
+    border-color: var(--color-primary); //  边框颜色跟随选色器主色
   }
+}
+
+/*  优化：激活状态，边框和阴影跟随选色器主色 */
+.card-active {
+  border-color: var(--color-active); //  激活边框跟随选色器 active 色
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
 }
