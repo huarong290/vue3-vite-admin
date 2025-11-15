@@ -1,10 +1,10 @@
-//src/styles/variables/_index.scss
+// src/styles/variables/_index.scss
 
 // 📦 变量统一导入入口
 // 每个模块独立维护，统一在这里暴露
-@use './colors' as *; //管理颜色体系
-@use './fonts' as *; //管理字体体系
-@use './spacing' as *; //管理间距、圆角、阴影
-@use './zindex' as *; //管理层级
-@use '../breakpoints' as *; //管理响应式断点
-@use './_animations.scss' as *; //管理动画时长变量
+@use './colors' as *; // 管理颜色体系
+@use './fonts' as *; // 管理字体体系
+@use './spacing' as *; // 管理间距、圆角、阴影
+@use './zindex' as *; // 管理层级
+@use '../breakpoints' as *; // 管理响应式断点
+@use './_animations.scss' as *; // 管理动画时长变量

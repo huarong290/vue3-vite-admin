@@ -1,4 +1,4 @@
-//src/styles/theme/_dark.scss
+// src/styles/theme/_dark.scss
 // 🌚 暗黑主题变量
 [data-theme='dark'] {
   /* 主色系 */
@@ -7,17 +7,19 @@
   --color-warning: #b88230;
   --color-danger: #c45656;
   --color-info: #73767a;
-  //--color-primary-rgb: 51, 126, 204;
+
+  // --color-primary-rgb: 51, 126, 204;
+
   /* 背景色 */
   --color-bg-body: #111827; /* 页面主体背景 */
   --color-bg-container: #1f2937; /* 卡片、表格、弹窗容器背景 */
-  --color-bg-overlay: rgba(255, 255, 255, 0.05); /* 遮罩层 */
+  --color-bg-overlay: rgb(255 255 255 / 5%); /* 遮罩层 */
 
   /* 文本色 */
   --color-text-primary: #f9fafb; /* 主文本：几乎白色 */
   --color-text-secondary: #d1d5db; /* 次文本：浅灰 */
   --color-text-disabled: #6b7280; /* 禁用文本：中灰 */
-  --color-text-inverse: #000000; /* 反色文本：黑色 */
+  --color-text-inverse: #000; /* 反色文本：黑色 */
 
   /* 边框色 */
   --color-border-light: #374151; /* 浅边框 */
@@ -25,50 +27,52 @@
   --color-border-dark: #6b7280; /* 深边框 */
 
   /* 状态色（交互） */
-  --color-hover: rgba(51, 126, 204, 0.15); /* Hover 背景 */
-  --color-active: rgba(51, 126, 204, 0.25); /* Active 背景 */
+  --color-hover: rgb(51 126 204 / 15%); /* Hover 背景 */
+  --color-active: rgb(51 126 204 / 25%); /* Active 背景 */
   --color-disabled: #374151; /* 禁用背景 */
+
   /* 阴影（暗黑模式下更柔和） */
-  --box-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
-  --box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.7);
-  --box-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.8);
+  --box-shadow-sm: 0 1px 2px rgb(0 0 0 / 60%);
+  --box-shadow-base: 0 2px 4px rgb(0 0 0 / 70%);
+  --box-shadow-lg: 0 4px 8px rgb(0 0 0 / 80%);
 
   /* Element Plus 菜单变量覆盖 */
+
   /* Element Plus 基础色 */
-  //--el-color-primary: var(--color-primary);
-  //--el-color-success: var(--color-success);
-  //--el-color-warning: var(--color-warning);
-  //--el-color-danger: var(--color-danger);
-  //--el-color-info: var(--color-info);
+  // --el-color-primary: var(--color-primary);
+  // --el-color-success: var(--color-success);
+  // --el-color-warning: var(--color-warning);
+  // --el-color-danger: var(--color-danger);
+  // --el-color-info: var(--color-info);
   //
-  ///* 文本颜色 */
-  //--el-text-color-primary: var(--color-text-primary);
-  //--el-text-color-regular: var(--color-text-secondary);
-  //--el-text-color-secondary: var(--color-text-secondary);
-  //--el-text-color-disabled: var(--color-text-disabled);
+  /// * 文本颜色 */
+  // --el-text-color-primary: var(--color-text-primary);
+  // --el-text-color-regular: var(--color-text-secondary);
+  // --el-text-color-secondary: var(--color-text-secondary);
+  // --el-text-color-disabled: var(--color-text-disabled);
   //
-  ///* 边框颜色 */
-  //--el-border-color: var(--color-border-base);
-  //--el-border-color-light: var(--color-border-light);
-  //--el-border-color-lighter: var(--color-border-dark);
-  //--el-border-color-extra-light: var(--color-border-dark);
+  /// * 边框颜色 */
+  // --el-border-color: var(--color-border-base);
+  // --el-border-color-light: var(--color-border-light);
+  // --el-border-color-lighter: var(--color-border-dark);
+  // --el-border-color-extra-light: var(--color-border-dark);
   //
-  ///* 背景颜色 */
-  //--el-bg-color: var(--color-bg-body);
-  //--el-bg-color-overlay: var(--color-bg-overlay);
-  //--el-fill-color: var(--color-bg-container);
-  //--el-fill-color-light: var(--color-border-light);
-  //--el-fill-color-lighter: var(--color-border-base);
+  /// * 背景颜色 */
+  // --el-bg-color: var(--color-bg-body);
+  // --el-bg-color-overlay: var(--color-bg-overlay);
+  // --el-fill-color: var(--color-bg-container);
+  // --el-fill-color-light: var(--color-border-light);
+  // --el-fill-color-lighter: var(--color-border-base);
   //
-  ///* 菜单 */
-  //--el-menu-bg-color: var(--color-bg-container);
-  //--el-menu-text-color: var(--color-text-primary);
-  //--el-menu-hover-bg-color: var(--color-hover);
-  //--el-menu-active-color: var(--color-primary);
+  /// * 菜单 */
+  // --el-menu-bg-color: var(--color-bg-container);
+  // --el-menu-text-color: var(--color-text-primary);
+  // --el-menu-hover-bg-color: var(--color-hover);
+  // --el-menu-active-color: var(--color-primary);
   //
-  ///* 卡片 / 弹窗 / 表格 */
-  //--el-card-bg-color: var(--color-bg-container);
-  //--el-dialog-bg-color: var(--color-bg-container);
-  //--el-table-border-color: var(--color-border-light);
-  //--el-table-header-bg-color: var(--color-bg-container);
+  /// * 卡片 / 弹窗 / 表格 */
+  // --el-card-bg-color: var(--color-bg-container);
+  // --el-dialog-bg-color: var(--color-bg-container);
+  // --el-table-border-color: var(--color-border-light);
+  // --el-table-header-bg-color: var(--color-bg-container);
 }

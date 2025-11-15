@@ -7,7 +7,6 @@ import 'element-plus/dist/index.css'
 import router from './router'
 import pinia from '@/stores'
 
-
 // 引入全局样式
 import '@/styles/index.scss'
 

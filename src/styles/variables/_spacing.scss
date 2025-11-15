@@ -1,4 +1,4 @@
-//src/styles/variables/_spacing.scss
+// src/styles/variables/_spacing.scss
 // 📏 间距变量系统
 @use 'sass:map';
 
@@ -40,13 +40,13 @@ $border-radius-lg: 0.5rem !default;
 $border-radius-xl: 0.75rem !default;
 
 // 阴影
-$box-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05) !default;
+$box-shadow-sm: 0 1px 2px rgb(0 0 0 / 5%) !default;
 $box-shadow-base:
-  0 1px 3px rgba(0, 0, 0, 0.1),
-  0 1px 2px rgba(0, 0, 0, 0.06) !default;
+  0 1px 3px rgb(0 0 0 / 10%),
+  0 1px 2px rgb(0 0 0 / 6%) !default;
 $box-shadow-lg:
-  0 10px 15px rgba(0, 0, 0, 0.1),
-  0 4px 6px rgba(0, 0, 0, 0.05) !default;
+  0 10px 15px rgb(0 0 0 / 10%),
+  0 4px 6px rgb(0 0 0 / 5%) !default;
 
 // CSS 自定义属性输出
 :root {
@@ -55,12 +55,10 @@ $box-shadow-lg:
   }
 
   --container-max-width: #{$container-max-width};
-
   --border-radius-sm: #{$border-radius-sm};
   --border-radius-base: #{$border-radius-base};
   --border-radius-lg: #{$border-radius-lg};
   --border-radius-xl: #{$border-radius-xl};
-
   --box-shadow-sm: #{$box-shadow-sm};
   --box-shadow-base: #{$box-shadow-base};
   --box-shadow-lg: #{$box-shadow-lg};

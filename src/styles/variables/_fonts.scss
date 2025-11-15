@@ -1,12 +1,11 @@
-//src/styles/variables/_fonts.scss
+// src/styles/variables/_fonts.scss
 // 🔤 字体变量系统
 @use 'sass:map';
 
 // 字体族
 $font-family-base:
-  -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
-  'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif !default;
-
+  -apple-system, blinkmacsystemfont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+  'Microsoft YaHei', 'Helvetica Neue', helvetica, arial, sans-serif !default;
 $font-family-mono: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace' !default;
 
 // 字体大小映射
@@ -54,7 +53,6 @@ $font-weight-bold: 700 !default;
   --line-height-tight: #{$line-height-tight};
   --line-height-normal: #{$line-height-normal};
   --line-height-relaxed: #{$line-height-relaxed};
-
   --font-weight-light: #{$font-weight-light};
   --font-weight-normal: #{$font-weight-normal};
   --font-weight-medium: #{$font-weight-medium};

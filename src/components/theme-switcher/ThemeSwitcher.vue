@@ -6,11 +6,7 @@
     </el-button>
 
     <!-- 颜色选择器：切换到自定义模式 -->
-    <el-color-picker
-        v-model="themeStore.primaryColor"
-        @change="handleColorChange"
-        show-alpha
-    />
+    <el-color-picker v-model="themeStore.primaryColor" @change="handleColorChange" show-alpha />
   </div>
 </template>
 

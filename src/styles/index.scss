@@ -1,4 +1,4 @@
-//src/styles/index.scss
+// src/styles/index.scss
 // 📌 样式主入口，统一导入所有模块
 // 使用 Dart Sass 新规范：@use 替代 @import
 
@@ -23,6 +23,7 @@
 @use './components/layout';
 @use './components/header';
 @use './components/menu';
+
 // 4.主题（light/dark 等主题变量覆盖）
 // 必须放在最后，覆盖前面定义的变量
 @use './theme/index';

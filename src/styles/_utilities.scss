@@ -1,4 +1,4 @@
-//src/styles/_utilities.scss
+// src/styles/_utilities.scss
 // 🛠️ 工具类样式
 @use './variables/spacing' as spacing;
 @use './variables/fonts' as fonts;
@@ -65,15 +65,19 @@
 .font-light {
   font-weight: 300;
 }
+
 .font-normal {
   font-weight: 400;
 }
+
 .font-medium {
   font-weight: 500;
 }
+
 .font-semibold {
   font-weight: 600;
 }
+
 .font-bold {
   font-weight: 700;
 }
@@ -82,9 +86,11 @@
 .underline {
   text-decoration: underline;
 }
+
 .line-through {
   text-decoration: line-through;
 }
+
 .no-underline {
   text-decoration: none;
 }
@@ -93,12 +99,15 @@
 .overflow-hidden {
   overflow: hidden;
 }
+
 .overflow-auto {
   overflow: auto;
 }
+
 .overflow-x-auto {
   overflow-x: auto;
 }
+
 .overflow-y-auto {
   overflow-y: auto;
 }
@@ -107,12 +116,15 @@
 .relative {
   position: relative;
 }
+
 .absolute {
   position: absolute;
 }
+
 .fixed {
   position: fixed;
 }
+
 .sticky {
   position: sticky;
 }
@@ -121,9 +133,11 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
 .cursor-not-allowed {
   cursor: not-allowed;
 }
+
 .cursor-default {
   cursor: default;
 }

@@ -1,4 +1,4 @@
-//src/styles/_common.scss
+// src/styles/_common.scss
 
 // 🌍 通用基础样式
 // 说明：定义全局基础样式和常用工具类
@@ -14,17 +14,19 @@
 }
 
 /* 响应式容器 */
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .container {
     max-width: 720px;
   }
 }
-@media (min-width: 1024px) {
+
+@media (width >= 1024px) {
   .container {
     max-width: 960px;
   }
 }
-@media (min-width: 1280px) {
+
+@media (width >= 1280px) {
   .container {
     max-width: 1200px;
   }
@@ -41,9 +43,11 @@
 .text-center {
   text-align: center;
 }
+
 .text-left {
   text-align: left;
 }
+
 .text-right {
   text-align: right;
 }
@@ -51,18 +55,23 @@
 .text-primary {
   color: var(--color-primary);
 }
+
 .text-success {
   color: var(--color-success);
 }
+
 .text-warning {
   color: var(--color-warning);
 }
+
 .text-danger {
   color: var(--color-danger);
 }
+
 .text-muted {
   color: var(--color-text-secondary);
 }
+
 .text-inverse {
   color: var(--color-text-inverse);
 }
@@ -71,18 +80,23 @@
 .bg-primary {
   background-color: var(--color-primary);
 }
+
 .bg-success {
   background-color: var(--color-success);
 }
+
 .bg-warning {
   background-color: var(--color-warning);
 }
+
 .bg-danger {
   background-color: var(--color-danger);
 }
+
 .bg-white {
   background-color: var(--color-white);
 }
+
 .bg-black {
   background-color: var(--color-black);
 }
@@ -91,12 +105,15 @@
 .hidden {
   display: none;
 }
+
 .block {
   display: block;
 }
+
 .inline-block {
   display: inline-block;
 }
+
 .flex {
   display: flex;
 }
@@ -122,6 +139,7 @@
 .flex-wrap {
   flex-wrap: wrap;
 }
+
 .flex-nowrap {
   flex-wrap: nowrap;
 }
@@ -129,12 +147,15 @@
 .items-start {
   align-items: flex-start;
 }
+
 .items-end {
   align-items: flex-end;
 }
+
 .justify-start {
   justify-content: flex-start;
 }
+
 .justify-end {
   justify-content: flex-end;
 }

@@ -16,10 +16,7 @@
       </el-button>
 
       <!-- ✅ 新增：颜色选择器 -->
-      <el-color-picker
-          v-model="themeStore.primaryColor"
-          @change="themeStore.setPrimaryColor"
-      />
+      <el-color-picker v-model="themeStore.primaryColor" @change="themeStore.setPrimaryColor" />
     </div>
   </div>
 </template>
