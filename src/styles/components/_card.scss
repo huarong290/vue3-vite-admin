@@ -1,5 +1,7 @@
 // src/styles/components/_card.scss
+
 // 🧾 卡片组件样式
+@use '@/styles/variables/_index.scss' as *;
 
 .card {
   background: var(--color-bg-container);
@@ -7,6 +9,7 @@
   box-shadow: var(--box-shadow-sm);
   border: 1px solid var(--color-border-light);
   overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .card-header {
@@ -37,7 +40,7 @@
 
 .card-footer {
   padding: var(--spacing-4);
-  background-color: var(--color-bg-body);
+  background-color: var(--color-bg-container); //  保持和卡片主体一致
   border-top: 1px solid var(--color-border-light);
 }
 
@@ -51,9 +54,10 @@
 }
 
 .card-hover {
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 
   &:hover {
     box-shadow: var(--box-shadow-lg);
+    border-color: var(--color-primary); //  跟随主题色变化
   }
 }

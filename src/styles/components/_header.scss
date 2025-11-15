@@ -1,10 +1,46 @@
 // src/styles/components/_header.scss
 
+// 📌 全局 Header 样式
+@use '@/styles/variables/_index.scss' as *;
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
-  padding: 0 16px;
-  color: var(--color-text-primary); // ✅ 改成变量
+  padding: var(--spacing-2) var(--spacing-4);
+  background-color: var(--color-bg-container);
+  border-bottom: 1px solid var(--color-border-light);
+  box-shadow: var(--box-shadow-sm);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+
+  .menu-toggle {
+    display: none; // 默认隐藏，移动端在 scoped 样式里显示
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+
+    span {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .el-button {
+      transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+
+    .el-color-picker {
+      margin-left: var(--spacing-2);
+    }
+  }
 }

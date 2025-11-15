@@ -32,7 +32,8 @@ $colors: (
   @each $name, $value in $colors {
     --color-#{$name}: #{$value};
   }
-
+  /* 主色（默认值，可被 JS 覆盖） */
+  --color-primary: var(--color-primary, #409eff); // 默认值，但允许 JS 覆盖
   // 语义化颜色变量（组件直接使用）
   // 背景色
   --color-bg-body: var(--color-gray-50);
@@ -50,9 +51,9 @@ $colors: (
   --color-border-base: var(--color-gray-300);
   --color-border-dark: var(--color-gray-400);
 
-  // 状态色
-  --color-hover: rgb(64 158 255 / 10%);
-  --color-active: rgb(64 158 255 / 20%);
+  /* 状态色基于主色 */
+  --color-hover: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  --color-active: color-mix(in srgb, var(--color-primary) 20%, transparent);
   --color-disabled: var(--color-gray-200);
 }
 

@@ -1,91 +1,78 @@
 // src/styles/components/_form.scss
+
 // 📝 表单组件样式
-
-.form-group {
-  margin-bottom: var(--spacing-4);
-}
-
-.form-label {
-  display: block;
-  margin-bottom: var(--spacing-2);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-primary);
-
-  &.required::after {
-    content: '*';
-    color: var(--color-danger);
-    margin-left: var(--spacing-1);
-  }
-}
+@use '@/styles/variables/_index.scss' as *;
 
 .form-control {
+  display: block;
   width: 100%;
   padding: var(--spacing-2) var(--spacing-3);
   font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-container);
   border: 1px solid var(--color-border-base);
   border-radius: var(--border-radius-base);
-  background-color: var(--color-bg-container);
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: all 0.2s ease-in-out;
+
+  &::placeholder {
+    color: var(--color-text-secondary);
+  }
 
   &:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px var(--color-hover);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
 
   &:disabled {
-    background-color: var(--color-border-light);
+    background-color: var(--color-disabled);
     color: var(--color-text-disabled);
     cursor: not-allowed;
   }
-
-  &.error {
-    border-color: var(--color-danger);
-
-    &:focus {
-      box-shadow: 0 0 0 3px var(--color-active);
-    }
-  }
 }
 
-.form-text {
-  display: block;
-  margin-top: var(--spacing-1);
+/* 输入框尺寸 */
+.form-control-sm {
+  padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
+}
 
-  &.error {
-    color: var(--color-danger);
+.form-control-lg {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-base);
+}
+
+/* 选择器 */
+.select-control {
+  @extend .form-control;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg fill='%23aaa' viewBox='0 0 20 20'><path d='M5.25 7.5L10 12.25L14.75 7.5H5.25Z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-2) center;
+  background-size: 1rem;
+}
+
+/* 表单分组 */
+.form-group {
+  margin-bottom: var(--spacing-4);
+
+  label {
+    display: block;
+    margin-bottom: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
   }
 }
 
-// 表单布局
-.form-inline {
-  display: flex;
-  align-items: center;
-
-  .form-group {
-    margin-bottom: 0;
-    margin-right: var(--spacing-4);
-  }
+/* 校验状态 */
+.form-control.is-valid {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-success) 20%, transparent);
 }
 
-.form-horizontal {
-  .form-group {
-    display: flex;
-    align-items: center;
-  }
-
-  .form-label {
-    width: 120px;
-    margin-bottom: 0;
-    margin-right: var(--spacing-4);
-    text-align: right;
-  }
-
-  .form-control {
-    flex: 1;
-  }
+.form-control.is-invalid {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
 }

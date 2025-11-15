@@ -73,18 +73,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
-/*  只保留局部样式：移动端遮罩效果 */
-@media screen and (max-width: 768px) {
-  .layout-aside {
-    position: absolute;
-    z-index: 1000;
-    height: 100vh;
-    transform: translateX(-100%);
-  }
 
-  .layout-aside.open {
-    transform: translateX(0);
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15); // 移动端遮罩效果
-  }
-}
 </style>

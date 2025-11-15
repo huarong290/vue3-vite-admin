@@ -1,0 +1,106 @@
+//src/styles/components/_sidebar.scss
+// 📂 侧边栏组件样式
+@use '@/styles/variables/_index.scss' as *;
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 240px;
+  background-color: var(--color-bg-container);
+  border-right: 1px solid var(--color-border-light);
+  box-shadow: var(--box-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  z-index: var(--zindex-sidebar);
+
+  .sidebar-header {
+    padding: var(--spacing-4);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .sidebar-menu {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-2);
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: var(--spacing-2) var(--spacing-3);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+      border-radius: var(--border-radius-base);
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--color-hover);
+        color: var(--color-primary); // ✅ 跟随主题色
+      }
+
+      &.active {
+        background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+        color: var(--color-primary);
+        font-weight: var(--font-weight-semibold);
+      }
+
+      .icon {
+        margin-right: var(--spacing-2);
+        font-size: var(--font-size-md);
+      }
+    }
+  }
+
+  .sidebar-footer {
+    padding: var(--spacing-3);
+    border-top: 1px solid var(--color-border-light);
+    background-color: var(--color-bg-body);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    text-align: center;
+  }
+}
+
+/* 折叠状态 */
+.sidebar-collapsed {
+  width: 64px;
+
+  .sidebar-header {
+    font-size: var(--font-size-md);
+    text-align: center;
+  }
+
+  .sidebar-menu .menu-item {
+    justify-content: center;
+
+    .icon {
+      margin-right: 0;
+    }
+
+    span {
+      display: none; // ✅ 折叠时隐藏文字
+    }
+  }
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    height: 100%;
+    transform: translateX(-100%);
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}

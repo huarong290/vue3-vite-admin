@@ -8,14 +8,15 @@
       circle
       @click="$emit('toggle-menu')"
     />
+    <!-- 右侧操作区 -->
     <div class="header-right">
       <span>欢迎使用系统</span>
-      <!-- ✅ 新增：主题切换按钮 -->
+      <!-- 主题切换按钮 -->
       <el-button @click="toggleTheme" circle>
         {{ themeStore.mode === 'light' ? '🌞' : '🌙' }}
       </el-button>
 
-      <!-- ✅ 新增：颜色选择器 -->
+      <!--颜色选择器 -->
       <el-color-picker v-model="themeStore.primaryColor" @change="themeStore.setPrimaryColor" />
     </div>
   </div>
@@ -35,6 +36,7 @@ function toggleTheme() {
 
 <style scoped lang="scss">
 /* AppHeader.vue scoped 样式 */
+/* 局部样式：只负责移动端菜单按钮显示逻辑 */
 .header {
   .menu-toggle {
     display: none;

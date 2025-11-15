@@ -1,40 +1,99 @@
 // src/styles/components/_layout.scss
-
+@use '@/styles/variables/_index.scss' as *;
 // 1.基础布局
 .layout {
   height: 100vh;
   position: relative;
+  background-color: var(--color-bg-body);
+  color: var(--color-text-primary);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 // 2.侧边栏基础样式
 .layout-aside {
   background: var(--color-bg-container); //  改为容器背景色
   border-right: 1px solid var(--color-border-light);
-  transition: all 0.3s ease;
+  transition:
+    width 0.3s ease,
+    transform 0.3s ease,
+    background-color 0.3s ease;
+  box-shadow: var(--box-shadow-sm);
+  height: 100vh;
+  overflow: hidden;
+  z-index: var(--zindex-sidebar);
 }
 
 // 3.头部基础样式
 .layout-header {
-  height: 60px;
-  background: var(--color-bg-container); //  改为容器背景色
-  padding: 0;
+  background-color: var(--color-bg-container);
+  border-bottom: 1px solid var(--color-border-light);
+  box-shadow: var(--box-shadow-sm);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 // 4.主体区域
 .layout-main {
-  background: var(--color-bg-body); //  改为页面主体背景色
-  padding: 0;
+  flex: 1;
+  background-color: var(--color-bg-body);
+  color: var(--color-text-primary);
+  padding: var(--spacing-4);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 // 5.面包屑区域
 .layout-breadcrumb {
-  padding: var(--spacing-4);
-  background: var(--color-bg-container); // ✅ 改为容器背景色
+  padding: var(--spacing-3) var(--spacing-4);
+  background-color: var(--color-bg-body);
   border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: var(--spacing-3);
 }
 
 // 6.内容区域
 .layout-content {
+  background-color: var(--color-bg-container);
+  border-radius: var(--border-radius-base);
+  box-shadow: var(--box-shadow-sm);
   padding: var(--spacing-4);
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 120px); // 保证内容区撑满
+  transition: background-color 0.3s ease;
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 768px) {
+  .layout-aside {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+    width: 200px;
+    z-index: 1000;
+  }
+
+  .layout-aside.open {
+    transform: translateX(0);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  }
+
+  /* 遮罩层 */
+  .layout::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .layout-aside.open ~ .layout::after {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }

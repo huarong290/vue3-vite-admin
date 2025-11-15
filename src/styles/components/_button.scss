@@ -1,6 +1,7 @@
 // src/styles/components/_button.scss
 
 // 🔘 按钮组件样式
+@use '@/styles/variables/_index.scss' as *;
 
 .btn {
   display: inline-flex;
@@ -17,7 +18,8 @@
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgb(var(--color-primary), 0.1);
+    /* 使用 color-mix 让阴影跟随主题色 */
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
 
   &:disabled {
@@ -26,13 +28,14 @@
   }
 }
 
+/* 语义化按钮类型 */
 .btn-primary {
   background-color: var(--color-primary);
   color: var(--color-white);
   border-color: var(--color-primary);
 
   &:hover:not(:disabled) {
-    filter: brightness(0.9);
+    background-color: color-mix(in srgb, var(--color-primary) 90%, white);
   }
 }
 
@@ -53,11 +56,11 @@
   border-color: var(--color-success);
 
   &:hover:not(:disabled) {
-    filter: brightness(0.9);
+    background-color: color-mix(in srgb, var(--color-success) 90%, white);
   }
 }
 
-// 按钮尺寸
+/* 按钮尺寸 */
 .btn-sm {
   padding: var(--spacing-1) var(--spacing-3);
   font-size: var(--font-size-xs);
@@ -68,7 +71,7 @@
   font-size: var(--font-size-base);
 }
 
-// 按钮组
+/* 按钮组 */
 .btn-group {
   display: inline-flex;
 
@@ -86,7 +89,7 @@
     }
 
     &:not(:first-child) {
-      margin-left: -1px;
+      border-left: none; /* 更语义化，避免负 margin */
     }
   }
 }

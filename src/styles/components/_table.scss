@@ -1,10 +1,13 @@
 // src/styles/components/_table.scss
 // 📊 表格组件样式
+@use '@/styles/variables/_index.scss' as *;
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--font-size-sm);
+  background-color: var(--color-bg-container);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-base);
 
   th,
   td {
@@ -14,43 +17,69 @@
   }
 
   th {
-    background-color: var(--color-bg-container);
+    font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-secondary);
+    background-color: var(--color-bg-body);
   }
 
-  tbody tr {
-    transition: background-color 0.2s ease;
+  tr:hover {
+    background-color: var(--color-hover); //  跟随主题色
+  }
+}
 
-    &:hover {
-      background-color: var(--color-hover);
-    }
+/* 表格变体 */
+.table-bordered {
+  th,
+  td {
+    border: 1px solid var(--color-border-base);
   }
 }
 
 .table-striped {
-  tbody tr:nth-child(even) {
+  tbody tr:nth-child(odd) {
     background-color: var(--color-bg-body);
-
-    &:hover {
-      background-color: var(--color-hover);
-    }
   }
 }
 
-.table-bordered {
-  border: 1px solid var(--color-border-light);
+.table-hover {
+  tbody tr:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  }
+}
 
+/* 表格尺寸 */
+.table-sm {
   th,
   td {
-    border: 1px solid var(--color-border-light);
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-xs);
   }
 }
 
-.table-responsive {
-  overflow-x: auto;
+.table-lg {
+  th,
+  td {
+    padding: var(--spacing-4) var(--spacing-6);
+    font-size: var(--font-size-base);
+  }
+}
 
-  .table {
-    min-width: 600px;
+/* 表格状态色 */
+.table-success {
+  tbody tr {
+    background-color: color-mix(in srgb, var(--color-success) 10%, transparent);
+  }
+}
+
+.table-danger {
+  tbody tr {
+    background-color: color-mix(in srgb, var(--color-danger) 10%, transparent);
+  }
+}
+
+.table-info {
+  tbody tr {
+    background-color: color-mix(in srgb, var(--color-info) 10%, transparent);
   }
 }
