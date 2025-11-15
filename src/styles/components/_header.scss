@@ -6,5 +6,5 @@
   justify-content: space-between;
   height: 100%;
   padding: 0 16px;
-  color: var(--color-text-light); // 用全局变量替代 #fff
+  color: var(--color-text-primary); // ✅ 改成变量
 }

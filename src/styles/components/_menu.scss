@@ -3,18 +3,21 @@
 .sidebar-menu {
   border: none;
   height: 100%;
-
+  background-color: var(--color-bg-container); //  使用语义化变量改为容器背景色
   :deep(.el-menu-item) {
     height: 48px;
     line-height: 48px;
     margin: 0;
-
+    color: var(--color-text-primary); //  使用语义化文本色
     &.is-active {
-      background-color: var(--color-hover);
+      background-color: var(--color-hover); //  激活时文字用主色
     }
 
     &:hover {
       background-color: var(--color-hover);
     }
+  }
+  :deep(.el-sub-menu__title) {
+    color: var(--color-text-primary); //  子菜单标题文字颜色
   }
 }

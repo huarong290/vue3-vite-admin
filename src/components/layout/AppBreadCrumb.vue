@@ -1,4 +1,4 @@
-<!--src/components/layout/AppBreadcrumb.vue-->
+<!--src/components/layout/AppBreadCrumb.vue-->
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item v-for="(r, i) in breadcrumbRoutes" :key="i">
@@ -37,10 +37,10 @@ const breadcrumbRoutes = computed(() => {
         color: var(--color-text-secondary);
 
         &.is-link {
-          color: var(--color-primary);
+          color: var(--el-color-primary);
 
           &:hover {
-            color: var(--color-primary);
+            color: var(--el-color-primary);
             text-decoration: underline;
           }
         }

@@ -1,4 +1,4 @@
-<!--src/views/HomePage.vue-->
+<!--src/views/HomeDemo.vue-->
 <template>
   <div class="home-page">
     <el-card class="welcome-card">

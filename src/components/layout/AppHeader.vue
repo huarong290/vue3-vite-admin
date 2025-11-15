@@ -10,12 +10,30 @@
     />
     <div class="header-right">
       <span>欢迎使用系统</span>
+      <!-- ✅ 新增：主题切换按钮 -->
+      <el-button @click="toggleTheme" circle>
+        {{ themeStore.mode === 'light' ? '🌞' : '🌙' }}
+      </el-button>
+
+      <!-- ✅ 新增：颜色选择器 -->
+      <el-color-picker
+          v-model="themeStore.primaryColor"
+          @change="themeStore.setPrimaryColor"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useThemeStore } from '@/stores/modules/theme/theme.ts'
+
 defineProps<{ isCollapse: boolean }>()
+
+const themeStore = useThemeStore()
+
+function toggleTheme() {
+  themeStore.setMode(themeStore.mode === 'light' ? 'dark' : 'light')
+}
 </script>
 
 <style scoped lang="scss">

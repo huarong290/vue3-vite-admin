@@ -1,22 +1,76 @@
 //src/styles/theme/_light.scss
 // 🌞 明亮主题变量（默认）
 [data-theme='light'] {
+  /* 主色系 */
   --color-primary: #409eff;
   --color-success: #67c23a;
   --color-warning: #e6a23c;
   --color-danger: #f56c6c;
   --color-info: #909399;
-  --color-primary-rgb: 64, 158, 255;
 
-  --color-bg-body: #f8f9fa;
-  --color-bg-container: #ffffff;
+  /* 背景色 */
+  --color-bg-body: #f8f9fa; /* 页面主体背景：浅灰 */
+  --color-bg-container: #ffffff; /* 卡片、表格、弹窗容器背景：白色 */
+  --color-bg-overlay: rgba(0, 0, 0, 0.05); /* 遮罩层：浅黑透明 */
 
-  --color-text-primary: #1f2937;
-  --color-text-secondary: #6b7280;
+  /* 文本色 */
+  --color-text-primary: #1f2937; /* 主文本：深灰 */
+  --color-text-secondary: #6b7280; /* 次文本：中灰 */
+  --color-text-disabled: #9e9e9e; /* 禁用文本：浅灰 */
+  --color-text-inverse: #ffffff; /* 反色文本：白色 */
 
-  --color-border-light: #e5e7eb;
-  --color-border-base: #d1d5db;
+  /* 边框色 */
+  --color-border-light: #e5e7eb; /* 浅边框 */
+  --color-border-base: #d1d5db; /* 基础边框 */
+  --color-border-dark: #9e9e9e; /* 深边框 */
 
-  --color-hover: rgba(64, 158, 255, 0.1);
-  --color-active: rgba(64, 158, 255, 0.2);
+  /* 状态色（交互） */
+  --color-hover: rgba(64, 158, 255, 0.1); /* Hover 背景 */
+  --color-active: rgba(64, 158, 255, 0.2); /* Active 背景 */
+  --color-disabled: #e5e7eb; /* 禁用背景 */
+
+  /* 阴影（明亮模式下更轻） */
+  --box-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --box-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+  /* Element Plus 菜单变量覆盖 */
+  /* Element Plus 基础色 */
+  /* 基础色 */
+  //--el-color-primary: var(--color-primary);
+  //--el-color-success: var(--color-success);
+  //--el-color-warning: var(--color-warning);
+  //--el-color-danger: var(--color-danger);
+  //--el-color-info: var(--color-info);
+  //
+  ///* 文本颜色 */
+  //--el-text-color-primary: var(--color-text-primary);
+  //--el-text-color-regular: var(--color-text-secondary);
+  //--el-text-color-secondary: var(--color-text-secondary);
+  //--el-text-color-disabled: var(--color-text-disabled);
+  //
+  ///* 边框颜色 */
+  //--el-border-color: var(--color-border-base);
+  //--el-border-color-light: var(--color-border-light);
+  //--el-border-color-lighter: var(--color-border-dark);
+  //--el-border-color-extra-light: var(--color-border-dark);
+  //
+  ///* 背景颜色 */
+  //--el-bg-color: var(--color-bg-body);
+  //--el-bg-color-overlay: var(--color-bg-overlay);
+  //--el-fill-color: var(--color-bg-container);
+  //--el-fill-color-light: var(--color-border-light);
+  //--el-fill-color-lighter: var(--color-border-base);
+  //
+  ///* 菜单 */
+  //--el-menu-bg-color: var(--color-bg-container);
+  //--el-menu-text-color: var(--color-text-primary);
+  //--el-menu-hover-bg-color: var(--color-hover);
+  //--el-menu-active-color: var(--color-primary);
+  //
+  ///* 卡片 / 弹窗 / 表格 */
+  //--el-card-bg-color: var(--color-bg-container);
+  //--el-dialog-bg-color: var(--color-bg-container);
+  //--el-table-border-color: var(--color-border-light);
+  //--el-table-header-bg-color: var(--color-bg-container);
 }

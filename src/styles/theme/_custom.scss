@@ -1,0 +1,10 @@
+// src/styles/theme/_custom.scss
+// 🎨 用户自定义主题变量（运行时注入）
+// 说明：通过 JS 动态修改 document.documentElement.style.setProperty()
+
+[data-theme='custom'] {
+  --color-primary: var(--custom-color-primary, #409eff);
+  --el-color-primary: var(--custom-color-primary, #409eff);
+
+  // 其他变量可按需扩展
+}

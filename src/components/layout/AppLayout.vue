@@ -18,7 +18,7 @@
       </el-header>
 
       <el-main class="layout-main">
-        <app-breadcrumb class="layout-breadcrumb" />
+        <app-bread-crumb class="layout-breadcrumb" />
         <div class="layout-content">
           <router-view />
         </div>
@@ -31,7 +31,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppSideMenu from '@/components/layout/AppSideMenu.vue'
-import AppBreadcrumb from '@/components/layout/AppBreadcrumb.vue'
+import AppBreadCrumb from '@/components/layout/AppBreadCrumb.vue'
 //  桌面端折叠状态
 const isCollapse = ref(false)
 //  移动端菜单开关

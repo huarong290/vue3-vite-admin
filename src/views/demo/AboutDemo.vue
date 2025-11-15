@@ -1,4 +1,4 @@
-<!--src/views/AboutPage.vue-->
+<!--src/views/AboutDemo.vue-->
 <template>
   <div class="about-page">
     <el-card>

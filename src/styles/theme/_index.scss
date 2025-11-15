@@ -1,10 +1,11 @@
 //src/styles/theme/_index.scss
 // 📦 主题统一导入入口
-// 使用 @forward 而不是 @use，确保纯 CSS 内容能正确输出到最终样式
+// 使用 @use 确保纯 CSS 内容能正确输出
 
-@forward './light';
-@forward './dark';
-
+@use './light';
+@use './dark';
+@use './element-plus-overrides';
+@use './custom'; // 用户自定义主题
 // 如果未来需要扩展更多主题，可以直接取消注释
-// @forward './blue';
-// @forward './green';
+// @use './blue';
+// @use './green';
