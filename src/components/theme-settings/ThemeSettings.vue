@@ -5,57 +5,40 @@
     <!-- 模式切换 -->
     <div class="setting-item">
       <span>主题模式：</span>
-      <el-switch
-          v-model="isDark"
-          active-text="暗黑"
-          inactive-text="明亮"
-          @change="toggleMode"
-      />
+      <el-switch v-model="isDark" active-text="暗黑" inactive-text="明亮" @change="toggleMode" />
     </div>
 
     <!-- 主色选择器 -->
     <div class="setting-item">
       <span>主色：</span>
       <el-color-picker
-          v-model="themeStore.primaryColor"
-          @change="(c) => themeStore.setPrimaryColor(c)"
+        v-model="themeStore.primaryColor"
+        @change="(c) => themeStore.setPrimaryColor(c)"
       />
     </div>
 
     <!-- Success 颜色选择器 -->
     <div class="setting-item">
       <span>成功色：</span>
-      <el-color-picker
-          v-model="successColor"
-          @change="(c) => themeStore.setSuccessColor(c)"
-      />
+      <el-color-picker v-model="successColor" @change="(c) => themeStore.setSuccessColor(c)" />
     </div>
 
     <!-- Warning 颜色选择器 -->
     <div class="setting-item">
       <span>警告色：</span>
-      <el-color-picker
-          v-model="warningColor"
-          @change="(c) => themeStore.setWarningColor(c)"
-      />
+      <el-color-picker v-model="warningColor" @change="(c) => themeStore.setWarningColor(c)" />
     </div>
 
     <!-- Danger 颜色选择器 -->
     <div class="setting-item">
       <span>错误色：</span>
-      <el-color-picker
-          v-model="dangerColor"
-          @change="(c) => themeStore.setDangerColor(c)"
-      />
+      <el-color-picker v-model="dangerColor" @change="(c) => themeStore.setDangerColor(c)" />
     </div>
 
     <!-- Info 颜色选择器 -->
     <div class="setting-item">
       <span>信息色：</span>
-      <el-color-picker
-          v-model="infoColor"
-          @change="(c) => themeStore.setInfoColor(c)"
-      />
+      <el-color-picker v-model="infoColor" @change="(c) => themeStore.setInfoColor(c)" />
     </div>
   </div>
 </template>

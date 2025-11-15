@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import ThemeSettings from "@/components/theme-settings/ThemeSettings.vue";
+import ThemeSettings from '@/components/theme-settings/ThemeSettings.vue'
 
 const tableData = [
   { name: '张三', age: 28, role: '开发工程师' },
@@ -49,7 +49,6 @@ const tableData = [
 </script>
 
 <style scoped lang="scss">
-
 /* ✅ Scoped 样式时的覆盖示例 */
 .demo-card {
   max-width: 400px;
