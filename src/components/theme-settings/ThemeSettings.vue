@@ -11,34 +11,31 @@
     <!-- 主色选择器 -->
     <div class="setting-item">
       <span>主色：</span>
-      <el-color-picker
-        v-model="themeStore.primaryColor"
-        @change="(c) => themeStore.setPrimaryColor(c)"
-      />
+      <el-color-picker v-model="themeStore.primaryColor" @change="handlePrimaryChange" />
     </div>
 
     <!-- Success 颜色选择器 -->
     <div class="setting-item">
       <span>成功色：</span>
-      <el-color-picker v-model="successColor" @change="(c) => themeStore.setSuccessColor(c)" />
+      <el-color-picker v-model="successColor" @change="handleSuccessChange" />
     </div>
 
     <!-- Warning 颜色选择器 -->
     <div class="setting-item">
       <span>警告色：</span>
-      <el-color-picker v-model="warningColor" @change="(c) => themeStore.setWarningColor(c)" />
+      <el-color-picker v-model="warningColor" @change="handleWarningChange" />
     </div>
 
     <!-- Danger 颜色选择器 -->
     <div class="setting-item">
       <span>错误色：</span>
-      <el-color-picker v-model="dangerColor" @change="(c) => themeStore.setDangerColor(c)" />
+      <el-color-picker v-model="dangerColor" @change="handleDangerChange" />
     </div>
 
     <!-- Info 颜色选择器 -->
     <div class="setting-item">
       <span>信息色：</span>
-      <el-color-picker v-model="infoColor" @change="(c) => themeStore.setInfoColor(c)" />
+      <el-color-picker v-model="infoColor" @change="handleInfoChange" />
     </div>
   </div>
 </template>
@@ -54,7 +51,22 @@ const successColor = ref('#67c23a')
 const warningColor = ref('#e6a23c')
 const dangerColor = ref('#f56c6c')
 const infoColor = ref('#909399')
-
+//  类型安全的事件处理函数
+function handlePrimaryChange(c: string) {
+  themeStore.setPrimaryColor(c)
+}
+function handleSuccessChange(c: string) {
+  themeStore.setSuccessColor(c)
+}
+function handleWarningChange(c: string) {
+  themeStore.setWarningColor(c)
+}
+function handleDangerChange(c: string) {
+  themeStore.setDangerColor(c)
+}
+function handleInfoChange(c: string) {
+  themeStore.setInfoColor(c)
+}
 // 暗黑模式开关
 const isDark = computed({
   get: () => themeStore.isDark,

@@ -2,10 +2,10 @@
   <el-container class="layout" @click="handleOutsideClick">
     <!-- 左侧导航栏 -->
     <el-aside
-        :class="{ open: isMobileMenuOpen }"
-        :width="isCollapse ? '64px' : '200px'"
-        class="layout-aside"
-        ref="asideRef"
+      :class="{ open: isMobileMenuOpen }"
+      :width="isCollapse ? '64px' : '200px'"
+      class="layout-aside"
+      ref="asideRef"
     >
       <AppSideMenu :collapse="isCollapse" />
     </el-aside>
@@ -21,19 +21,14 @@
 
         <!-- ✅ 标签页区域 -->
         <el-tabs
-            v-model="activeTab"
-            type="card"
-            class="layout-tabs"
-            closable
-            @tab-remove="removeTab"
-            @tab-click="handleTabClick"
+          v-model="activeTab"
+          type="card"
+          class="layout-tabs"
+          closable
+          @tab-remove="removeTab"
+          @tab-click="handleTabClick"
         >
-          <el-tab-pane
-              v-for="tab in tabs"
-              :key="tab.name"
-              :label="tab.title"
-              :name="tab.name"
-          />
+          <el-tab-pane v-for="tab in tabs" :key="tab.name" :label="tab.title" :name="tab.name" />
         </el-tabs>
 
         <!-- 路由内容区 -->
@@ -51,7 +46,7 @@ import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppSideMenu from '@/components/layout/AppSideMenu.vue'
 import AppBreadCrumb from '@/components/layout/AppBreadCrumb.vue'
-import type {TabsPaneContext} from "element-plus";
+import type { TabsPaneContext } from 'element-plus'
 
 const isCollapse = ref(false)
 const isMobileMenuOpen = ref(false)
@@ -84,10 +79,10 @@ function handleResize() {
 
 function handleOutsideClick(e: MouseEvent) {
   if (
-      window.innerWidth <= 768 &&
-      isMobileMenuOpen.value &&
-      asideRef.value &&
-      !asideRef.value.contains(e.target as Node)
+    window.innerWidth <= 768 &&
+    isMobileMenuOpen.value &&
+    asideRef.value &&
+    !asideRef.value.contains(e.target as Node)
   ) {
     isMobileMenuOpen.value = false
   }
@@ -95,7 +90,7 @@ function handleOutsideClick(e: MouseEvent) {
 
 /* 标签页操作 */
 function addTab(tab: { title: string; name: string; path: string }) {
-  if (!tabs.value.find(t => t.name === tab.name)) {
+  if (!tabs.value.find((t) => t.name === tab.name)) {
     tabs.value.push(tab)
   }
   activeTab.value = tab.name
@@ -105,7 +100,7 @@ function removeTab(name: string) {
   const index = tabs.value.findIndex((t: TabItem) => t.name === name)
   if (index !== -1) {
     tabs.value.splice(index, 1)
-    if (activeTab.value === name && tabs.value.length> 0) {
+    if (activeTab.value === name && tabs.value.length > 0) {
       const nextIndex = Math.max(0, index - 1)
       const nextTab = tabs.value[nextIndex]
 
@@ -122,7 +117,7 @@ function removeTab(name: string) {
 }
 
 function handleTabClick(tab: TabsPaneContext) {
-  const target = tabs.value.find((t: TabItem)=> t.name === tab.paneName)
+  const target = tabs.value.find((t: TabItem) => t.name === tab.paneName)
   if (target) {
     router.push(target.path)
   }
@@ -130,15 +125,15 @@ function handleTabClick(tab: TabsPaneContext) {
 
 /* 监听路由变化，自动添加标签页 */
 watch(
-    () => route.fullPath,
-    () => {
-      addTab({
-        title: (route.meta.title as string) || route.name?.toString() || '未命名',
-        name: route.name?.toString() || route.fullPath,
-        path: route.fullPath
-      })
-    },
-    { immediate: true }
+  () => route.fullPath,
+  () => {
+    addTab({
+      title: (route.meta.title as string) || route.name?.toString() || '未命名',
+      name: route.name?.toString() || route.fullPath,
+      path: route.fullPath
+    })
+  },
+  { immediate: true }
 )
 
 onMounted(() => {
@@ -150,5 +145,4 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

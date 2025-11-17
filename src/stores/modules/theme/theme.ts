@@ -18,7 +18,9 @@ const presetColors: Record<ThemeMode, string> = {
 export const useThemeStore = defineStore('theme', {
   state: () => ({
     mode: 'light' as ThemeMode,
-    primaryColor: '#409eff'
+    primaryColor: '#409eff',
+    headerGradient: '#409eff',
+    asideGradient: '#409eff'
   }),
   getters: {
     isDark: (state) => state.mode === 'dark'
@@ -32,9 +34,10 @@ export const useThemeStore = defineStore('theme', {
       document.documentElement.setAttribute('data-theme', mode)
       localStorage.setItem('theme-mode', mode)
 
-      // 如果是预设主题，自动更新主色
+      //// 只有非 dark 模式才更新预设颜色 如果是预设主题，自动更新主色
       if (presetColors[mode]) {
         this.setPrimaryColor(presetColors[mode])
+        this.setLayoutGradientColor(presetColors[mode])
       }
     },
     /**
@@ -96,7 +99,13 @@ export const useThemeStore = defineStore('theme', {
 
       localStorage.setItem('theme-color', color)
     },
-
+    /** ✅ 新增：单独设置头部和侧边栏渐变色 */
+    setLayoutGradientColor(color: string) {
+      this.headerGradient = color
+      this.asideGradient = color
+      document.documentElement.style.setProperty('--color-header-gradient', color)
+      document.documentElement.style.setProperty('--color-aside-gradient', color)
+    },
     /**
      * 设置语义色（success/warning/danger/info）
      */
@@ -126,6 +135,8 @@ export const useThemeStore = defineStore('theme', {
 
       this.setMode(savedMode)
       this.setPrimaryColor(savedColor) // 保证选色器生效
+      // 初始化时保持渐变色与主色一致
+      this.setLayoutGradientColor(savedColor)
     }
   }
 })

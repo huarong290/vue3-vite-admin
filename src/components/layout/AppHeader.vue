@@ -18,12 +18,20 @@
 
       <!--颜色选择器 -->
       <el-color-picker v-model="themeStore.primaryColor" @change="themeStore.setPrimaryColor" />
+      <!--  全屏按钮：使用 Element Plus 官方图标 -->
+      <el-button @click="toggleFullscreen" circle>
+        <el-icon>
+          <component :is="isFullscreen ? Close : FullScreen" />
+        </el-icon>
+      </el-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useThemeStore } from '@/stores/modules/theme/theme.ts'
+import { ref } from 'vue'
+import { Close, FullScreen } from '@element-plus/icons-vue'
 
 defineProps<{ isCollapse: boolean }>()
 
@@ -31,6 +39,20 @@ const themeStore = useThemeStore()
 
 function toggleTheme() {
   themeStore.setMode(themeStore.mode === 'light' ? 'dark' : 'light')
+}
+/* 全屏状态 */
+const isFullscreen = ref(false)
+
+function toggleFullscreen() {
+  if (!isFullscreen.value) {
+    // 进入全屏
+    document.documentElement.requestFullscreen?.()
+    isFullscreen.value = true
+  } else {
+    // 退出全屏
+    document.exitFullscreen?.()
+    isFullscreen.value = false
+  }
 }
 </script>
 

@@ -60,16 +60,16 @@
 </template>
 
 <script setup lang="ts">
-import ThemeSettings from "@/components/theme-settings/ThemeSettings.vue";
-import { ref } from "vue";
+import ThemeSettings from '@/components/theme-settings/ThemeSettings.vue'
+import { ref } from 'vue'
 
 const tableData = [
-  { name: "张三", age: 28, role: "开发工程师" },
-  { name: "李四", age: 32, role: "产品经理" },
-  { name: "王五", age: 25, role: "设计师" },
-];
+  { name: '张三', age: 28, role: '开发工程师' },
+  { name: '李四', age: 32, role: '产品经理' },
+  { name: '王五', age: 25, role: '设计师' }
+]
 
-const activeTab = ref("user");
+const activeTab = ref('user')
 </script>
 
 <style scoped lang="scss">
@@ -143,4 +143,3 @@ const activeTab = ref("user");
 //  }
 //}
 </style>
-

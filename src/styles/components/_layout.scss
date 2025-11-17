@@ -6,9 +6,6 @@
   height: 100vh;
   position: relative;
   background-color: var(--color-bg-body);
-  // ⚠️ 默认跟随 light/dark 模式
-  //  如果在 theme.ts 的 setPrimaryColor 里启用 updateBackground = true，
-  //    这里的 var(--color-bg-body) 会被 JS 动态覆盖，从而跟随选色器变化
   color: var(--color-text-primary);
   transition:
     background-color 0.3s ease,
@@ -17,9 +14,13 @@
 
 // 2.侧边栏基础样式
 .layout-aside {
-  background: var(--color-bg-container);
-  // ⚠️ 默认跟随 light/dark 模式
-  //  可选：在 setPrimaryColor 里动态覆盖 var(--color-bg-container)，让容器背景跟随选色器
+  /*  新增：侧边栏渐变背景 */
+  background: linear-gradient(
+    180deg,
+    var(--color-aside-gradient) 0%,
+    var(--color-bg-container) 100%
+  );
+
   border-right: 1px solid var(--color-border-light);
   transition:
     width 0.3s ease,
@@ -29,39 +30,72 @@
   height: 100vh;
   overflow: hidden;
   z-index: var(--zindex-sidebar);
+
+  /* 自定义滚动条样式 */
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-border-light);
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-bg-body);
+  }
 }
 
 // 3.头部基础样式
 .layout-header {
-  background-color: var(--color-bg-container);
-  // ⚠️ 默认跟随 light/dark 模式
-  //  可选：在 setPrimaryColor 里动态覆盖 var(--color-bg-container)，让头部背景跟随选色器
   border-bottom: 1px solid var(--color-border-light);
   box-shadow: var(--box-shadow-sm);
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+
+    .el-button {
+      min-width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
 
 // 4.主体区域
 .layout-main {
   flex: 1;
   background-color: var(--color-bg-body);
-  // ⚠️ 默认跟随 light/dark 模式
-  //  可选：在 setPrimaryColor 里动态覆盖 var(--color-bg-body)，让主体背景跟随选色器
   color: var(--color-text-primary);
   padding: var(--spacing-4);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
+
+  /* 自定义滚动条样式 */
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-border-light);
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-bg-body);
+  }
 }
 
 // 5.面包屑区域
 .layout-breadcrumb {
   padding: var(--spacing-3) var(--spacing-4);
   background-color: var(--color-bg-body);
-  // ⚠️ 默认跟随 light/dark 模式
-  //  可选：在 setPrimaryColor 里动态覆盖 var(--color-bg-body)，让面包屑背景跟随选色器
   border-bottom: 1px solid var(--color-border-light);
   margin-bottom: var(--spacing-3);
 }
@@ -69,14 +103,32 @@
 // 6.内容区域
 .layout-content {
   background-color: var(--color-bg-container);
-  // ⚠️ 默认跟随 light/dark 模式
-  //  可选：在 setPrimaryColor 里动态覆盖 var(--color-bg-container)，让内容区背景跟随选色器
   border-radius: var(--border-radius-base);
   box-shadow: var(--box-shadow-sm);
   padding: var(--spacing-4);
-  min-height: calc(100vh - 120px); // 保证内容区撑满
+  min-height: calc(100vh - 120px);
   transition: background-color 0.3s ease;
+
+  /* hover 阴影效果 */
+  &:hover {
+    box-shadow: var(--box-shadow-md);
+  }
+
+  /* 淡入动画效果 */
+  animation: fadeIn 0.3s ease;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* 7.标签页样式覆盖 */
 .layout-tabs {
   margin-bottom: var(--spacing-3);
@@ -106,8 +158,26 @@
     border-bottom: 1px solid var(--color-border-light);
   }
 }
+
 /* 移动端适配 */
 @media screen and (max-width: 768px) {
+  .layout-header {
+    .header-right {
+      flex-wrap: wrap;
+      gap: var(--spacing-2);
+
+      .el-button {
+        min-width: 32px;
+        height: 32px;
+        font-size: var(--font-size-xs);
+      }
+
+      .el-color-picker {
+        transform: scale(0.85);
+      }
+    }
+  }
+
   .layout-aside {
     position: absolute;
     left: 0;
@@ -115,6 +185,7 @@
     transform: translateX(-100%);
     width: 200px;
     z-index: 1000;
+    transition: transform 0.3s ease;
   }
 
   .layout-aside.open {
@@ -122,20 +193,21 @@
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
   }
 
-  /* 遮罩层 */
-  .layout::after {
+  /* 遮罩层优化 */
+  .layout.open::after {
     content: '';
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 999;
-    opacity: 0;
-    pointer-events: none;
+    opacity: 1;
+    pointer-events: auto;
     transition: opacity 0.3s ease;
   }
 
-  .layout-aside.open ~ .layout::after {
-    opacity: 1;
-    pointer-events: auto;
+  /* 标签页在移动端缩小字体和间距 */
+  .layout-tabs .el-tabs__item {
+    font-size: var(--font-size-xs);
+    padding: 0 var(--spacing-2);
   }
 }
