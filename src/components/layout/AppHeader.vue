@@ -48,7 +48,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>个人设置</el-dropdown-item>
-            <el-dropdown-item divided>退出登录</el-dropdown-item>
+            <el-dropdown-item divided @click="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -60,6 +60,8 @@
 import { useThemeStore } from '@/stores/modules/theme/theme.ts'
 import { ref } from 'vue'
 import { Expand, Fold, Close, FullScreen, Sunny, Moon } from '@element-plus/icons-vue'
+import {ElMessage} from "element-plus";
+import router from "@/router";
 
 defineProps<{ isCollapse: boolean }>()
 
@@ -81,6 +83,15 @@ function toggleFullscreen() {
     document.exitFullscreen?.()
     isFullscreen.value = false
   }
+}
+function logout() {
+  // 清理 token
+  localStorage.removeItem('token')
+  localStorage.removeItem('saved-username')
+  localStorage.removeItem('saved-password')
+
+  ElMessage.success('已退出登录')
+  router.push('/login')
 }
 </script>
 
