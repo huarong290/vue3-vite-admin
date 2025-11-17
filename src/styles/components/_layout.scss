@@ -14,13 +14,13 @@
 
 // 2.侧边栏基础样式
 .layout-aside {
-  /*  新增：侧边栏渐变背景 */
-  background: linear-gradient(
-    180deg,
-    var(--color-aside-gradient) 0%,
-    var(--color-bg-container) 100%
-  );
-
+  ///*  新增：侧边栏渐变背景 */
+  //background: linear-gradient(
+  //  180deg,
+  //  var(--color-aside-gradient) 0%,
+  //  var(--color-bg-container) 100%
+  //);
+  background: var(--color-bg-container);
   border-right: 1px solid var(--color-border-light);
   transition:
     width 0.3s ease,
@@ -30,7 +30,7 @@
   height: 100vh;
   overflow: hidden;
   z-index: var(--zindex-sidebar);
-
+  position: relative; // 确保层级正确
   /* 自定义滚动条样式 */
   &::-webkit-scrollbar {
     width: 6px;

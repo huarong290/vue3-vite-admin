@@ -18,16 +18,20 @@
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
-
   .menu-toggle {
-    display: none; // 默认隐藏，移动端在 scoped 样式里显示
+    display: inline-flex;
   }
-
-  .header-right {
+  .header-left {
     display: flex;
     align-items: center;
     gap: var(--spacing-3);
+  }
+  .header-right {
+    display: flex;
 
+    align-items: center;
+    gap: var(--spacing-3);
+    margin-left: auto; // 让右侧按钮组自动靠右
     span {
       font-size: var(--font-size-sm);
       color: var(--color-text-secondary); //  跟随 light/dark 模式
