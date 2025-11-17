@@ -4,15 +4,12 @@
     <!-- 左侧：折叠按钮 + 系统标题 -->
     <!-- 按钮图标根据折叠状态切换 菜单折叠按钮：加上 Tooltip -->
     <div class="header-left">
-      <el-tooltip
-          :content="isCollapse ? '展开菜单' : '收起菜单'"
-          placement="bottom"
-      >
+      <el-tooltip :content="isCollapse ? '展开菜单' : '收起菜单'" placement="bottom">
         <el-button
-            class="menu-toggle"
-            :icon="isCollapse ? Expand : Fold"
-            circle
-            @click="$emit('toggle-menu')"
+          class="menu-toggle"
+          :icon="isCollapse ? Expand : Fold"
+          circle
+          @click="$emit('toggle-menu')"
         />
       </el-tooltip>
       <span class="system-title">欢迎使用系统</span>
@@ -21,8 +18,8 @@
     <div class="header-right">
       <!-- 主题切换按钮：使用 Element Plus 官方图标 + Tooltip -->
       <el-tooltip
-          :content="themeStore.mode === 'light' ? '切换到暗黑模式' : '切换到明亮模式'"
-          placement="bottom"
+        :content="themeStore.mode === 'light' ? '切换到暗黑模式' : '切换到明亮模式'"
+        placement="bottom"
       >
         <el-button @click="toggleTheme" circle>
           <el-icon>
@@ -34,10 +31,7 @@
       <!--颜色选择器 -->
       <el-color-picker v-model="themeStore.primaryColor" @change="themeStore.setPrimaryColor" />
       <!-- 全屏按钮：使用 Element Plus 官方图标 加上 Tooltip -->
-      <el-tooltip
-          :content="isFullscreen ? '退出全屏' : '进入全屏'"
-          placement="bottom"
-      >
+      <el-tooltip :content="isFullscreen ? '退出全屏' : '进入全屏'" placement="bottom">
         <el-button @click="toggleFullscreen" circle>
           <el-icon>
             <component :is="isFullscreen ? Close : FullScreen" />
@@ -48,11 +42,8 @@
       <!-- 用户头像 + 下拉菜单 -->
       <el-dropdown trigger="click">
         <span class="avatar-wrapper">
-          <el-avatar
-              size="small"
-              src="https://avatars.githubusercontent.com/u/9919?v=4"
-          />
-        <span class="username">Admin</span>
+          <el-avatar size="small" src="https://avatars.githubusercontent.com/u/9919?v=4" />
+          <span class="username">Admin</span>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -68,7 +59,7 @@
 <script setup lang="ts">
 import { useThemeStore } from '@/stores/modules/theme/theme.ts'
 import { ref } from 'vue'
-import { Expand,Fold,Close, FullScreen, Sunny, Moon } from '@element-plus/icons-vue'
+import { Expand, Fold, Close, FullScreen, Sunny, Moon } from '@element-plus/icons-vue'
 
 defineProps<{ isCollapse: boolean }>()
 
@@ -93,5 +84,4 @@ function toggleFullscreen() {
 }
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

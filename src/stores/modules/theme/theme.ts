@@ -35,14 +35,14 @@ export const useThemeStore = defineStore('theme', {
       localStorage.setItem('theme-mode', mode)
 
       //// 只有非 dark 模式才更新预设颜色 如果是预设主题，自动更新主色
-        const savedColor = localStorage.getItem('theme-color')
-        if (savedColor) {
-            this.setPrimaryColor(savedColor)
-            this.setLayoutGradientColor(savedColor)
-        } else if (presetColors[mode]) {
-            this.setPrimaryColor(presetColors[mode])
-            this.setLayoutGradientColor(presetColors[mode])
-        }
+      const savedColor = localStorage.getItem('theme-color')
+      if (savedColor) {
+        this.setPrimaryColor(savedColor)
+        this.setLayoutGradientColor(savedColor)
+      } else if (presetColors[mode]) {
+        this.setPrimaryColor(presetColors[mode])
+        this.setLayoutGradientColor(presetColors[mode])
+      }
     },
     /**
      * 设置主题色（支持自定义）
