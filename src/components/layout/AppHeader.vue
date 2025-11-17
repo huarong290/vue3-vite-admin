@@ -1,19 +1,23 @@
 <!--src/components/layout/AppHeader.vue-->
 <template>
   <div class="header">
-    <!--  按钮图标根据折叠状态切换 -->
-    <el-button
-      class="menu-toggle"
-      :icon="isCollapse ? 'Expand' : 'Fold'"
-      circle
-      @click="$emit('toggle-menu')"
-    />
+
     <!-- 右侧操作区 -->
     <div class="header-right">
+      <!--  按钮图标根据折叠状态切换 -->
+      <el-button
+          class="menu-toggle"
+          :icon="isCollapse ? Expand : Fold"
+          circle
+          @click="$emit('toggle-menu')"
+      />
       <span>欢迎使用系统</span>
       <!-- 主题切换按钮 -->
+      <!-- 主题切换按钮：使用 Element Plus 官方图标 -->
       <el-button @click="toggleTheme" circle>
-        {{ themeStore.mode === 'light' ? '🌞' : '🌙' }}
+        <el-icon>
+          <component :is="themeStore.mode === 'light' ? Sunny : Moon" />
+        </el-icon>
       </el-button>
 
       <!--颜色选择器 -->
@@ -31,7 +35,7 @@
 <script setup lang="ts">
 import { useThemeStore } from '@/stores/modules/theme/theme.ts'
 import { ref } from 'vue'
-import { Close, FullScreen } from '@element-plus/icons-vue'
+import { Expand,Fold,Close, FullScreen, Sunny, Moon } from '@element-plus/icons-vue'
 
 defineProps<{ isCollapse: boolean }>()
 
