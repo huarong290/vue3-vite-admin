@@ -1,0 +1,79 @@
+//src/styles/components/_descriptions.scss
+// 📝 Descriptions 组件样式
+@use '@/styles/variables/_index.scss' as *;
+
+[data-theme] .el-descriptions {
+  color: var(--color-text-primary);
+}
+
+[data-theme] .el-descriptions__cell {
+  background-color: var(--color-bg-container);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-light);
+}
+
+[data-theme] .el-descriptions__label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+[data-theme] .el-descriptions__content {
+  color: var(--color-text-primary);
+}
+/* 基础容器 */
+.descriptions {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--spacing-6);
+  color: var(--color-text-primary);
+}
+
+/* 单元格 */
+.descriptions-cell {
+  display: table-cell;
+  padding: var(--spacing-2) var(--spacing-4);
+  border: 1px solid var(--color-border-light);
+  background-color: var(--color-bg-container);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Label 与 Content */
+.descriptions-label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-container);
+}
+
+.descriptions-content {
+  color: var(--color-text-primary);
+}
+
+/* 带边框的变体 */
+.descriptions-bordered .descriptions-cell {
+  border: 1px solid var(--color-border-base);
+}
+
+/* 条纹模式 */
+.descriptions-striped .descriptions-cell:nth-child(odd) {
+  background-color: color-mix(in srgb, var(--color-bg-container) 96%, white);
+}
+
+/* 标题与额外信息 */
+.descriptions-header {
+  margin-bottom: var(--spacing-3);
+  color: var(--color-text-primary);
+}
+
+.descriptions-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.descriptions-extra {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}

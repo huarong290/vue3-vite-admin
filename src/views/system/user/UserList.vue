@@ -1,6 +1,6 @@
 <!--src/views/system/user/UserList.vue-->
 <template>
-  <el-card>
+  <el-card class="card">
     <h2>用户列表</h2>
     <el-table :data="users" style="width: 100%">
       <el-table-column prop="id" label="ID" width="80" />

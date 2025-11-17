@@ -1,7 +1,7 @@
 <!--src/views/AboutDemo.vue-->
 <template>
   <div class="about-page">
-    <el-card>
+    <el-card class="card">
       <template #header>
         <div class="card-header">
           <h2>关于页面</h2>

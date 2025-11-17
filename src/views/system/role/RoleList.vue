@@ -1,6 +1,6 @@
 <!--src/views/system/role/RoleList.vue-->
 <template>
-  <el-card>
+  <el-card class="card">
     <h2>角色列表</h2>
     <el-table :data="roles" style="width: 100%">
       <el-table-column prop="id" label="ID" width="80" />

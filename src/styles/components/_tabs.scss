@@ -1,0 +1,42 @@
+//src/styles/components/_tabs.scss
+// 🧾 标签页组件样式
+@use '@/styles/variables/_index.scss' as *;
+
+/* 全局覆盖 Element Plus Tabs */
+[data-theme] {
+  /* 标签文字颜色 */
+  --el-tabs-text-color: var(--color-text-secondary);
+  --el-tabs-active-color: var(--color-primary);
+
+  /* 标签下划线颜色 */
+  --el-tabs-active-bar-color: var(--color-primary);
+
+  /* 背景色（可选） */
+  --el-tabs-bg-color: var(--color-bg-container);
+}
+
+/* 自定义样式增强 */
+.el-tabs {
+  .el-tabs__item {
+    color: var(--el-tabs-text-color);
+    transition: color 0.3s ease;
+
+    &.is-active {
+      color: var(--el-tabs-active-color);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    &:hover {
+      color: var(--color-hover);
+    }
+  }
+
+  .el-tabs__active-bar {
+    background-color: var(--el-tabs-active-bar-color);
+    transition: background-color 0.3s ease;
+  }
+
+  .el-tabs__nav-wrap {
+    border-bottom: 1px solid var(--color-border-light);
+  }
+}

@@ -1,10 +1,10 @@
 <!--src/views/HomeDemo.vue-->
 <template>
   <div class="home-page">
-    <el-card class="welcome-card">
+    <el-card class="card">
       <template #header>
         <div class="card-header">
-          <h2>欢迎使用后台管理系统</h2>
+          <h2 class="card-title">欢迎使用后台管理系统</h2>
         </div>
       </template>
 
@@ -32,49 +32,9 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+</script>
 
 <style lang="scss" scoped>
-.home-page {
-  .welcome-card {
-    margin-bottom: var(--spacing-6);
 
-    .card-header {
-      h2 {
-        margin: 0;
-        color: var(--color-text-primary);
-        font-size: var(--font-size-2xl);
-        font-weight: var(--font-weight-semibold);
-      }
-    }
-
-    .welcome-content {
-      p {
-        color: var(--color-text-secondary);
-        line-height: var(--line-height-relaxed);
-        margin-bottom: var(--spacing-6);
-      }
-
-      .quick-actions {
-        margin-bottom: var(--spacing-8);
-
-        h3 {
-          color: var(--color-text-primary);
-          margin-bottom: var(--spacing-4);
-          font-size: var(--font-size-lg);
-          font-weight: var(--font-weight-medium);
-        }
-      }
-
-      .system-info {
-        h3 {
-          color: var(--color-text-primary);
-          margin-bottom: var(--spacing-4);
-          font-size: var(--font-size-lg);
-          font-weight: var(--font-weight-medium);
-        }
-      }
-    }
-  }
-}
 </style>

@@ -68,4 +68,7 @@
   --el-button-active-bg-color: var(--color-active); //  active 背景跟随选色器
   --el-button-hover-border-color: var(--color-hover);
   --el-button-active-border-color: var(--color-active);
+
+  /* Descriptions 组件背景色覆盖 */
+  --el-descriptions-item-bg-color: var(--color-bg-container);
 }
