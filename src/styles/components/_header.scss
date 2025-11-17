@@ -36,7 +36,16 @@
       font-size: var(--font-size-sm);
       color: var(--color-text-secondary); //  跟随 light/dark 模式
     }
-
+    .avatar-wrapper {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      .username {
+        font-size: var(--font-size-sm);
+        color: var(--color-text-primary);
+      }
+    }
     .el-button {
       transition:
         color 0.2s ease,

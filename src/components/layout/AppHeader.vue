@@ -44,6 +44,23 @@
           </el-icon>
         </el-button>
       </el-tooltip>
+
+      <!-- 用户头像 + 下拉菜单 -->
+      <el-dropdown trigger="click">
+        <span class="avatar-wrapper">
+          <el-avatar
+              size="small"
+              src="https://avatars.githubusercontent.com/u/9919?v=4"
+          />
+        <span class="username">Admin</span>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item>个人设置</el-dropdown-item>
+            <el-dropdown-item divided>退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -77,5 +94,4 @@ function toggleFullscreen() {
 </script>
 
 <style scoped lang="scss">
-/* AppHeader.vue scoped 样式 */
 </style>
