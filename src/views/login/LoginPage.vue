@@ -12,8 +12,8 @@
         <!-- 右侧工具栏 -->
         <div class="theme-tools">
           <el-tooltip
-              :content="themeStore.mode === 'light' ? '切换到暗黑模式' : '切换到明亮模式'"
-              placement="bottom"
+            :content="themeStore.mode === 'light' ? '切换到暗黑模式' : '切换到明亮模式'"
+            placement="bottom"
           >
             <el-button @click="toggleTheme" circle size="large">
               <el-icon>
@@ -23,43 +23,43 @@
           </el-tooltip>
 
           <el-color-picker
-              v-model="themeStore.primaryColor"
-              @change="themeStore.setPrimaryColor"
-              size="large"
+            v-model="themeStore.primaryColor"
+            @change="themeStore.setPrimaryColor"
+            size="large"
           />
         </div>
       </div>
 
       <!-- 登录表单 -->
       <el-form
-          ref="loginFormRef"
-          :model="loginForm"
-          :rules="rules"
-          label-position="left"
-          label-width="0"
-          class="form"
-          @submit.prevent
+        ref="loginFormRef"
+        :model="loginForm"
+        :rules="rules"
+        label-position="left"
+        label-width="0"
+        class="form"
+        @submit.prevent
       >
         <!-- 用户名输入框 -->
         <el-form-item prop="username">
           <el-input
-              v-model="loginForm.username"
-              placeholder="用户名 / 邮箱"
-              clearable
-              :prefix-icon="User"
+            v-model="loginForm.username"
+            placeholder="用户名 / 邮箱"
+            clearable
+            :prefix-icon="User"
           />
         </el-form-item>
 
         <!-- 密码输入框 -->
         <el-form-item prop="password">
           <el-input
-              v-model="loginForm.password"
-              :type="showPassword ? 'text' : 'password'"
-              placeholder="密码"
-              clearable
-              :prefix-icon="Lock"
-              :suffix-icon="showPassword ? View : Hide"
-              @suffix-click="toggleShowPassword"
+            v-model="loginForm.password"
+            :type="showPassword ? 'text' : 'password'"
+            placeholder="密码"
+            clearable
+            :prefix-icon="Lock"
+            :suffix-icon="showPassword ? View : Hide"
+            @suffix-click="toggleShowPassword"
           />
         </el-form-item>
 
@@ -98,10 +98,10 @@
     </div>
 
     <!-- 右侧展示板 -->
-<!--    <div class="panel" aria-hidden="true">-->
-<!--      <h2 class="panel-title">欢迎来到管理面板</h2>-->
-<!--      <p class="panel-desc">简洁、安全、高效 —— 管理你的应用与数据。</p>-->
-<!--    </div>-->
+    <!--    <div class="panel" aria-hidden="true">-->
+    <!--      <h2 class="panel-title">欢迎来到管理面板</h2>-->
+    <!--      <p class="panel-desc">简洁、安全、高效 —— 管理你的应用与数据。</p>-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -176,9 +176,11 @@ function handleForgot() {
     cancelButtonText: '取消',
     inputPattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     inputErrorMessage: '请输入有效邮箱'
-  }).then(({ value }) => {
-    ElMessage.success(`已向 ${value} 发送重置邮件`)
-  }).catch(() => {})
+  })
+    .then(({ value }) => {
+      ElMessage.success(`已向 ${value} 发送重置邮件`)
+    })
+    .catch(() => {})
 }
 
 // 社交登录处理
@@ -192,6 +194,4 @@ function toggleTheme() {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

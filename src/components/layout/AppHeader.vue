@@ -60,8 +60,8 @@
 import { useThemeStore } from '@/stores/modules/theme/theme.ts'
 import { ref } from 'vue'
 import { Expand, Fold, Close, FullScreen, Sunny, Moon } from '@element-plus/icons-vue'
-import {ElMessage} from "element-plus";
-import router from "@/router";
+import { ElMessage } from 'element-plus'
+import router from '@/router'
 
 defineProps<{ isCollapse: boolean }>()
 
