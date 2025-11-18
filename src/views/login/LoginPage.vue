@@ -15,7 +15,7 @@
               :content="themeStore.mode === 'light' ? '切换到暗黑模式' : '切换到明亮模式'"
               placement="bottom"
           >
-            <el-button @click="toggleTheme" circle size="small">
+            <el-button @click="toggleTheme" circle size="large">
               <el-icon>
                 <component :is="themeStore.mode === 'light' ? Sunny : Moon" />
               </el-icon>
@@ -25,7 +25,7 @@
           <el-color-picker
               v-model="themeStore.primaryColor"
               @change="themeStore.setPrimaryColor"
-              size="small"
+              size="large"
           />
         </div>
       </div>
