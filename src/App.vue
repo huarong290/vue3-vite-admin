@@ -1,7 +1,6 @@
 <!--src/App.vue-->
 <template>
   <!-- 在根容器上绑定 data-theme -->
-  <div id="app" :data-theme="themeStore.mode">
   <router-view v-slot="{ Component }">
     <transition name="fade" mode="out-in">
       <keep-alive>
@@ -9,7 +8,6 @@
       </keep-alive>
     </transition>
   </router-view>
-  </div>
 </template>
 
 <script setup lang="ts">

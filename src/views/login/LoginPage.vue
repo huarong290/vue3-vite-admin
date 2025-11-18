@@ -98,10 +98,10 @@
     </div>
 
     <!-- 右侧展示板 -->
-    <div class="panel" aria-hidden="true">
-      <h2 class="panel-title">欢迎来到管理面板</h2>
-      <p class="panel-desc">简洁、安全、高效 —— 管理你的应用与数据。</p>
-    </div>
+<!--    <div class="panel" aria-hidden="true">-->
+<!--      <h2 class="panel-title">欢迎来到管理面板</h2>-->
+<!--      <p class="panel-desc">简洁、安全、高效 —— 管理你的应用与数据。</p>-->
+<!--    </div>-->
   </div>
 </template>
 
