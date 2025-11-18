@@ -4,8 +4,8 @@
 
 [data-theme] {
   /* 主色及语义色 */
-  --el-color-primary: var(--color-primary); //  跟随选色器
-  --el-color-success: var(--color-success); //  跟随语义色
+  --el-color-primary: var(--color-primary); // 跟随选色器
+  --el-color-success: var(--color-success); // 跟随语义色
   --el-color-warning: var(--color-warning);
   --el-color-danger: var(--color-danger);
   --el-color-info: var(--color-info);
@@ -13,36 +13,38 @@
   /* 主色的浅色/深色（由 JS 动态生成） */
   --el-color-primary-light-3: var(--el-color-primary-light-3);
   --el-color-primary-light-5: var(--el-color-primary-light-5);
+  --el-color-primary-light-7: var(--el-color-primary-light-7);
   --el-color-primary-dark-2: var(--el-color-primary-dark-2);
 
-  /* 文本颜色 */
-  --el-text-color-primary: var(--color-text-primary); //  跟随 light/dark
+  /* 文本颜色 - 核心变动：确保表单文本颜色正确 */
+  --el-text-color-primary: var(--color-text-primary); // 跟随 light/dark
   --el-text-color-regular: var(--color-text-secondary);
   --el-text-color-secondary: var(--color-text-secondary);
+  --el-text-color-placeholder: var(--color-text-secondary);
   --el-text-color-disabled: var(--color-text-disabled);
 
-  /* 边框颜色 */
+  /* 边框颜色 - 核心变动：确保表单边框颜色正确 */
   --el-border-color: var(--color-border-base);
   --el-border-color-light: var(--color-border-light);
-  --el-border-color-lighter: var(--color-border-dark);
-  --el-border-color-extra-light: var(--color-border-dark);
+  --el-border-color-lighter: var(--color-border-lighter);
+  --el-border-color-extra-light: var(--color-border-extra-light);
 
-  /* 背景颜色 */
-  --el-bg-color: var(--color-bg-body); //  跟随 light/dark 或选色器覆盖
+  /* 背景颜色 - 核心变动：确保表单背景颜色正确 */
+  --el-bg-color: var(--color-bg-body); // 跟随 light/dark 或选色器覆盖
   --el-bg-color-overlay: var(--color-bg-overlay);
   --el-fill-color: var(--color-bg-container);
-  --el-fill-color-light: var(--color-border-light);
-  --el-fill-color-lighter: var(--color-border-base);
+  --el-fill-color-light: var(--color-fill-light);
+  --el-fill-color-lighter: var(--color-fill-lighter);
+  --el-fill-color-extra-light: var(--color-fill-extra-light);
+  --el-fill-color-blank: var(--color-bg-container);
 
   /* 菜单 */
   --el-menu-bg-color: var(--color-bg-container);
   --el-menu-text-color: var(--color-text-primary);
-  --el-menu-hover-bg-color: var(--color-hover); //  跟随选色器 hover 色
-  --el-menu-active-color: var(--color-primary); //  跟随选色器主色
+  --el-menu-hover-bg-color: var(--color-hover); // 跟随选色器 hover 色
+  --el-menu-active-color: var(--color-primary); // 跟随选色器主色
 
   /* 卡片 / 弹窗 / 表格 */
-
-  /* 卡片背景和文字颜色 */
   --el-card-bg-color: var(--color-bg-container);
   --el-card-text-color: var(--color-text-primary);
   --el-card-border-color: var(--color-border-light);
@@ -57,18 +59,56 @@
   --el-table-border-color: var(--color-border-light);
   --el-table-header-bg-color: var(--color-bg-container);
 
-  /* 输入框 / 表单 */
-  --el-input-focus-border-color: var(--color-primary); //  输入框 focus 边框跟随选色器
-  --el-input-hover-border-color: var(--color-hover); //  hover 边框跟随选色器
-  --el-input-bg-color: var(--color-bg-container);
+  /* 输入框 / 表单 - 核心变动：确保表单组件正确显示 */
   --el-input-text-color: var(--color-text-primary);
+  --el-input-border-color: var(--color-border-base);
+  --el-input-bg-color: var(--color-bg-container);
+  --el-input-placeholder-color: var(--color-text-secondary);
+  --el-input-hover-border-color: var(--color-primary);
+  --el-input-focus-border-color: var(--color-primary);
+  --el-input-focus-bg-color: var(--color-bg-container);
+
+  /* 输入框禁用状态 */
+  --el-input-disabled-bg-color: var(--color-disabled);
+  --el-input-disabled-border-color: var(--color-border-light);
+  --el-input-disabled-text-color: var(--color-text-disabled);
 
   /* 按钮 */
-  --el-button-hover-bg-color: var(--color-hover); //  hover 背景跟随选色器
-  --el-button-active-bg-color: var(--color-active); //  active 背景跟随选色器
+  --el-button-hover-bg-color: var(--color-hover); // hover 背景跟随选色器
+  --el-button-active-bg-color: var(--color-active); // active 背景跟随选色器
   --el-button-hover-border-color: var(--color-hover);
   --el-button-active-border-color: var(--color-active);
 
+  /* 复选框 */
+  --el-checkbox-bg-color: var(--color-bg-container);
+  --el-checkbox-input-border-color: var(--color-border-base);
+  --el-checkbox-checked-bg-color: var(--color-primary);
+  --el-checkbox-checked-input-border-color: var(--color-primary);
+  --el-checkbox-disabled-bg-color: var(--color-disabled);
+  --el-checkbox-disabled-input-border-color: var(--color-border-light);
+
   /* Descriptions 组件背景色覆盖 */
   --el-descriptions-item-bg-color: var(--color-bg-container);
+
+  /* 新增：组件阴影统一管理 */
+  --el-box-shadow-light: var(--box-shadow-sm);
+  --el-box-shadow: var(--box-shadow-base);
+  --el-box-shadow-dark: var(--box-shadow-lg);
+}
+
+// 暗黑模式特定调整
+[data-theme='dark'] {
+  /* 暗黑模式下输入框的特殊处理 */
+  --el-input-bg-color: var(--color-bg-container);
+  --el-input-text-color: var(--color-text-primary);
+  --el-input-border-color: var(--color-border-base);
+
+  /* 暗黑模式下卡片的特殊处理 */
+  --el-card-bg-color: var(--color-bg-container);
+}
+
+// 亮色模式特定调整
+[data-theme='light'] {
+  /* 亮色模式下可能需要的一些特殊调整 */
+  --el-input-bg-color: var(--color-white);
 }

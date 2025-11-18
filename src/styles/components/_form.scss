@@ -1,7 +1,195 @@
 // src/styles/components/_form.scss
 
 // 📝 表单组件样式
+// 此文件包含所有表单相关组件的样式定义
+// 与Element Plus组件深度集成，确保主题一致性
+
 @use '@/styles/variables/_index.scss' as *;
+
+// ==================== Element Plus Form Item 样式设置 ====================
+
+.el-form-item {
+  margin-bottom: var(--spacing-5);
+
+  // 标签样式
+  :deep(.el-form-item__label) {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-2);
+    line-height: var(--line-height-normal);
+
+    // 必需字段星号样式
+    &::before {
+      color: var(--color-danger);
+      margin-right: var(--spacing-1);
+    }
+  }
+
+  // 内容区域
+  :deep(.el-form-item__content) {
+    line-height: var(--line-height-normal);
+
+    // 输入框样式 - 核心变动：确保主题适配
+    .el-input,
+    .el-select,
+    .el-textarea {
+      .el-input__wrapper {
+        background-color: var(--color-bg-container);
+        border: 1px solid var(--color-border-base);
+        border-radius: var(--border-radius-base);
+        box-shadow: var(--box-shadow-sm);
+        transition: all 0.2s ease-in-out;
+
+        // 变动：悬停状态使用主色
+        &:hover {
+          border-color: var(--color-primary);
+          box-shadow: var(--box-shadow-base);
+        }
+
+        // 变动：聚焦状态使用主色阴影
+        &.is-focus {
+          border-color: var(--color-primary);
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+        }
+      }
+
+      // 输入框文本 - 确保文本颜色正确
+      .el-input__inner {
+        color: var(--color-text-primary);
+        font-size: var(--font-size-sm);
+
+        &::placeholder {
+          color: var(--color-text-secondary);
+        }
+      }
+
+      // 变动：图标颜色适配主题
+      .el-input__prefix,
+      .el-input__suffix {
+        .el-icon {
+          color: var(--color-text-secondary);
+        }
+      }
+    }
+  }
+
+  // 错误状态 - 使用危险色
+  &.is-error {
+    :deep(.el-form-item__label) {
+      color: var(--color-danger);
+    }
+
+    :deep(.el-input__wrapper) {
+      border-color: var(--color-danger);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
+    }
+
+    :deep(.el-form-item__error) {
+      color: var(--color-danger);
+      font-size: var(--font-size-xs);
+      margin-top: var(--spacing-1);
+      line-height: var(--line-height-tight);
+    }
+  }
+
+  // 成功状态
+  &.is-success {
+    :deep(.el-input__wrapper) {
+      border-color: var(--color-success);
+    }
+  }
+
+  // 禁用状态
+  &.is-disabled {
+    :deep(.el-form-item__label) {
+      color: var(--color-text-disabled);
+    }
+
+    :deep(.el-input__wrapper) {
+      background-color: var(--color-disabled);
+      border-color: var(--color-border-light);
+
+      .el-input__inner {
+        color: var(--color-text-disabled);
+      }
+    }
+  }
+}
+
+// ==================== 表单项尺寸变体 ====================
+
+.el-form-item--small {
+  margin-bottom: var(--spacing-3);
+
+  :deep(.el-form-item__label) {
+    font-size: var(--font-size-xs);
+  }
+
+  :deep(.el-input__inner) {
+    font-size: var(--font-size-xs);
+  }
+}
+
+.el-form-item--large {
+  margin-bottom: var(--spacing-6);
+
+  :deep(.el-form-item__label) {
+    font-size: var(--font-size-base);
+  }
+
+  :deep(.el-input__inner) {
+    font-size: var(--font-size-base);
+  }
+}
+
+// ==================== 标签位置变体 ====================
+
+.el-form--label-top {
+  .el-form-item {
+    :deep(.el-form-item__label) {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding-bottom: var(--spacing-2);
+    }
+  }
+}
+
+.el-form--label-left {
+  .el-form-item {
+    :deep(.el-form-item__label) {
+      text-align: left;
+      justify-content: flex-start;
+    }
+  }
+}
+
+.el-form--label-right {
+  .el-form-item {
+    :deep(.el-form-item__label) {
+      text-align: right;
+      justify-content: flex-end;
+    }
+  }
+}
+
+// ==================== 内联表单 ====================
+
+.el-form--inline {
+  .el-form-item {
+    display: inline-flex;
+    margin-right: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+    vertical-align: top;
+
+    :deep(.el-form-item__content) {
+      display: inline-flex;
+    }
+  }
+}
+
+// ==================== 自定义表单控件（与现有样式集成） ====================
 
 .form-control {
   display: block;
@@ -9,25 +197,25 @@
   padding: var(--spacing-2) var(--spacing-3);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
-  color: var(--color-text-primary); //  跟随 light/dark 模式
-  background-color: var(--color-bg-container); //  跟随 light/dark 模式
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-container);
   border: 1px solid var(--color-border-base);
   border-radius: var(--border-radius-base);
   transition: all 0.2s ease-in-out;
 
   &::placeholder {
-    color: var(--color-text-secondary); //  跟随 light/dark 模式
+    color: var(--color-text-secondary);
   }
 
+  // 变动：聚焦状态使用主色
   &:focus {
     outline: none;
-    border-color: var(--color-primary); //  优化：边框颜色跟随选色器主色
-    /*  优化：使用 color-mix，让阴影跟随选色器主色 */
+    border-color: var(--color-primary);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
 
   &:disabled {
-    background-color: var(--color-disabled); //  跟随 light/dark 模式
+    background-color: var(--color-disabled);
     color: var(--color-text-disabled);
     cursor: not-allowed;
   }
@@ -63,12 +251,11 @@
     margin-bottom: var(--spacing-2);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
-    color: var(--color-text-secondary); //  跟随 light/dark 模式
+    color: var(--color-text-secondary);
   }
 }
 
-/* 校验状态 */
-/* 校验状态颜色跟随选色器的语义色 */
+/* 校验状态 - 使用语义色 */
 .form-control.is-valid {
   border-color: var(--color-success);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-success) 20%, transparent);
@@ -77,4 +264,68 @@
 .form-control.is-invalid {
   border-color: var(--color-danger);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
+}
+
+// ==================== 响应式设计 ====================
+
+@media (max-width: 768px) {
+  .el-form-item {
+    margin-bottom: var(--spacing-4);
+  }
+
+  .el-form--inline {
+    .el-form-item {
+      display: block;
+      margin-right: 0;
+      width: 100%;
+    }
+  }
+}
+
+// ==================== 登录表单特定样式 ====================
+
+// 登录页面表单特殊处理
+.login-form {
+  .el-form-item {
+    // 登录表单项的特殊边距
+    margin-bottom: var(--spacing-5);
+
+    // 登录输入框的特殊样式
+    :deep(.el-input__wrapper) {
+      background: var(--color-bg-container);
+      border: 1px solid var(--color-border-base);
+
+      // 变动：确保登录页输入框在暗黑模式下正确显示
+      &:hover,
+      &.is-focus {
+        border-color: var(--color-primary);
+      }
+    }
+  }
+}
+
+// ==================== 暗黑模式特定调整 ====================
+
+// 暗黑模式下的表单特殊处理
+[data-theme='dark'] {
+  .el-form-item {
+    :deep(.el-input__wrapper) {
+      background: var(--color-bg-container);
+      border-color: var(--color-border-base);
+
+      .el-input__inner {
+        color: var(--color-text-primary);
+      }
+    }
+  }
+
+  .form-control {
+    background: var(--color-bg-container);
+    border-color: var(--color-border-base);
+    color: var(--color-text-primary);
+
+    &::placeholder {
+      color: var(--color-text-secondary);
+    }
+  }
 }
