@@ -19,7 +19,7 @@
 
 /* 登录卡片 */
 .auth-card {
-  width: 420px;
+  width: 450px;
   max-width: calc(100% - var(--spacing-6));
   background: var(--color-bg-container);
   border-radius: var(--border-radius-lg);
@@ -72,8 +72,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 80px;
+  height: 80px;
   border-radius: var(--border-radius-lg);
   background: var(--color-primary);
   color: var(--color-white);
