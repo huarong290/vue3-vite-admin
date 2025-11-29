@@ -203,3 +203,14 @@ npm install
 npm install vue-router@4 pinia sass axios
 
 ==============================
+
+类型 (type)	          说明	                                        示例提交信息
+feat	              新功能	                                       feat(login): 添加登录界面代码
+fix	                  Bug 修复	                                   fix(auth): 修复刷新 token 失败的问题
+docs	              文档修改	                                   docs(readme): 更新项目启动说明
+style	              代码格式/样式调整（不影响逻辑）	                   style(ui): 优化登录按钮样式
+refactor	          重构（既不是新功能也不是修复）	                   refactor(user): 重构用户服务逻辑
+test	              测试相关	                                   test(auth): 添加登录接口单元测试
+chore	              构建/工具/依赖更新	                           chore(deps): 升级 springdoc 到 2.8.14
+perf	              性能优化	                                   perf(cache): 优化 Redis 缓存查询速度
+ci	                  CI/CD 配置修改	                               ci(github-actions): 添加自动化构建流程
