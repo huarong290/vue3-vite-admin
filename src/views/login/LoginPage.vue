@@ -63,6 +63,20 @@
           />
         </el-form-item>
 
+        <!-- 验证码输入框 -->
+        <el-form-item prop="captchaCode">
+          <div class="captcha-row">
+            <el-input
+              v-model="loginForm.captchaCode"
+              placeholder="请输入验证码"
+              clearable
+              style="flex: 1"
+            />
+            <!-- 验证码图片，点击刷新 -->
+            <img :src="captchaImage" alt="验证码" class="captcha-img" @click="loadCaptcha" />
+          </div>
+        </el-form-item>
+
         <!-- 记住我和忘记密码 -->
         <div class="form-row">
           <el-checkbox v-model="loginForm.remember">记住我</el-checkbox>
@@ -93,15 +107,9 @@
         </div>
 
         <!-- 提示信息 -->
-        <p class="note">本示例会本地模拟登录。生产环境请用后端鉴权并安全存储凭证。</p>
+        <p class="note">本示例会调用后端接口进行登录和验证码校验。</p>
       </el-form>
     </div>
-
-    <!-- 右侧展示板 -->
-    <!--    <div class="panel" aria-hidden="true">-->
-    <!--      <h2 class="panel-title">欢迎来到管理面板</h2>-->
-    <!--      <p class="panel-desc">简洁、安全、高效 —— 管理你的应用与数据。</p>-->
-    <!--    </div>-->
   </div>
 </template>
 
@@ -109,8 +117,9 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { useThemeStore } from '@/stores/modules/theme/theme.ts'
+import { useThemeStore } from '@/stores/modules/theme/theme'
 import { Sunny, Moon, User, Lock, View, Hide } from '@element-plus/icons-vue'
+import { getCaptchaApi, loginApi } from '@/api/auth/auth'
 
 const router = useRouter()
 const themeStore = useThemeStore()
@@ -119,15 +128,28 @@ const loginFormRef = ref()
 const loading = ref(false)
 const showPassword = ref(false)
 
-const loginForm = ref({ username: '', password: '', remember: false })
+// 登录表单数据
+const loginForm = ref({
+  username: '',
+  password: '',
+  remember: false,
+  captchaId: '',
+  captchaCode: ''
+})
 
+// 验证码图片
+const captchaImage = ref('')
+
+// 校验规则
 const rules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  captchaCode: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
 }
 
-// 页面加载时检查保存的登录信息
+// 页面加载时检查保存的登录信息并获取验证码
 onMounted(() => {
+  loadCaptcha()
   const saved = localStorage.getItem('lp_saved')
   if (saved) {
     try {
@@ -141,31 +163,52 @@ onMounted(() => {
   }
 })
 
+// 加载验证码
+async function loadCaptcha() {
+  try {
+    const res = await getCaptchaApi()
+    loginForm.value.captchaId = res.captchaId
+    captchaImage.value = 'data:image/png;base64,' + res.captchaImage
+  } catch (e) {
+    console.warn('读取保存的账号失败', e)
+    ElMessage.error('获取验证码失败')
+  }
+}
+
 // 切换密码显示/隐藏
 function toggleShowPassword() {
   showPassword.value = !showPassword.value
 }
 
 // 登录处理
-function handleLogin() {
-  loginFormRef.value.validate((valid: boolean) => {
+async function handleLogin() {
+  loginFormRef.value.validate(async (valid: boolean) => {
     if (!valid) return
     loading.value = true
-    setTimeout(() => {
-      loading.value = false
-      if (loginForm.value.username === 'admin' && loginForm.value.password === '123456') {
-        localStorage.setItem('token', 'mock-token-demo')
-        if (loginForm.value.remember) {
-          localStorage.setItem('lp_saved', JSON.stringify(loginForm.value))
-        } else {
-          localStorage.removeItem('lp_saved')
-        }
-        ElMessage.success('登录成功')
-        router.push('/')
+    try {
+      const res = await loginApi({
+        username: loginForm.value.username,
+        password: loginForm.value.password,
+        captchaId: loginForm.value.captchaId,
+        captchaCode: loginForm.value.captchaCode,
+        rememberMe: loginForm.value.remember
+      })
+      // 登录成功逻辑
+      localStorage.setItem('token', res.accessToken)
+      if (loginForm.value.remember) {
+        localStorage.setItem('lp_saved', JSON.stringify(loginForm.value))
       } else {
-        ElMessage.error('用户名或密码错误')
+        localStorage.removeItem('lp_saved')
       }
-    }, 900)
+      ElMessage.success('登录成功')
+      router.push('/')
+    } catch (e) {
+      ElMessage.error('登录失败，请检查账号或验证码')
+      console.warn('登录失败，请检查账号或验证码', e)
+      loadCaptcha() // 登录失败时刷新验证码
+    } finally {
+      loading.value = false
+    }
   })
 }
 
@@ -194,4 +237,17 @@ function toggleTheme() {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.captcha-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.captcha-img {
+  width: 100px;
+  height: 40px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+</style>
