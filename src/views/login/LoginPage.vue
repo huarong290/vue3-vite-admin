@@ -119,11 +119,12 @@ import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useThemeStore } from '@/stores/modules/theme/theme'
 import { Sunny, Moon, User, Lock, View, Hide } from '@element-plus/icons-vue'
-import { getCaptchaApi, loginApi } from '@/api/auth/auth'
+import { getCaptchaApi, getUserInfoApi, loginApi } from '@/api/auth/auth'
+import { useUserStore } from '@/stores/modules/user/user'
 
 const router = useRouter()
 const themeStore = useThemeStore()
-
+const userStore = useUserStore()
 const loginFormRef = ref()
 const loading = ref(false)
 const showPassword = ref(false)
@@ -193,13 +194,18 @@ async function handleLogin() {
         captchaCode: loginForm.value.captchaCode,
         rememberMe: loginForm.value.remember
       })
-      // 登录成功逻辑
-      localStorage.setItem('token', res.accessToken)
-      if (loginForm.value.remember) {
-        localStorage.setItem('lp_saved', JSON.stringify(loginForm.value))
-      } else {
-        localStorage.removeItem('lp_saved')
-      }
+      // // 登录成功逻辑
+      // localStorage.setItem('token', res.accessToken)
+      // if (loginForm.value.remember) {
+      //   localStorage.setItem('lp_saved', JSON.stringify(loginForm.value))
+      // } else {
+      //   localStorage.removeItem('lp_saved')
+      // }
+      // 保存 Token
+      userStore.setToken(res)
+      // 获取用户信息
+      const userInfo = await getUserInfoApi()
+      userStore.setUserInfo(userInfo)
       ElMessage.success('登录成功')
       router.push('/')
     } catch (e) {

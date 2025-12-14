@@ -37,12 +37,14 @@ service.interceptors.request.use(
 
     // 对象式 store：直接访问 string，不需要 .value
     if (userStore.accessToken && !config.noToken) {
-      config.headers?.set('Authorization', `${userStore.tokenType} ${userStore.accessToken}`)
+      config.headers = config.headers || {}
+      config.headers['Authorization'] = `${userStore.tokenType} ${userStore.accessToken}`
     }
 
     // 上传文件时修改 Content-Type
     if (config.isUpload) {
-      config.headers?.set('Content-Type', 'multipart/form-data')
+      config.headers = config.headers || {}
+      config.headers['Content-Type'] = 'multipart/form-data'
     }
 
     return config
@@ -73,6 +75,14 @@ service.interceptors.response.use(
       const status = error.response.status
       const responseData = error.response.data as ApiResponse
       message = responseData?.message || `请求错误：${status}`
+
+      // 401 自动登出
+      if (status === 401) {
+        const userStore = useUserStore()
+        userStore.logout()
+        ElMessage.error('登录已过期，请重新登录')
+        window.location.href = '/login'
+      }
     } else if (error.request) {
       message = '服务器无响应，请检查网络连接'
     } else {

@@ -2,6 +2,7 @@
 
 import request from '@/utils/request.ts'
 import type { CaptchaResponse, LoginForm, LoginResponse } from '@/types/auth.ts'
+import type { UserInfo } from '@/types/user.ts'
 
 /**
  * 获取验证码接口
@@ -18,4 +19,11 @@ export const getCaptchaApi = (): Promise<CaptchaResponse> => {
  */
 export const loginApi = (data: LoginForm): Promise<LoginResponse> => {
   return request.post<LoginResponse>('/auth/login', data)
+}
+
+/**
+ * 获取用户信息接口
+ */
+export const getUserInfoApi = (): Promise<UserInfo> => {
+  return request.get<UserInfo>('/auth/userInfo')
 }
