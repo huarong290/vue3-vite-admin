@@ -59,8 +59,10 @@ router.beforeEach(async (to, _from, next) => {
           dynamicRoutes.forEach((route) => {
             router.addRoute('RootLayout', route)
           })
-          //  关键：重新进入当前路由，确保匹配到新加的路由
-          return next({ ...to, replace: true })
+          //  关键：只有在当前路由还没匹配到组件时才重新进入当前路由，确保匹配到新加的路由
+          if (to.matched.length === 0) {
+            return next({ ...to, replace: true })
+          }
         }
       } catch (e: unknown) {
         userStore.logout()

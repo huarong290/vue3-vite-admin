@@ -26,11 +26,34 @@
       <el-table-column prop="email" label="邮箱" />
       <el-table-column prop="phone" label="手机号" />
       <el-table-column prop="deptId" label="部门ID" />
+      <el-table-column prop="lastLoginTime" label="上次登录时间">
+        <template #default="scope">
+          <!-- 如果为空显示 '-'，否则格式化 -->
+          {{
+            scope.row.lastLoginTime
+              ? dayjs(scope.row.lastLoginTime).format('YYYY-MM-DD HH:mm:ss')
+              : '-'
+          }}
+        </template>
+      </el-table-column>
       <el-table-column prop="status" label="状态">
         <template #default="scope">
           <el-tag :type="scope.row.status === 1 ? 'success' : 'danger'">
             {{ scope.row.status === 1 ? '启用' : '禁用' }}
           </el-tag>
+        </template>
+      </el-table-column>
+      <!-- 可选：新增列：创建时间 -->
+      <el-table-column prop="createTime" label="创建时间">
+        <template #default="scope">
+          {{ dayjs(scope.row.createTime).format('YYYY-MM-DD HH:mm:ss') }}
+        </template>
+      </el-table-column>
+
+      <!-- 可选：新增列：更新时间 -->
+      <el-table-column prop="updateTime" label="更新时间">
+        <template #default="scope">
+          {{ dayjs(scope.row.updateTime).format('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
     </el-table>
@@ -52,6 +75,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { getUserPageList } from '@/api/modules/user/user.ts'
 import type { SysUserVO } from '@/types/system/user.ts'
 import type { PageQuery } from '@/types/common.ts'
+import dayjs from 'dayjs'
 
 // 用户数据
 const users = ref<SysUserVO[]>([])

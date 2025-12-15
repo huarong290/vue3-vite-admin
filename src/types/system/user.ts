@@ -11,6 +11,7 @@ export interface UserInfo {
   permissions: string[]
   menus: Menu[]
 }
+
 export interface SysUserQueryDTO {
   username: string
   email: string
@@ -18,6 +19,7 @@ export interface SysUserQueryDTO {
   deptId: number
   orgId: number
 }
+
 // 用户 VO
 export interface SysUserVO {
   id: number
@@ -25,10 +27,11 @@ export interface SysUserVO {
   nickname: string
   email: string
   phone: string
+  avatar?: string | null
   deptId: number
   orgId: number
   status: number
-  lastLoginTime: string
-  createTime: string
-  updateTime: string
+  lastLoginTime?: string | null
+  createTime?: string
+  updateTime?: string
 }
