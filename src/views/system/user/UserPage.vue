@@ -227,7 +227,9 @@ const submitAddUser = () => {
       // 刷新列表：保持当前查询条件与分页
       fetchUsers()
     } catch (e: unknown) {
-      ElMessage.error(e?.message ?? '新增用户失败')
+      // e 类型改为 unknown，更安全
+      const err = e as { message?: string }
+      ElMessage.error(err?.message ?? '新增用户失败')
     }
   })
 }
