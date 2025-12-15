@@ -70,72 +70,44 @@
       @size-change="handleSizeChange"
     />
     <!--  新增：新增用户弹窗 -->
-    <el-dialog
+    <!-- ✅ 调整部分：使用封装好的 AddDialog -->
+    <AddDialog
       v-model="addDialogVisible"
-      width="600px"
-      destroy-on-close
-      draggable
-      :fullscreen="isFullscreen"
+      title="新增用户"
+      :form="addForm"
+      :rules="addRules"
+      :onSubmit="submitAddUser"
     >
-      <!-- 自定义标题栏 -->
-      <template #header>
-        <div class="dialog-header">
-          <span>新增用户</span>
-          <div class="dialog-actions">
-            <!-- 全屏按钮 -->
-            <el-icon class="icon-btn" @click="toggleFullscreen">
-              <component :is="isFullscreen ? Close : FullScreen" />
-            </el-icon>
-            <!-- 默认关闭按钮仍然存在 -->
-          </div>
-        </div>
-      </template>
-      <!-- 表单内容 -->
-      <el-form ref="addFormRef" :model="addForm" :rules="addRules" label-width="100px">
+      <template #form-fields="{ form }">
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="addForm.username" placeholder="请输入用户名" />
+          <el-input v-model="form.username" placeholder="请输入用户名" />
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="addForm.password" type="password" placeholder="请输入密码" />
+          <el-input v-model="form.password" type="password" placeholder="请输入密码" />
         </el-form-item>
         <el-form-item label="昵称" prop="nickname">
-          <el-input v-model="addForm.nickname" placeholder="请输入昵称" />
+          <el-input v-model="form.nickname" placeholder="请输入昵称" />
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
-          <el-input v-model="addForm.email" placeholder="请输入邮箱" />
+          <el-input v-model="form.email" placeholder="请输入邮箱" />
         </el-form-item>
         <el-form-item label="手机号" prop="phone">
-          <el-input v-model="addForm.phone" placeholder="请输入手机号" />
+          <el-input v-model="form.phone" placeholder="请输入手机号" />
         </el-form-item>
         <el-form-item label="部门ID" prop="deptId">
-          <el-input-number
-            v-model="addForm.deptId"
-            :min="1"
-            :max="999999"
-            controls-position="right"
-          />
+          <el-input-number v-model="form.deptId" :min="1" :max="999999" controls-position="right" />
         </el-form-item>
         <el-form-item label="组织ID" prop="orgId">
-          <el-input-number
-            v-model="addForm.orgId"
-            :min="1"
-            :max="999999"
-            controls-position="right"
-          />
+          <el-input-number v-model="form.orgId" :min="1" :max="999999" controls-position="right" />
         </el-form-item>
         <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="addForm.status">
+          <el-radio-group v-model="form.status">
             <el-radio :label="1">启用</el-radio>
             <el-radio :label="0">禁用</el-radio>
           </el-radio-group>
         </el-form-item>
-      </el-form>
-
-      <template #footer>
-        <el-button @click="addDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitAddUser">提交</el-button>
       </template>
-    </el-dialog>
+    </AddDialog>
   </el-card>
 </template>
 
@@ -146,8 +118,7 @@ import { SysUserDTO, type SysUserVO } from '@/types/system/user.ts'
 import type { PageQuery } from '@/types/common.ts'
 import dayjs from 'dayjs'
 import { ElMessage } from 'element-plus'
-import { FullScreen, Close } from '@element-plus/icons-vue'
-import type { FormInstance } from 'element-plus'
+import AddDialog from '@/components/dialog/AddDialog.vue'
 
 // 用户数据
 const users = ref<SysUserVO[]>([])
@@ -158,7 +129,6 @@ const loading = ref<boolean>(false)
 
 // 新增用户弹窗状态
 const addDialogVisible = ref<boolean>(false)
-const isFullscreen = ref(false)
 // 查询条件
 const queryForm = reactive<PageQuery>({
   page: 1,
@@ -177,7 +147,6 @@ const addForm = reactive<SysUserDTO>({
   status: 1
 })
 //  新增：表单校验规则（Element Plus）
-const addFormRef = ref<FormInstance>()
 const addRules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -206,38 +175,28 @@ const fetchUsers = async () => {
   loading.value = false
 }
 //  新增：提交新增用户
-const submitAddUser = () => {
-  addFormRef.value?.validate(async (valid: boolean) => {
-    if (!valid) return
-    try {
-      await addUserApi(addForm)
-      ElMessage.success('新增用户成功')
-      addDialogVisible.value = false
-      // 重置表单
-      Object.assign(addForm, {
-        username: '',
-        password: '',
-        nickname: '',
-        email: '',
-        phone: '',
-        deptId: undefined,
-        orgId: undefined,
-        status: 1
-      })
-      // 刷新列表：保持当前查询条件与分页
-      fetchUsers()
-    } catch (e: unknown) {
-      // e 类型改为 unknown，更安全
-      const err = e as { message?: string }
-      ElMessage.error(err?.message ?? '新增用户失败')
-    }
-  })
+const submitAddUser = async (form: SysUserDTO): Promise<void> => {
+  try {
+    await addUserApi(form)
+    ElMessage.success('新增用户成功')
+    addDialogVisible.value = false
+    Object.assign(addForm, {
+      username: '',
+      password: '',
+      nickname: '',
+      email: '',
+      phone: '',
+      deptId: undefined,
+      orgId: undefined,
+      status: 1
+    })
+    fetchUsers()
+  } catch (e: unknown) {
+    const err = e as { message?: string }
+    ElMessage.error(err?.message ?? '新增用户失败')
+  }
 }
 
-// 切换全屏
-const toggleFullscreen = () => {
-  isFullscreen.value = !isFullscreen.value
-}
 // 查询
 const search = () => {
   page.value = 1 // 查询时重置到第一页
@@ -281,20 +240,5 @@ onMounted(() => {
 }
 .ml-2 {
   margin-left: 8px;
-}
-
-.dialog-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-.dialog-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.icon-btn {
-  cursor: pointer;
 }
 </style>

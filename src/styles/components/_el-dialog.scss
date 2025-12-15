@@ -1,0 +1,72 @@
+// src/styles/components/_el-dialog.scss
+// 🎨 Element Plus 弹窗样式适配
+@use '@/styles/variables/_index.scss' as *;
+
+/* 基础弹窗样式 */
+.el-dialog {
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow-lg);
+  background-color: var(--color-bg-container);
+  border: 1px solid var(--color-border-light);
+  transition: opacity 0.3s ease;
+
+  &.dialog-sm {
+    max-width: 400px;
+  }
+  &.dialog-lg {
+    max-width: 800px;
+  }
+}
+
+/* 弹窗头部 */
+.el-dialog__header {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--color-border-light);
+
+  .dialog-header {
+    display: flex;
+    justify-content: space-between; /* 左右分布：左边标题，右边图标 */
+    align-items: center; /* 垂直居中 */
+    width: 100%;
+  }
+
+  .dialog-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .dialog-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+
+    .icon-btn {
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--color-text-secondary);
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+  }
+}
+
+/* 弹窗主体内容 */
+.el-dialog__body {
+  padding: var(--spacing-4);
+  color: var(--color-text-primary);
+}
+
+/* 弹窗底部按钮区 */
+.el-dialog__footer {
+  padding: var(--spacing-3) var(--spacing-4);
+  border-top: 1px solid var(--color-border-light);
+  background-color: var(--color-bg-body);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-2);
+}
