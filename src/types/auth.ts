@@ -9,7 +9,7 @@ export interface LoginForm {
   rememberMe: boolean
 }
 /** 用户状态接口，复用 TokenResponse 并扩展用户信息 */
-import type { UserInfo } from '@/types/user'
+import type { UserInfo } from '@/types/system/user.ts'
 
 export interface UserState extends LoginResponse {
   userInfo: UserInfo | null

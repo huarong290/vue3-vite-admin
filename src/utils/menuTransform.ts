@@ -1,6 +1,6 @@
 // src/utils/menuTransform.ts
 import type { RouteRecordRaw } from 'vue-router'
-import type { Menu } from '@/types/menu'
+import type { Menu } from '@/types/system/menu.ts'
 
 // fallback 映射表：特殊情况时使用
 const viewMap: Record<string, () => Promise<unknown>> = {

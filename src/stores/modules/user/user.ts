@@ -1,7 +1,7 @@
 // src/stores/modules/user/user.ts
 import { defineStore } from 'pinia'
-import type { LoginResponse } from '@/types/auth'
-import type { UserInfo } from '@/types/user'
+import type { LoginResponse } from '@/types/auth.ts'
+import type { UserInfo } from '@/types/system/user.ts'
 
 /**
  * 用户状态管理（对象式写法）

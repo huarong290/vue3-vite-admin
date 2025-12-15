@@ -23,3 +23,9 @@ export interface ApiResponse<T = unknown> {
   /** 时间戳（可选） */
   timestamp?: number
 }
+
+export interface PageQuery {
+  page: number
+  size: number
+  [key: string]: unknown // 允许额外的查询条件，比如 username、email
+}

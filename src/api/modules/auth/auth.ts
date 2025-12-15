@@ -2,7 +2,7 @@
 
 import request from '@/utils/request.ts'
 import type { CaptchaResponse, LoginForm, LoginResponse } from '@/types/auth.ts'
-import type { UserInfo } from '@/types/user.ts'
+import type { UserInfo } from '@/types/system/user.ts'
 
 /**
  * 获取验证码接口

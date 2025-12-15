@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import demoRoutes from './modules/demo'
 import { useUserStore } from '@/stores/modules/user/user'
-import { getUserInfoApi } from '@/api/auth/auth'
+import { getUserInfoApi } from '@/api/modules/auth/auth'
 import { ElMessage } from 'element-plus'
 import { useMenuStore } from '@/stores/modules/menu/menu'
 import { transformMenusToRoutes } from '@/utils/menuTransform'
@@ -59,6 +59,8 @@ router.beforeEach(async (to, _from, next) => {
           dynamicRoutes.forEach((route) => {
             router.addRoute('RootLayout', route)
           })
+          //  关键：重新进入当前路由，确保匹配到新加的路由
+          return next({ ...to, replace: true })
         }
       } catch (e: unknown) {
         userStore.logout()

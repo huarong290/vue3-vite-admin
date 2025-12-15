@@ -8,7 +8,9 @@ import type { ApiResponse } from '@/types/common'
 /**
  * 扩展请求配置
  */
-export interface CustomRequestConfig extends InternalAxiosRequestConfig {
+export interface CustomRequestConfig extends Omit<InternalAxiosRequestConfig, 'headers'> {
+  // ✅ 调整点：让 headers 可选，避免调用时必须传
+  headers?: Record<string, string>
   silent?: boolean
   isUpload?: boolean
   noToken?: boolean
@@ -27,24 +29,26 @@ const service: AxiosInstance = axios.create({
  * 请求拦截器
  */
 service.interceptors.request.use(
-  (config: CustomRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
+    const customConfig = config as CustomRequestConfig
     const userStore = useUserStore()
 
     // GET 请求加时间戳防缓存
-    if (config.method?.toLowerCase() === 'get') {
-      config.params = { ...config.params, _t: Date.now() }
+    if (customConfig.method?.toLowerCase() === 'get') {
+      customConfig.params = { ...customConfig.params, _t: Date.now() }
     }
 
-    // 对象式 store：直接访问 string，不需要 .value
-    if (userStore.accessToken && !config.noToken) {
-      config.headers = config.headers || {}
-      config.headers['Authorization'] = `${userStore.tokenType} ${userStore.accessToken}`
+    // 保证 headers 一定存在
+    customConfig.headers = customConfig.headers || {}
+
+    // Token 注入
+    if (userStore.accessToken && !customConfig.noToken) {
+      customConfig.headers['Authorization'] = `${userStore.tokenType} ${userStore.accessToken}`
     }
 
     // 上传文件时修改 Content-Type
-    if (config.isUpload) {
-      config.headers = config.headers || {}
-      config.headers['Content-Type'] = 'multipart/form-data'
+    if (customConfig.isUpload) {
+      customConfig.headers['Content-Type'] = 'multipart/form-data'
     }
 
     return config

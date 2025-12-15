@@ -119,7 +119,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useThemeStore } from '@/stores/modules/theme/theme'
 import { Sunny, Moon, User, Lock, View, Hide } from '@element-plus/icons-vue'
-import { getCaptchaApi, getUserInfoApi, loginApi } from '@/api/auth/auth'
+import { getCaptchaApi, getUserInfoApi, loginApi } from '@/api/modules/auth/auth'
 import { useUserStore } from '@/stores/modules/user/user'
 
 const router = useRouter()
