@@ -55,6 +55,7 @@ interface TabItem {
   title: string
   name: string
   path: string
+  affix?: boolean | undefined
 }
 /* 标签页状态 */
 const activeTab = ref('')
@@ -89,7 +90,7 @@ function handleOutsideClick(e: MouseEvent) {
 }
 
 /* 标签页操作 */
-function addTab(tab: { title: string; name: string; path: string }) {
+function addTab(tab: TabItem) {
   if (!tabs.value.find((t) => t.name === tab.name)) {
     tabs.value.push(tab)
   }
@@ -99,6 +100,9 @@ function addTab(tab: { title: string; name: string; path: string }) {
 function removeTab(name: string) {
   const index = tabs.value.findIndex((t: TabItem) => t.name === name)
   if (index !== -1) {
+    const tab = tabs.value[index]
+    if (tab?.affix) return //  固定标签不可关闭
+
     tabs.value.splice(index, 1)
     if (activeTab.value === name && tabs.value.length > 0) {
       const nextIndex = Math.max(0, index - 1)
@@ -119,7 +123,7 @@ function removeTab(name: string) {
 function handleTabClick(tab: TabsPaneContext) {
   const target = tabs.value.find((t: TabItem) => t.name === tab.paneName)
   if (target) {
-    router.push(target.path)
+    router.push({ name: target.name }) // 调整：统一用 name 跳转
   }
 }
 
@@ -127,6 +131,7 @@ function handleTabClick(tab: TabsPaneContext) {
 watch(
   () => route.fullPath,
   () => {
+    if (route.meta.hidden) return //  过滤掉隐藏页面（如登录页）
     addTab({
       title: (route.meta.title as string) || route.name?.toString() || '未命名',
       name: route.name?.toString() || route.fullPath,
@@ -136,8 +141,21 @@ watch(
   { immediate: true }
 )
 
+/* 初始化：预加载所有 affix 标签 */
 onMounted(() => {
   window.addEventListener('resize', handleResize)
+
+  // ✅ 遍历路由，预加载 affix 标签（如首页）
+  router.getRoutes().forEach((r) => {
+    if (r.meta?.affix && !r.meta?.hidden) {
+      addTab({
+        title: (r.meta.title as string) || r.name?.toString() || '未命名',
+        name: r.name?.toString() || r.path,
+        path: r.path,
+        affix: true
+      })
+    }
+  })
 })
 
 onBeforeUnmount(() => {

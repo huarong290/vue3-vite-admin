@@ -1,8 +1,10 @@
 /** 菜单元信息 */
 export interface Meta {
+  affix: boolean
   title: string
-  icon: string
-  visible: boolean
+  icon?: string
+  keepAlive?: boolean
+  hidden?: boolean
   roles: string[]
   permissions: string[]
 }
@@ -10,11 +12,15 @@ export interface Meta {
 /** 菜单结构 */
 export interface Menu {
   id: number
-  path: string
-  component: string
-  parentId: number
-  type: number
-  permission: string
+  menuName: string
+  menuPath: string
+  menuComponent: string
+  menuParentId: number
+  menuType: number
+  menuPermission: string
+  menuSort: number
+  menuVisible: number
+  menuStatus: number
   children: Menu[] // 递归子菜单
   meta: Meta
 }

@@ -62,11 +62,12 @@ import { ref } from 'vue'
 import { Expand, Fold, Close, FullScreen, Sunny, Moon } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import router from '@/router'
+import { useUserStore } from '@/stores/modules/user/user.ts'
 
 defineProps<{ isCollapse: boolean }>()
 
 const themeStore = useThemeStore()
-
+const userStore = useUserStore()
 function toggleTheme() {
   themeStore.setMode(themeStore.mode === 'light' ? 'dark' : 'light')
 }
@@ -85,11 +86,10 @@ function toggleFullscreen() {
   }
 }
 function logout() {
-  // 清理 token
-  localStorage.removeItem('token')
-  localStorage.removeItem('saved-username')
-  localStorage.removeItem('saved-password')
-
+  // 使用 Pinia 的登出逻辑
+  userStore.logout()
+  // 清理记住的账号信息（如果有）
+  localStorage.removeItem('lp_saved')
   ElMessage.success('已退出登录')
   router.push('/login')
 }

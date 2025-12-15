@@ -1,47 +1,43 @@
-<!--src/components/layout/AppSideMenu.vue-->
-
 <template>
-  <transition name="sidebar-collapse">
-    <el-menu
-      router
-      :default-active="$route.path"
+  <el-menu
+    router
+    :default-active="$route.path"
+    :collapse="collapse"
+    unique-opened
+    class="side-menu"
+  >
+    <!-- 静态路由：直接从 router.getRoutes() 过滤 -->
+    <SideMenuItem
+      v-for="route in staticRoutes"
+      :key="route.name ?? route.path"
+      :route="route"
       :collapse="collapse"
-      class="sidebar-menu"
-      unique-opened
-    >
-      <!-- 遍历顶层路由，递归渲染 -->
-      <SideMenuItem
-        v-for="route in menuRoutes"
-        :key="route.name ?? route.path"
-        :route="route"
-        :collapse="collapse"
-      />
-    </el-menu>
-  </transition>
+    />
+
+    <!-- 动态路由：从 menuStore.menus 渲染 -->
+    <SideMenuItem
+      v-for="route in dynamicRoutes"
+      :key="route.name ?? route.path"
+      :route="route"
+      :collapse="collapse"
+    />
+  </el-menu>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRouter, type RouteRecordRaw, type RouteRecord } from 'vue-router'
+import { useRouter } from 'vue-router'
+import { useMenuStore } from '@/stores/modules/menu/menu'
 import SideMenuItem from './SideMenuItem.vue'
 
 defineProps<{ collapse: boolean }>()
 
 const router = useRouter()
-/**
- * 获取 AppLayout 下的子路由作为菜单数据
- * 过滤掉没有 meta.title 的路由
- */
-const menuRoutes = computed<RouteRecordRaw[]>(() => {
-  const layoutRoute = router.options.routes.find((r) => r.path === '/') as RouteRecord
-  const children = layoutRoute?.children ?? []
-  return children.filter((r) => r.meta && r.meta.title)
-})
+const menuStore = useMenuStore()
 
-// const menuRoutes = computed<RouteRecordRaw[]>(() => {
-//   const root = router.options.routes[0] as RouteRecordRaw
-//   const children = root?.children ?? []
-//   return children.filter((r) => r.meta && r.meta.title)
-// })
+//  静态路由：通过 router.getRoutes() 过滤出 demoRoutes
+const staticRoutes = computed(() => router.getRoutes().filter((r) => r.name === 'DemoModule'))
+
+//  动态路由：直接取 menuStore.menus
+const dynamicRoutes = computed(() => menuStore.menus)
 </script>
-<style scoped lang="scss"></style>
