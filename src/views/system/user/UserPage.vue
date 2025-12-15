@@ -58,6 +58,15 @@
           {{ dayjs(scope.row.updateTime).format('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
+
+
+      <!--  新增操作列 -->
+      <el-table-column label="操作" width="160" fixed="right">
+        <template #default="scope">
+          <el-button type="primary" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <!-- 分页组件 -->
@@ -117,7 +126,7 @@ import { addUserApi, getUserPageListApi } from '@/api/modules/user/user.ts'
 import { SysUserDTO, type SysUserVO } from '@/types/system/user.ts'
 import type { PageQuery } from '@/types/common.ts'
 import dayjs from 'dayjs'
-import { ElMessage } from 'element-plus'
+import {ElMessage, ElMessageBox} from 'element-plus'
 import AddDialog from '@/components/dialog/AddDialog.vue'
 
 // 用户数据
@@ -158,6 +167,28 @@ const addRules = {
   ],
   email: [{ type: 'email', message: '邮箱格式不正确', trigger: 'blur' }],
   phone: [{ pattern: /^1\d{10}$/, message: '手机号格式不正确', trigger: 'blur' }]
+}
+
+/** 编辑用户 */
+const handleEdit = (row: SysUserVO) => {
+  // 打开编辑弹窗，并把当前行数据传进去
+  console.log('编辑用户:', row)
+
+}
+
+/** 删除用户 */
+const handleDelete = async (row: SysUserVO) => {
+  try {
+    await ElMessageBox.confirm(`确认删除用户 ${row.username} 吗？`, '提示', {
+      type: 'warning'
+    })
+    // 调用删除接口
+    // await deleteUserApi(row.id)
+    ElMessage.success('删除成功')
+    fetchUsers() // 刷新列表
+  } catch {
+    ElMessage.info('已取消删除')
+  }
 }
 // 获取用户列表
 const fetchUsers = async () => {
