@@ -16,17 +16,12 @@ export const getUserPageListApi = (params: PageQuery) => {
 export const addUserApi = (data: SysUserDTO) => {
   return request.post<number>('/user/addUser', data)
 }
-// // 新增用户
-// export const createUser = (data: any) => {
-//   return request.post('/user/create', data)
-// }
-//
-// // 更新用户
-// export const updateUser = (id: number, data: any) => {
-//   return request.put(`/user/update/${id}`, data)
-// }
-//
-// // 删除用户
-// export const deleteUser = (id: number) => {
-//   return request.delete(`/user/delete/${id}`)
-// }
+// 更新用户
+export const updateUserApi = (data: SysUserDTO) => {
+  return request.put(`/user/updateUser`, data)
+}
+
+// 删除用户
+export const deleteUserApi = (id: number) => {
+  return request.delete(`/user/deleteUser/${id}`)
+}

@@ -28,6 +28,7 @@
       <el-table-column prop="email" label="邮箱" />
       <el-table-column prop="phone" label="手机号" />
       <el-table-column prop="deptId" label="部门ID" />
+      <el-table-column prop="orgId" label="组织ID" />
       <el-table-column prop="lastLoginTime" label="上次登录时间">
         <template #default="scope">
           <!-- 如果为空显示 '-'，否则格式化 -->
@@ -63,7 +64,7 @@
       <!--  新增操作列 -->
       <el-table-column label="操作" width="160" fixed="right">
         <template #default="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button type="primary" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -117,17 +118,48 @@
         </el-form-item>
       </template>
     </AddDialog>
+
+    <!-- 编辑弹窗 -->
+    <EditDialog
+        v-model="editDialogVisible"
+        title="编辑用户"
+        :form="editForm"
+        :rules="editRules"
+        :onSubmit="submitEditUser"
+    >
+      <template #form-fields="{ form }">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="form.username" disabled />
+        </el-form-item>
+        <el-form-item label="昵称" prop="nickname">
+          <el-input v-model="form.nickname" />
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="form.email" />
+        </el-form-item>
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model="form.phone" />
+        </el-form-item>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择状态">
+            <el-option label="启用" :value="1" />
+            <el-option label="禁用" :value="0" />
+          </el-select>
+        </el-form-item>
+      </template>
+    </EditDialog>
   </el-card>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { addUserApi, getUserPageListApi } from '@/api/modules/user/user.ts'
+import {addUserApi, deleteUserApi, getUserPageListApi, updateUserApi} from '@/api/modules/user/user.ts'
 import { SysUserDTO, type SysUserVO } from '@/types/system/user.ts'
 import type { PageQuery } from '@/types/common.ts'
 import dayjs from 'dayjs'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import AddDialog from '@/components/dialog/AddDialog.vue'
+import EditDialog from "@/components/dialog/EditDialog.vue";
 
 // 用户数据
 const users = ref<SysUserVO[]>([])
@@ -168,43 +200,6 @@ const addRules = {
   email: [{ type: 'email', message: '邮箱格式不正确', trigger: 'blur' }],
   phone: [{ pattern: /^1\d{10}$/, message: '手机号格式不正确', trigger: 'blur' }]
 }
-
-/** 编辑用户 */
-const handleEdit = (row: SysUserVO) => {
-  // 打开编辑弹窗，并把当前行数据传进去
-  console.log('编辑用户:', row)
-
-}
-
-/** 删除用户 */
-const handleDelete = async (row: SysUserVO) => {
-  try {
-    await ElMessageBox.confirm(`确认删除用户 ${row.username} 吗？`, '提示', {
-      type: 'warning'
-    })
-    // 调用删除接口
-    // await deleteUserApi(row.id)
-    ElMessage.success('删除成功')
-    fetchUsers() // 刷新列表
-  } catch {
-    ElMessage.info('已取消删除')
-  }
-}
-// 获取用户列表
-const fetchUsers = async () => {
-  loading.value = true
-  const res = await getUserPageListApi({
-    page: page.value,
-    size: pageSize.value,
-    username: queryForm.username,
-    email: queryForm.email,
-    phone: queryForm.phone
-  })
-  console.log(res)
-  users.value = res.records
-  total.value = res.total
-  loading.value = false
-}
 //  新增：提交新增用户
 const submitAddUser = async (form: SysUserDTO): Promise<void> => {
   try {
@@ -221,12 +216,77 @@ const submitAddUser = async (form: SysUserDTO): Promise<void> => {
       orgId: undefined,
       status: 1
     })
-    fetchUsers()
+    await fetchUsers()
   } catch (e: unknown) {
     const err = e as { message?: string }
     ElMessage.error(err?.message ?? '新增用户失败')
   }
 }
+/** 编辑用户 打开编辑弹窗 */
+const openEditDialog = (row: SysUserVO) => {
+  Object.assign(editForm, row)
+  editDialogVisible.value = true
+
+}
+const editDialogVisible = ref(false)
+const editForm = reactive<SysUserDTO>({
+  id: undefined,
+  username: '',
+  nickname: '',
+  email: '',
+  phone: '',
+  deptId: undefined,
+  orgId: undefined,
+  status: 1
+})
+
+//  编辑：表单校验规则（Element Plus）
+const editRules = {
+  username: [
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { min: 3, max: 20, message: '长度 3-20 个字符', trigger: 'blur' }
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 6, max: 50, message: '长度至少 6 个字符', trigger: 'blur' }
+  ],
+  email: [{ type: 'email', message: '邮箱格式不正确', trigger: 'blur' }],
+  phone: [{ pattern: /^1\d{10}$/, message: '手机号格式不正确', trigger: 'blur' }]
+}
+
+const submitEditUser = async (form: SysUserDTO) => {
+  await updateUserApi(form)
+  ElMessage.success('编辑成功')
+  editDialogVisible.value = false
+  await fetchUsers()
+}
+/** 删除用户 */
+const handleDelete = async (row: SysUserVO) => {
+  await ElMessageBox.confirm(`确认删除用户 ${row.username} 吗？`, '提示', {
+    type: 'warning'
+  })
+  // 调用删除接口
+  await deleteUserApi(row.id)
+  ElMessage.success('删除成功')
+  // 刷新列表
+  await fetchUsers()
+}
+// 获取用户列表
+const fetchUsers = async () => {
+  loading.value = true
+  const res = await getUserPageListApi({
+    page: page.value,
+    size: pageSize.value,
+    username: queryForm.username,
+    email: queryForm.email,
+    phone: queryForm.phone
+  })
+  console.log(res)
+  users.value = res.records
+  total.value = res.total
+  loading.value = false
+}
+
 
 // 查询
 const search = () => {
