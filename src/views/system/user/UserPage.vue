@@ -60,7 +60,6 @@
         </template>
       </el-table-column>
 
-
       <!--  新增操作列 -->
       <el-table-column label="操作" width="160" fixed="right">
         <template #default="scope">
@@ -80,7 +79,7 @@
       @size-change="handleSizeChange"
     />
     <!--  新增：新增用户弹窗 -->
-    <!-- ✅ 调整部分：使用封装好的 AddDialog -->
+    <!--  调整部分：使用封装好的 AddDialog -->
     <AddDialog
       v-model="addDialogVisible"
       title="新增用户"
@@ -121,11 +120,11 @@
 
     <!-- 编辑弹窗 -->
     <EditDialog
-        v-model="editDialogVisible"
-        title="编辑用户"
-        :form="editForm"
-        :rules="editRules"
-        :onSubmit="submitEditUser"
+      v-model="editDialogVisible"
+      title="编辑用户"
+      :form="editForm"
+      :rules="editRules"
+      :onSubmit="submitEditUser"
     >
       <template #form-fields="{ form }">
         <el-form-item label="用户名" prop="username">
@@ -153,13 +152,18 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import {addUserApi, deleteUserApi, getUserPageListApi, updateUserApi} from '@/api/modules/user/user.ts'
+import {
+  addUserApi,
+  deleteUserApi,
+  getUserPageListApi,
+  updateUserApi
+} from '@/api/modules/user/user.ts'
 import { SysUserDTO, type SysUserVO } from '@/types/system/user.ts'
 import type { PageQuery } from '@/types/common.ts'
 import dayjs from 'dayjs'
-import {ElMessage, ElMessageBox} from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import AddDialog from '@/components/dialog/AddDialog.vue'
-import EditDialog from "@/components/dialog/EditDialog.vue";
+import EditDialog from '@/components/dialog/EditDialog.vue'
 
 // 用户数据
 const users = ref<SysUserVO[]>([])
@@ -226,7 +230,6 @@ const submitAddUser = async (form: SysUserDTO): Promise<void> => {
 const openEditDialog = (row: SysUserVO) => {
   Object.assign(editForm, row)
   editDialogVisible.value = true
-
 }
 const editDialogVisible = ref(false)
 const editForm = reactive<SysUserDTO>({
@@ -286,7 +289,6 @@ const fetchUsers = async () => {
   total.value = res.total
   loading.value = false
 }
-
 
 // 查询
 const search = () => {

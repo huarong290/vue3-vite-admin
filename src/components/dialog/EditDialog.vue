@@ -1,41 +1,41 @@
 <template>
   <el-dialog
-      v-model="internalVisible"
-      :title="title"
-      width="600px"
-      destroy-on-close
-      draggable
-      :fullscreen="isFullscreen"
-      :show-close="false"
-  class="dialog-lg"
+    v-model="internalVisible"
+    :title="title"
+    width="600px"
+    destroy-on-close
+    draggable
+    :fullscreen="isFullscreen"
+    :show-close="false"
+    class="dialog-lg"
   >
-  <!-- 自定义标题栏 -->
-  <template #header>
-    <div class="dialog-header">
-      <span class="dialog-title">{{ title }}</span>
-      <div class="dialog-actions">
-        <!-- 全屏按钮 -->
-        <el-icon class="icon-btn" @click="toggleFullscreen">
-          <component :is="isFullscreen ? FullScreenExit : FullScreen" />
-        </el-icon>
-        <!-- 自定义关闭按钮 -->
-        <el-icon class="icon-btn" @click="updateVisible(false)">
-          <Close />
-        </el-icon>
+    <!-- 自定义标题栏 -->
+    <template #header>
+      <div class="dialog-header">
+        <span class="dialog-title">{{ title }}</span>
+        <div class="dialog-actions">
+          <!-- 全屏按钮 -->
+          <el-icon class="icon-btn" @click="toggleFullscreen">
+            <component :is="isFullscreen ? FullScreenExit : FullScreen" />
+          </el-icon>
+          <!-- 自定义关闭按钮 -->
+          <el-icon class="icon-btn" @click="updateVisible(false)">
+            <Close />
+          </el-icon>
+        </div>
       </div>
-    </div>
-  </template>
+    </template>
 
-  <!-- 表单内容插槽 -->
-  <el-form ref="formRef" :model="form" :rules="rules" label-width="100px">
-    <slot name="form-fields" :form="form"></slot>
-  </el-form>
+    <!-- 表单内容插槽 -->
+    <el-form ref="formRef" :model="form" :rules="rules" label-width="100px">
+      <slot name="form-fields" :form="form"></slot>
+    </el-form>
 
-  <!-- 底部按钮 -->
-  <template #footer>
-    <el-button @click="updateVisible(false)">取消</el-button>
-    <el-button type="primary" @click="handleSubmit">保存</el-button>
-  </template>
+    <!-- 底部按钮 -->
+    <template #footer>
+      <el-button @click="updateVisible(false)">取消</el-button>
+      <el-button type="primary" @click="handleSubmit">保存</el-button>
+    </template>
   </el-dialog>
 </template>
 
