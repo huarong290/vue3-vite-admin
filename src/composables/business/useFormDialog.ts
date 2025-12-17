@@ -169,7 +169,10 @@ export function useFormDialog<T extends Record<string, unknown>>(
       if (afterSubmit) await afterSubmit()
     } catch (error: unknown) {
       console.error('表单提交失败:', error)
-      const errorMsg = customOptions?.errorMessage || errorMessage ||(error instanceof Error ? error.message : '操作失败')
+      const errorMsg =
+        customOptions?.errorMessage ||
+        errorMessage ||
+        (error instanceof Error ? error.message : '操作失败')
       ElMessage.error(errorMsg)
       if (customOptions?.onError) customOptions.onError(error)
       throw error
@@ -198,16 +201,15 @@ export function useFormDialog<T extends Record<string, unknown>>(
  * @returns 表单对话框的简化版本（不包含 rules）
  */
 export function useSimpleFormDialog<T extends Record<string, unknown>>(
-    defaultForm: T
+  defaultForm: T
 ): Omit<UseFormDialogReturn<T>, 'rules'> {
-    const result = useFormDialog<T>({
-        defaultForm,
-        rules: {},
-        successMessage: '操作成功'
-    })
-    // 用对象展开再返回，避免解构未使用变量
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { rules: _rules, ...rest } = result
-    return rest
+  const result = useFormDialog<T>({
+    defaultForm,
+    rules: {},
+    successMessage: '操作成功'
+  })
+  // 用对象展开再返回，避免解构未使用变量
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { rules: _rules, ...rest } = result
+  return rest
 }
-

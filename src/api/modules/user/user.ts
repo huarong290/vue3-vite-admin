@@ -18,10 +18,10 @@ export const addUserApi = (data: SysUserDTO) => {
 }
 // 更新用户
 export const updateUserApi = (data: SysUserDTO) => {
-  return request.put(`/user/updateUser`, data)
+  return request.put<number>(`/user/updateUser`, data)
 }
 
 // 删除用户
 export const deleteUserApi = (id: number) => {
-  return request.delete(`/user/deleteUser/${id}`)
+  return request.delete<number>(`/user/deleteUser/${id}`)
 }

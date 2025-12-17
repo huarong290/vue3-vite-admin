@@ -2,7 +2,7 @@
   <el-card>
     <h2 class="page-title">
       用户管理
-      <el-button type="primary" class="ml-2" @click="addDialogVisible = true">新增用户</el-button>
+      <el-button type="primary" class="ml-2" @click="openAddDialog">新增用户</el-button>
     </h2>
 
     <!-- 查询条件 -->
@@ -177,6 +177,19 @@ const queryForm = reactive<PageQuery>({
 
 // 新增用户弹窗状态
 const addDialogVisible = ref<boolean>(false)
+const openAddDialog = () => {
+  Object.assign(addForm, {
+    username: '',
+    password: '',
+    nickname: '',
+    email: '',
+    phone: '',
+    deptId: undefined,
+    orgId: undefined,
+    status: 1
+  })
+  addDialogVisible.value = true
+}
 const addForm = reactive<SysUserDTO>({
   username: '',
   password: '',

@@ -6,7 +6,8 @@ import type { Menu } from '@/types/system/menu.ts'
 const viewMap: Record<string, () => Promise<unknown>> = {
   UserPage: () => import('@/views/system/user/UserPage.vue'),
   RolePage: () => import('@/views/system/role/RolePage.vue'),
-  MenuPage: () => import('@/views/system/menu/MenuPage.vue')
+  MenuPage: () => import('@/views/system/menu/MenuPage.vue'),
+  PermissionPage: () => import('@/views/system/permission/PermissionPage.vue')
 }
 
 export function transformMenusToRoutes(menus: Menu[]): RouteRecordRaw[] {
