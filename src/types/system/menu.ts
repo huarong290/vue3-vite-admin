@@ -21,6 +21,11 @@ export interface Menu {
   menuSort: number
   menuVisible: number
   menuStatus: number
-  children: Menu[] // 递归子菜单
-  meta: Meta
+  children?: Menu[] // 递归子菜单
+  meta?: Meta
+  createTime?: string //  可选
+  updateTime?: string //  可选
 }
+
+// src/types/system/menu.ts
+export type MenuForm = Omit<Menu, 'children' | 'meta' | 'createTime' | 'updateTime'>
