@@ -2,7 +2,7 @@
   <el-card>
     <h2 class="page-title">
       角色管理
-      <el-button type="primary" class="ml-2" @click="addDialogVisible = true">新增角色</el-button>
+      <el-button type="primary" class="ml-2" @click="openAddDialog">新增角色</el-button>
     </h2>
 
     <!-- 查询条件 -->
@@ -62,12 +62,12 @@
     />
 
     <!-- 新增角色弹窗 -->
-    <AddDialog
+    <FormDialog
       v-model="addDialogVisible"
       title="新增角色"
       :form="addForm"
       :rules="addRules"
-      :onSubmit="submitAddRole"
+      @submit="submitAddRole"
     >
       <template #form-fields="{ form }">
         <el-form-item label="角色名称" prop="roleName">
@@ -81,20 +81,20 @@
         </el-form-item>
         <el-form-item label="状态" prop="roleStatus">
           <el-radio-group v-model="form.roleStatus">
-            <el-radio :label="1">启用</el-radio>
-            <el-radio :label="0">禁用</el-radio>
+            <el-radio :value="1">启用</el-radio>
+            <el-radio :value="0">禁用</el-radio>
           </el-radio-group>
         </el-form-item>
       </template>
-    </AddDialog>
+    </FormDialog>
 
     <!-- 编辑角色弹窗 -->
-    <EditDialog
+    <FormDialog
       v-model="editDialogVisible"
       title="编辑角色"
       :form="editForm"
       :rules="editRules"
-      :onSubmit="submitEditRole"
+      @submit="submitEditRole"
     >
       <template #form-fields="{ form }">
         <el-form-item label="角色名称" prop="roleName">
@@ -113,7 +113,7 @@
           </el-select>
         </el-form-item>
       </template>
-    </EditDialog>
+    </FormDialog>
   </el-card>
 </template>
 
@@ -129,8 +129,7 @@ import { type SysRoleDTO, type SysRoleVO } from '@/types/system/role.ts'
 import type { PageQuery } from '@/types/common.ts'
 import dayjs from 'dayjs'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import AddDialog from '@/components/dialog/AddDialog.vue'
-import EditDialog from '@/components/dialog/EditDialog.vue'
+import FormDialog from '@/components/dialog/FormDialog.vue'
 
 // 角色数据
 const roles = ref<SysRoleVO[]>([])
@@ -139,8 +138,6 @@ const page = ref<number>(1)
 const pageSize = ref<number>(10)
 const loading = ref<boolean>(false)
 
-// 新增角色弹窗状态
-const addDialogVisible = ref<boolean>(false)
 // 查询条件
 const queryForm = reactive<PageQuery>({
   page: 1,
@@ -149,31 +146,30 @@ const queryForm = reactive<PageQuery>({
   roleCode: ''
 })
 
-// 新增角色表单模型
+// 新增角色弹窗状态
+const addDialogVisible = ref<boolean>(false)
+const openAddDialog = () => {
+  Object.assign(addForm, {
+    roleName: '',
+    roleCode: '',
+    roleDescription: '',
+    roleStatus: 1
+  })
+  addDialogVisible.value = true
+}
 const addForm = reactive<SysRoleDTO>({
   roleName: '',
   roleCode: '',
   roleDescription: '',
   roleStatus: 1
 })
-
-// 表单校验规则
 const addRules = {
   roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
   roleCode: [{ required: true, message: '请输入角色编码', trigger: 'blur' }]
 }
 
-// 提交新增角色
-const submitAddRole = async (form: SysRoleDTO) => {
-  await addRoleApi(form)
-  ElMessage.success('新增角色成功')
-  addDialogVisible.value = false
-  Object.assign(addForm, { roleName: '', roleCode: '', roleDescription: '', roleStatus: 1 })
-  await fetchRoles()
-}
-
-// 编辑弹窗
-const editDialogVisible = ref(false)
+// 编辑角色弹窗状态
+const editDialogVisible = ref<boolean>(false)
 const editForm = reactive<SysRoleDTO>({
   id: undefined,
   roleName: '',
@@ -181,22 +177,41 @@ const editForm = reactive<SysRoleDTO>({
   roleDescription: '',
   roleStatus: 1
 })
-
 const editRules = {
   roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
   roleCode: [{ required: true, message: '请输入角色编码', trigger: 'blur' }]
 }
 
-const openEditDialog = (row: SysRoleVO) => {
-  Object.assign(editForm, row)
-  editDialogVisible.value = true
+// 提交新增角色
+const submitAddRole = async (form: SysRoleDTO) => {
+  console.log(form)
+  await addRoleApi(form)
+  ElMessage.success('新增角色成功')
+  addDialogVisible.value = false
+  Object.assign(addForm, { roleName: '', roleCode: '', roleDescription: '', roleStatus: 1 })
+  await fetchRoles()
 }
 
+// 提交编辑角色
 const submitEditRole = async (form: SysRoleDTO) => {
   await updateRoleApi(form)
   ElMessage.success('编辑成功')
   editDialogVisible.value = false
   await fetchRoles()
+}
+
+// 打开编辑弹窗
+const openEditDialog = (row: SysRoleVO) => {
+  Object.assign(editForm, {
+    id: undefined,
+    roleName: '',
+    roleCode: '',
+    roleDescription: '',
+    roleStatus: 1
+  })
+  // 再覆盖成选中行的数据
+  Object.assign(editForm, row)
+  editDialogVisible.value = true
 }
 
 // 删除角色
@@ -234,6 +249,7 @@ const reset = () => {
   page.value = 1
   fetchRoles()
 }
+
 // 分页事件
 const handlePageChange = (p: number) => {
   page.value = p
@@ -243,7 +259,9 @@ const handleSizeChange = (s: number) => {
   pageSize.value = s
   page.value = 1
   fetchRoles()
-} // 页面加载时获取数据
+}
+
+// 页面加载时获取数据
 onMounted(() => {
   fetchRoles()
 })

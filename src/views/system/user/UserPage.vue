@@ -4,6 +4,7 @@
       用户管理
       <el-button type="primary" class="ml-2" @click="addDialogVisible = true">新增用户</el-button>
     </h2>
+
     <!-- 查询条件 -->
     <el-form :inline="true" :model="queryForm" class="mb-3">
       <el-form-item label="用户名">
@@ -31,7 +32,6 @@
       <el-table-column prop="orgId" label="组织ID" />
       <el-table-column prop="lastLoginTime" label="上次登录时间">
         <template #default="scope">
-          <!-- 如果为空显示 '-'，否则格式化 -->
           {{
             scope.row.lastLoginTime
               ? dayjs(scope.row.lastLoginTime).format('YYYY-MM-DD HH:mm:ss')
@@ -46,21 +46,16 @@
           </el-tag>
         </template>
       </el-table-column>
-      <!-- 可选：新增列：创建时间 -->
       <el-table-column prop="createTime" label="创建时间">
         <template #default="scope">
           {{ dayjs(scope.row.createTime).format('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
-
-      <!-- 可选：新增列：更新时间 -->
       <el-table-column prop="updateTime" label="更新时间">
         <template #default="scope">
           {{ dayjs(scope.row.updateTime).format('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
-
-      <!--  新增操作列 -->
       <el-table-column label="操作" width="160" fixed="right">
         <template #default="scope">
           <el-button type="primary" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
@@ -78,14 +73,14 @@
       @current-change="handlePageChange"
       @size-change="handleSizeChange"
     />
-    <!--  新增：新增用户弹窗 -->
-    <!--  调整部分：使用封装好的 AddDialog -->
-    <AddDialog
+
+    <!-- 新增用户弹窗 -->
+    <FormDialog
       v-model="addDialogVisible"
       title="新增用户"
       :form="addForm"
       :rules="addRules"
-      :onSubmit="submitAddUser"
+      @submit="submitAddUser"
     >
       <template #form-fields="{ form }">
         <el-form-item label="用户名" prop="username">
@@ -116,15 +111,15 @@
           </el-radio-group>
         </el-form-item>
       </template>
-    </AddDialog>
+    </FormDialog>
 
-    <!-- 编辑弹窗 -->
-    <EditDialog
+    <!-- 编辑用户弹窗 -->
+    <FormDialog
       v-model="editDialogVisible"
       title="编辑用户"
       :form="editForm"
       :rules="editRules"
-      :onSubmit="submitEditUser"
+      @submit="submitEditUser"
     >
       <template #form-fields="{ form }">
         <el-form-item label="用户名" prop="username">
@@ -146,7 +141,7 @@
           </el-select>
         </el-form-item>
       </template>
-    </EditDialog>
+    </FormDialog>
   </el-card>
 </template>
 
@@ -158,12 +153,11 @@ import {
   getUserPageListApi,
   updateUserApi
 } from '@/api/modules/user/user.ts'
-import { SysUserDTO, type SysUserVO } from '@/types/system/user.ts'
+import { type SysUserDTO, type SysUserVO } from '@/types/system/user.ts'
 import type { PageQuery } from '@/types/common.ts'
 import dayjs from 'dayjs'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import AddDialog from '@/components/dialog/AddDialog.vue'
-import EditDialog from '@/components/dialog/EditDialog.vue'
+import { ElMessage, ElMessageBox, type FormRules } from 'element-plus'
+import FormDialog from '@/components/dialog/FormDialog.vue'
 
 // 用户数据
 const users = ref<SysUserVO[]>([])
@@ -172,8 +166,6 @@ const page = ref<number>(1)
 const pageSize = ref<number>(10)
 const loading = ref<boolean>(false)
 
-// 新增用户弹窗状态
-const addDialogVisible = ref<boolean>(false)
 // 查询条件
 const queryForm = reactive<PageQuery>({
   page: 1,
@@ -182,17 +174,20 @@ const queryForm = reactive<PageQuery>({
   email: '',
   phone: ''
 })
-//新增用户表单模型
+
+// 新增用户弹窗状态
+const addDialogVisible = ref<boolean>(false)
 const addForm = reactive<SysUserDTO>({
   username: '',
   password: '',
   nickname: '',
   email: '',
   phone: '',
+  deptId: undefined,
+  orgId: undefined,
   status: 1
 })
-//  新增：表单校验规则（Element Plus）
-const addRules = {
+const addRules: FormRules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
     { min: 3, max: 20, message: '长度 3-20 个字符', trigger: 'blur' }
@@ -204,33 +199,25 @@ const addRules = {
   email: [{ type: 'email', message: '邮箱格式不正确', trigger: 'blur' }],
   phone: [{ pattern: /^1\d{10}$/, message: '手机号格式不正确', trigger: 'blur' }]
 }
-//  新增：提交新增用户
-const submitAddUser = async (form: SysUserDTO): Promise<void> => {
-  try {
-    await addUserApi(form)
-    ElMessage.success('新增用户成功')
-    addDialogVisible.value = false
-    Object.assign(addForm, {
-      username: '',
-      password: '',
-      nickname: '',
-      email: '',
-      phone: '',
-      deptId: undefined,
-      orgId: undefined,
-      status: 1
-    })
-    await fetchUsers()
-  } catch (e: unknown) {
-    const err = e as { message?: string }
-    ElMessage.error(err?.message ?? '新增用户失败')
-  }
+/** 提交新增用户 */
+const submitAddUser = async (form: SysUserDTO) => {
+  await addUserApi(form) // 这里调用新增接口
+  ElMessage.success('新增用户成功')
+  addDialogVisible.value = false
+  // 重置表单
+  Object.assign(addForm, {
+    username: '',
+    password: '',
+    nickname: '',
+    email: '',
+    phone: '',
+    deptId: undefined,
+    orgId: undefined,
+    status: 1
+  })
+  await fetchUsers() // 刷新列表
 }
-/** 编辑用户 打开编辑弹窗 */
-const openEditDialog = (row: SysUserVO) => {
-  Object.assign(editForm, row)
-  editDialogVisible.value = true
-}
+// 编辑用户弹窗状态
 const editDialogVisible = ref(false)
 const editForm = reactive<SysUserDTO>({
   id: undefined,
@@ -242,39 +229,40 @@ const editForm = reactive<SysUserDTO>({
   orgId: undefined,
   status: 1
 })
-
-//  编辑：表单校验规则（Element Plus）
-const editRules = {
+const editRules: FormRules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
     { min: 3, max: 20, message: '长度 3-20 个字符', trigger: 'blur' }
-  ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, max: 50, message: '长度至少 6 个字符', trigger: 'blur' }
   ],
   email: [{ type: 'email', message: '邮箱格式不正确', trigger: 'blur' }],
   phone: [{ pattern: /^1\d{10}$/, message: '手机号格式不正确', trigger: 'blur' }]
 }
 
+/** 提交编辑用户 */
 const submitEditUser = async (form: SysUserDTO) => {
   await updateUserApi(form)
   ElMessage.success('编辑成功')
   editDialogVisible.value = false
   await fetchUsers()
 }
+
+/** 打开编辑弹窗 */
+const openEditDialog = (row: SysUserVO) => {
+  Object.assign(editForm, row)
+  editDialogVisible.value = true
+}
+
 /** 删除用户 */
 const handleDelete = async (row: SysUserVO) => {
   await ElMessageBox.confirm(`确认删除用户 ${row.username} 吗？`, '提示', {
     type: 'warning'
   })
-  // 调用删除接口
-  await deleteUserApi(row.id)
+  await deleteUserApi(row.id!)
   ElMessage.success('删除成功')
-  // 刷新列表
   await fetchUsers()
 }
-// 获取用户列表
+
+/** 获取用户列表 */
 const fetchUsers = async () => {
   loading.value = true
   const res = await getUserPageListApi({
@@ -284,19 +272,18 @@ const fetchUsers = async () => {
     email: queryForm.email,
     phone: queryForm.phone
   })
-  console.log(res)
   users.value = res.records
   total.value = res.total
   loading.value = false
 }
 
-// 查询
+/** 查询 */
 const search = () => {
-  page.value = 1 // 查询时重置到第一页
+  page.value = 1
   fetchUsers()
 }
 
-// 重置
+/** 重置 */
 const reset = () => {
   queryForm.username = ''
   queryForm.email = ''
@@ -305,7 +292,7 @@ const reset = () => {
   fetchUsers()
 }
 
-// 分页事件
+/** 分页事件 */
 const handlePageChange = (p: number) => {
   page.value = p
   fetchUsers()
@@ -316,7 +303,7 @@ const handleSizeChange = (s: number) => {
   fetchUsers()
 }
 
-// 页面加载时获取数据
+/** 页面加载时获取数据 */
 onMounted(() => {
   fetchUsers()
 })
