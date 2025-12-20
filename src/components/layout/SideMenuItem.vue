@@ -5,7 +5,7 @@
   <el-sub-menu v-if="hasChildren" :index="route.path">
     <template #title>
       <el-icon v-if="route.meta?.icon">
-        <component :is="route.meta.icon" />
+        <component :is="iconComponent" />
       </el-icon>
       <span>{{ route.meta?.title || route.name }}</span>
     </template>
@@ -22,7 +22,7 @@
   <!-- 如果没有子路由，渲染为普通菜单项 -->
   <el-menu-item v-else :index="route.path">
     <el-icon v-if="route.meta?.icon">
-      <component :is="route.meta.icon" />
+      <component :is="iconComponent" />
     </el-icon>
     <span>{{ route.meta?.title || route.name }}</span>
   </el-menu-item>
@@ -31,6 +31,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
+import { resolveIcon } from '@/utils/resolveIcon.ts'
 
 // 正确写法：直接解构 props
 const { route, collapse } = defineProps<{
@@ -42,6 +43,8 @@ const { route, collapse } = defineProps<{
 const hasChildren = computed(() => {
   return Array.isArray(route.children) && route.children.length > 0
 })
+// 解析图标
+const iconComponent = computed(() => resolveIcon(route.meta?.icon as string))
 </script>
 
 <style scoped lang="scss">
