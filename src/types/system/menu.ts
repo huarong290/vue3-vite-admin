@@ -60,6 +60,7 @@ export interface Menu {
   menuSort: number
   menuVisible: number
   menuStatus: number
+  menuIcon: string
   children?: Menu[] // 递归子菜单
   meta?: Meta
   createTime?: string //  可选
@@ -81,6 +82,7 @@ export interface MenuNode {
   menuSort?: number
   menuVisible?: number
   menuStatus?: number
+  menuIcon: string
   children?: MenuNode[]
 
   // UI 层专用字段

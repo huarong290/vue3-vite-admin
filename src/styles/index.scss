@@ -28,6 +28,7 @@
 @use './components/descriptions';
 @use './components/login';
 @use './components/el-dialog';
+@use './components/icon_picker';
 // 4.主题（light/dark 等主题变量覆盖）
 // 必须放在最后，覆盖前面定义的变量
 @use './theme/index';

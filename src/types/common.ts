@@ -27,5 +27,14 @@ export interface ApiResponse<T = unknown> {
 export interface PageQuery {
   page: number
   size: number
-  [key: string]: unknown // 允许额外的查询条件，比如 username、email
+  permissionCode?: string
+  permissionName?: string
+  roleName?: string
+  roleCode?: string
+  username?: string
+  email?: string
+  phone?: string
+
+  // 允许额外字段（可选），但不要用 unknown
+  [key: string]: string | number | boolean | undefined
 }

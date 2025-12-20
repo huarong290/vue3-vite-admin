@@ -21,8 +21,11 @@ function toggleMode() {
 }
 
 // 用户选择颜色时，切换到 custom 模式
-function handleColorChange(color: string) {
-  themeStore.setPrimaryColor(color)
+function handleColorChange(color: string | null) {
+  if (color) {
+    themeStore.setPrimaryColor(color)
+    themeStore.setMode('custom')
+  }
 }
 </script>
 

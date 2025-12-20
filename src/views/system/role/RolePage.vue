@@ -267,16 +267,4 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
-.mb-3 {
-  margin-bottom: 1rem;
-}
-.page-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.ml-2 {
-  margin-left: 8px;
-}
-</style>
+<style scoped></style>

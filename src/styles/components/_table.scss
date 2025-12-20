@@ -1,6 +1,13 @@
 // src/styles/components/_table.scss
-// 📊 表格组件样式
+// 📊 表格组件样式（完整）
+// 包含：基础表格样式、变体、尺寸、状态色，以及表格内图标列的样式（与 --menu-icon-size 变量联动）
+
 @use '@/styles/variables/_index.scss' as *;
+
+/* 回退或引用全局图标尺寸变量（若主入口已定义则使用主入口） */
+:root {
+  --menu-icon-size: var(--menu-icon-size, 16px);
+}
 
 .table {
   width: 100%;
@@ -24,7 +31,55 @@
   }
 
   tr:hover {
-    background-color: var(--color-hover); //  跟随主题色
+    background-color: var(--color-hover); // 跟随主题色
+  }
+
+  /* -------------------------
+     表格内图标列样式（用于 el-table 的图标列）
+     使用约定类名：.icon-cell（单元格容器） 和 .table-icon（图标组件）
+     ------------------------- */
+  :deep(.icon-cell) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px; /* 与表格行高保持一致，可按需调整 */
+    padding: 0;
+  }
+
+  :deep(.table-icon),
+  :deep(.form-icon) {
+    font-size: var(--menu-icon-size);
+    width: calc(var(--menu-icon-size));
+    height: calc(var(--menu-icon-size));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  /* 确保 svg 按 font-size 缩放，不被固定宽高撑大 */
+  :deep(.table-icon svg),
+  :deep(.form-icon svg),
+  :deep(.menu-item-icon svg) {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  /* 小屏幕时缩小图标与单元格间距 */
+  @media (max-width: 480px) {
+    :deep(.table-icon),
+    :deep(.form-icon) {
+      font-size: calc(var(--menu-icon-size) - 2px);
+      width: calc(var(--menu-icon-size) - 2px);
+      height: calc(var(--menu-icon-size) - 2px);
+    }
+    :deep(.icon-cell) {
+      height: 32px;
+    }
   }
 }
 
@@ -82,4 +137,11 @@
   tbody tr {
     background-color: color-mix(in srgb, var(--color-info) 10%, transparent);
   }
+}
+
+/* 兼容：如果使用 el-table 的 cell 结构，也提供一个更具体的覆盖选择器 */
+:deep(.el-table .cell .icon-cell) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

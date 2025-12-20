@@ -29,6 +29,12 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
       <el-table-column prop="menuName" label="菜单名称" width="200" />
+      <el-table-column prop="menuIcon" label="图标" width="100">
+        <template #default="{ row }">
+          <MenuIcon :icon="row.menuIcon" :size="24" />
+        </template>
+      </el-table-column>
+
       <el-table-column prop="menuPath" label="路径" width="200" />
       <el-table-column prop="menuComponent" label="组件" width="200" />
       <el-table-column prop="menuPermission" label="权限标识" width="200" />
@@ -95,6 +101,10 @@
         <el-form-item label="菜单名称">
           <el-input v-model="editForm.menuName" />
         </el-form-item>
+        <el-form-item label="菜单图标">
+          <IconPickerGrid v-model="editForm.menuIcon" />
+        </el-form-item>
+
         <el-form-item label="路径">
           <el-input v-model="editForm.menuPath" />
         </el-form-item>
@@ -169,6 +179,7 @@ const editForm = ref<MenuForm>({
   menuParentId: 0,
   menuType: 1,
   menuPermission: '',
+  menuIcon: '',
   menuSort: 1,
   menuVisible: 1,
   menuStatus: 0
@@ -217,6 +228,7 @@ function buildMenuTree(nodes: MenuNode[], editingId?: number): MenuNode[] {
       menuParentId: 0,
       menuType: 0,
       menuPermission: '',
+      menuIcon: '',
       menuSort: 0,
       menuVisible: 1,
       menuStatus: 0,
@@ -237,6 +249,7 @@ async function openAddDialog(parentId = 0) {
     menuParentId: parentId,
     menuType: 1,
     menuPermission: '',
+    menuIcon: '',
     menuSort: 1,
     menuVisible: 1,
     menuStatus: 0
@@ -250,11 +263,18 @@ async function openAddDialog(parentId = 0) {
 
   editVisible.value = true
 }
-
+function formatIconName(name: string) {
+  if (!name) return ''
+  return name.charAt(0).toUpperCase() + name.slice(1)
+}
 // 打开编辑菜单弹窗
 async function openEditDialog(row: Menu) {
   isEdit.value = true
-  editForm.value = { ...row, menuParentId: Number(row.menuParentId) || 0 }
+  editForm.value = {
+    ...row,
+    menuParentId: Number(row.menuParentId) || 0,
+    menuIcon: formatIconName(row.menuIcon) // 转换成 PascalCase
+  }
 
   const res = await getMenuTreeApi()
   menuTreeOptions.value = buildMenuTree(res, editForm.value.id)
