@@ -4,39 +4,39 @@
  * 部门查询参数类
  * 用于分页查询时传递的条件。
  */
-export class SysDeptQueryDTO {
+export interface SysDeptQueryDTO {
     /** 部门名称（模糊查询） */
-    deptName!: string
+    deptName?: string
 
     /** 部门编码（模糊查询） */
-    deptCode!: string
+    deptCode?: string
 
     /** 状态：1 表示启用，0 表示禁用 */
-    status!: number
+    status?: number
 }
 
 /**
  * 部门 VO（View Object）
  * 用于后端返回给前端展示的部门数据。
  */
-export class SysDeptVO {
+export interface SysDeptVO {
     /** 部门唯一标识 ID */
-    id!: number
+    id?: number
 
     /** 部门名称 */
-    deptName!: string
+    deptName?: string
 
     /** 部门编码 */
-    deptCode!: string
+    deptCode?: string
 
     /** 上级部门 ID */
-    parentId!: number
+    parentId?: number
 
     /** 上级部门名称 */
     parentName?: string
 
     /** 排序号 */
-    orderNum!: number
+    orderNum?: number
 
     /** 部门负责人 */
     leader?: string
@@ -48,7 +48,7 @@ export class SysDeptVO {
     email?: string
 
     /** 状态：1 表示启用，0 表示禁用 */
-    status!: number
+    status?: number
 
     /** 创建时间（ISO 格式字符串） */
     createTime?: string
@@ -61,7 +61,7 @@ export class SysDeptVO {
  * 部门 DTO（Data Transfer Object）
  * 用于新增或更新部门时传递的参数。
  */
-export class SysDeptDTO {
+export interface SysDeptDTO {
     /** 部门唯一标识 ID（更新时必填，新增时可忽略） */
     id?: number
 

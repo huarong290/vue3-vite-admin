@@ -4,39 +4,39 @@
  * 组织查询参数类
  * 用于分页查询时传递的条件。
  */
-export class SysOrgQueryDTO {
+export interface SysOrgQueryDTO {
     /** 组织名称（模糊查询） */
-    orgName!: string
+    orgName?: string
 
     /** 组织编码（模糊查询） */
-    orgCode!: string
+    orgCode?: string
 
     /** 状态：1 表示启用，0 表示禁用 */
-    status!: number
+    status?: number
 }
 
 /**
  * 组织 VO（View Object）
  * 用于后端返回给前端展示的组织数据。
  */
-export class SysOrgVO {
+export interface SysOrgVO {
     /** 组织唯一标识 ID */
-    id!: number
+    id?: number
 
     /** 组织名称 */
-    orgName!: string
+    orgName?: string
 
     /** 组织编码 */
-    orgCode!: string
+    orgCode?: string
 
     /** 上级组织 ID */
-    parentId!: number
+    parentId?: number
 
     /** 上级组织名称 */
     parentName?: string
 
     /** 排序号 */
-    orderNum!: number
+    orderNum?: number
 
     /** 组织负责人 */
     leader?: string
@@ -48,7 +48,7 @@ export class SysOrgVO {
     email?: string
 
     /** 状态：1 表示启用，0 表示禁用 */
-    status!: number
+    status?: number
 
     /** 创建时间（ISO 格式字符串） */
     createTime?: string
@@ -61,7 +61,7 @@ export class SysOrgVO {
  * 组织 DTO（Data Transfer Object）
  * 用于新增或更新组织时传递的参数。
  */
-export class SysOrgDTO {
+export interface SysOrgDTO {
     /** 组织唯一标识 ID（更新时必填，新增时可忽略） */
     id?: number
 
