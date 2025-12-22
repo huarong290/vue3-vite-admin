@@ -5,14 +5,14 @@
  * 用于分页查询时传递的条件。
  */
 export interface SysDeptQueryDTO {
-    /** 部门名称（模糊查询） */
-    deptName?: string
+  /** 部门名称（模糊查询） */
+  deptName?: string
 
-    /** 部门编码（模糊查询） */
-    deptCode?: string
+  /** 部门编码（模糊查询） */
+  deptCode?: string
 
-    /** 状态：1 表示启用，0 表示禁用 */
-    status?: number
+  /** 状态：1 表示启用，0 表示禁用 */
+  deptStatus?: number
 }
 
 /**
@@ -20,41 +20,41 @@ export interface SysDeptQueryDTO {
  * 用于后端返回给前端展示的部门数据。
  */
 export interface SysDeptVO {
-    /** 部门唯一标识 ID */
-    id?: number
+  /** 部门唯一标识 ID */
+  id?: number
 
-    /** 部门名称 */
-    deptName?: string
+  /** 部门名称 */
+  deptName?: string
 
-    /** 部门编码 */
-    deptCode?: string
+  /** 部门编码 */
+  deptCode?: string
 
-    /** 上级部门 ID */
-    parentId?: number
+  /** 上级部门 ID */
+  parentId?: number
 
-    /** 上级部门名称 */
-    parentName?: string
+  /** 上级部门名称 */
+  parentName?: string
 
-    /** 排序号 */
-    orderNum?: number
+  /** 排序号 */
+  orderNum?: number
 
-    /** 部门负责人 */
-    leader?: string
+  /** 部门负责人 */
+  leader?: string
 
-    /** 联系电话 */
-    phone?: string
+  /** 联系电话 */
+  phone?: string
 
-    /** 邮箱 */
-    email?: string
+  /** 邮箱 */
+  email?: string
 
-    /** 状态：1 表示启用，0 表示禁用 */
-    status?: number
+  /** 状态：1 表示启用，0 表示禁用 */
+  deptStatus?: number
 
-    /** 创建时间（ISO 格式字符串） */
-    createTime?: string
+  /** 创建时间（ISO 格式字符串） */
+  createTime?: string
 
-    /** 更新时间（ISO 格式字符串） */
-    updateTime?: string
+  /** 更新时间（ISO 格式字符串） */
+  updateTime?: string
 }
 
 /**
@@ -62,30 +62,75 @@ export interface SysDeptVO {
  * 用于新增或更新部门时传递的参数。
  */
 export interface SysDeptDTO {
-    /** 部门唯一标识 ID（更新时必填，新增时可忽略） */
-    id?: number
+  /** 部门唯一标识 ID（更新时必填，新增时可忽略） */
+  id?: number
 
-    /** 部门名称 */
-    deptName?: string
+  /** 部门名称 */
+  deptName?: string
 
-    /** 部门编码 */
-    deptCode?: string
+  /** 部门编码 */
+  deptCode?: string
 
-    /** 上级部门 ID */
-    parentId?: number
+  /** 上级部门 ID */
+  parentId?: number
 
-    /** 排序号 */
-    orderNum?: number
+  /** 排序号 */
+  orderNum?: number
 
-    /** 部门负责人 */
-    leader?: string
+  /** 部门负责人 */
+  leader?: string
 
-    /** 联系电话 */
-    phone?: string
+  /** 联系电话 */
+  phone?: string
 
-    /** 邮箱 */
-    email?: string
+  /** 邮箱 */
+  email?: string
 
-    /** 状态：1 表示启用，0 表示禁用 */
-    status?: number
+  /** 状态：1 表示启用，0 表示禁用 */
+  deptStatus?: number
+}
+
+/**
+ * 部门树 VO（View Object）
+ * 用于前端展示部门树形结构，例如下拉树选择、树形表格。
+ */
+export interface SysDeptTreeVO {
+  /** 部门唯一标识 ID */
+  id: number
+
+  /** 部门名称 */
+  deptName: string
+
+  /** 部门编码 */
+  deptCode: string
+
+  /** 父部门 ID（顶级部门为 0） */
+  parentId: number
+
+  /** 部门状态：1 表示启用，0 表示禁用 */
+  deptStatus: number
+
+  /** 排序号 */
+  orderNum?: number
+
+  /** 部门负责人 */
+  leader?: string
+
+  /** 联系电话 */
+  phone?: string
+
+  /** 邮箱 */
+  email?: string
+
+  /** 创建时间（ISO 格式字符串） */
+  createTime?: string
+
+  /** 更新时间（ISO 格式字符串） */
+  updateTime?: string
+
+  /** 子部门集合（树形结构） */
+  children?: SysDeptTreeVO[]
+
+  /**  */
+  disabled?: boolean
 }

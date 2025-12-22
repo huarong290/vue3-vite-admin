@@ -1,3 +1,4 @@
+<!--src/views/system/permission/PermissionPage.vue-->
 <template>
   <el-card>
     <h2 class="page-title">

@@ -5,14 +5,14 @@
  * 用于分页查询时传递的条件。
  */
 export interface SysOrgQueryDTO {
-    /** 组织名称（模糊查询） */
-    orgName?: string
+  /** 组织名称（模糊查询） */
+  orgName?: string
 
-    /** 组织编码（模糊查询） */
-    orgCode?: string
+  /** 组织编码（模糊查询） */
+  orgCode?: string
 
-    /** 状态：1 表示启用，0 表示禁用 */
-    status?: number
+  /** 状态：1 表示启用，0 表示禁用 */
+  status?: number
 }
 
 /**
@@ -20,41 +20,41 @@ export interface SysOrgQueryDTO {
  * 用于后端返回给前端展示的组织数据。
  */
 export interface SysOrgVO {
-    /** 组织唯一标识 ID */
-    id?: number
+  /** 组织唯一标识 ID */
+  id?: number
 
-    /** 组织名称 */
-    orgName?: string
+  /** 组织名称 */
+  orgName?: string
 
-    /** 组织编码 */
-    orgCode?: string
+  /** 组织编码 */
+  orgCode?: string
 
-    /** 上级组织 ID */
-    parentId?: number
+  /** 上级组织 ID */
+  parentId?: number
 
-    /** 上级组织名称 */
-    parentName?: string
+  /** 上级组织名称 */
+  parentName?: string
 
-    /** 排序号 */
-    orderNum?: number
+  /** 排序号 */
+  orderNum?: number
 
-    /** 组织负责人 */
-    leader?: string
+  /** 组织负责人 */
+  leader?: string
 
-    /** 联系电话 */
-    phone?: string
+  /** 联系电话 */
+  phone?: string
 
-    /** 邮箱 */
-    email?: string
+  /** 邮箱 */
+  email?: string
 
-    /** 状态：1 表示启用，0 表示禁用 */
-    status?: number
+  /** 状态：1 表示启用，0 表示禁用 */
+  status?: number
 
-    /** 创建时间（ISO 格式字符串） */
-    createTime?: string
+  /** 创建时间（ISO 格式字符串） */
+  createTime?: string
 
-    /** 更新时间（ISO 格式字符串） */
-    updateTime?: string
+  /** 更新时间（ISO 格式字符串） */
+  updateTime?: string
 }
 
 /**
@@ -62,30 +62,72 @@ export interface SysOrgVO {
  * 用于新增或更新组织时传递的参数。
  */
 export interface SysOrgDTO {
-    /** 组织唯一标识 ID（更新时必填，新增时可忽略） */
-    id?: number
+  /** 组织唯一标识 ID（更新时必填，新增时可忽略） */
+  id?: number
 
-    /** 组织名称 */
-    orgName?: string
+  /** 组织名称 */
+  orgName?: string
 
-    /** 组织编码 */
-    orgCode?: string
+  /** 组织编码 */
+  orgCode?: string
 
-    /** 上级组织 ID */
-    parentId?: number
+  /** 上级组织 ID */
+  parentId?: number
 
-    /** 排序号 */
-    orderNum?: number
+  /** 排序号 */
+  orderNum?: number
 
-    /** 组织负责人 */
-    leader?: string
+  /** 组织负责人 */
+  leader?: string
 
-    /** 联系电话 */
-    phone?: string
+  /** 联系电话 */
+  phone?: string
 
-    /** 邮箱 */
-    email?: string
+  /** 邮箱 */
+  email?: string
 
-    /** 状态：1 表示启用，0 表示禁用 */
-    status?: number
+  /** 状态：1 表示启用，0 表示禁用 */
+  orgStatus?: number
+}
+
+/**
+ * 组织树 VO（View Object）
+ * 用于前端展示组织树形结构，例如下拉树选择、树形表格。
+ */
+export interface SysOrgTreeVO {
+  /** 组织唯一标识 ID */
+  id: number
+
+  /** 组织名称 */
+  orgName: string
+
+  /** 组织编码 */
+  orgCode: string
+
+  /** 父组织 ID（顶级组织为 0） */
+  parentId: number
+
+  /** 组织状态：1 表示启用，0 表示禁用 */
+  orgStatus: number
+
+  /** 排序号 */
+  orderNum?: number
+
+  /** 组织负责人 */
+  leader?: string
+
+  /** 联系电话 */
+  phone?: string
+
+  /** 邮箱 */
+  email?: string
+
+  /** 创建时间（ISO 格式字符串） */
+  createTime?: string
+
+  /** 更新时间（ISO 格式字符串） */
+  updateTime?: string
+
+  /** 子组织集合（树形结构） */
+  children?: SysOrgTreeVO[]
 }

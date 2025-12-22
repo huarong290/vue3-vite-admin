@@ -34,6 +34,10 @@ export interface PageQuery {
   username?: string
   email?: string
   phone?: string
+  deptCode?: string
+  deptName?: string
+  orgCode?: string
+  orgName?: string
 
   // 允许额外字段（可选），但不要用 unknown
   [key: string]: string | number | boolean | undefined
