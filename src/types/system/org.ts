@@ -131,3 +131,4 @@ export interface SysOrgTreeVO {
   /** 子组织集合（树形结构） */
   children?: SysOrgTreeVO[]
 }
+

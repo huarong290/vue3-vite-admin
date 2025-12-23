@@ -47,9 +47,9 @@ export interface SysRoleVO {
   /** 更新时间 */
   updateTime: string
 
-  /** 关联的菜单列表 */
-  menuIds: number[]
-
-  /** 关联的权限标识列表 */
-  permissions: string[]
+  // /** 关联的菜单列表 */
+  // menuIds: number[]
+  //
+  // /** 关联的权限标识列表 */
+  // permissions: string[]
 }
