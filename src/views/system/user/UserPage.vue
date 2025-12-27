@@ -56,10 +56,13 @@
           {{ dayjs(scope.row.updateTime).format('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="160" fixed="right">
+      <el-table-column label="操作" width="220" fixed="right">
         <template #default="scope">
           <el-button type="primary" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="warning" size="small" @click="openAssignRoleDialog(scope.row)"
+            >分配角色</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -142,6 +145,24 @@
         </el-form-item>
       </template>
     </FormDialog>
+    <FormDialog
+      v-model="assignRoleDialogVisible"
+      title="分配角色"
+      :form="assignRoleForm"
+      :rules="assignRoleRules"
+      submitText="保存"
+      @submit="submitAssignRoles"
+    >
+      <template #form-fields="{ form }">
+        <el-form-item label="角色" prop="roleIds">
+          <el-checkbox-group v-model="form.roleIds">
+            <el-checkbox v-for="role in allRoles" :key="role.id" :label="role.id">
+              {{ role.roleName }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </template>
+    </FormDialog>
   </el-card>
 </template>
 
@@ -158,6 +179,9 @@ import type { PageQuery } from '@/types/common.ts'
 import dayjs from 'dayjs'
 import { ElMessage, ElMessageBox, type FormRules } from 'element-plus'
 import FormDialog from '@/components/dialog/FormDialog.vue'
+import { assignRolesApi } from '@/api/modules/userrole/userRole.ts'
+import { getRoleListApi, getRolesByUserIdApi } from '@/api/modules/role/role.ts'
+import type { SysRoleVO } from '@/types/system/role.ts'
 
 // 用户数据
 const users = ref<SysUserVO[]>([])
@@ -166,6 +190,16 @@ const page = ref<number>(1)
 const pageSize = ref<number>(10)
 const loading = ref<boolean>(false)
 
+const assignRoleDialogVisible = ref(false)
+const allRoles = ref<SysRoleVO[]>([]) // ✅ 定义为数组
+
+const assignRoleForm = reactive({
+  userId: null as number | null,
+  roleIds: [] as number[]
+})
+const assignRoleRules: FormRules = {
+  roleIds: [{ required: true, message: '请选择至少一个角色', trigger: 'change' }]
+}
 // 查询条件
 const queryForm = reactive<PageQuery>({
   page: 1,
@@ -274,7 +308,24 @@ const handleDelete = async (row: SysUserVO) => {
   ElMessage.success('删除成功')
   await fetchUsers()
 }
+/** 打开分配角色弹窗 */
+const openAssignRoleDialog = async (row: SysUserVO) => {
+  assignRoleForm.userId = row.id!
+  // 获取所有角色
+  allRoles.value = await getRoleListApi()
+  // 获取用户已有角色
+  const userRoles = await getRolesByUserIdApi(row.id!)
+  assignRoleForm.roleIds = userRoles.map((r: SysRoleVO) => r.id)
+  assignRoleDialogVisible.value = true
+}
 
+/** 提交分配角色 */
+const submitAssignRoles = async (form: typeof assignRoleForm) => {
+  await assignRolesApi(form.userId!, form.roleIds)
+  ElMessage.success('分配角色成功')
+  assignRoleDialogVisible.value = false
+  await fetchUsers()
+}
 /** 获取用户列表 */
 const fetchUsers = async () => {
   loading.value = true
