@@ -11,7 +11,7 @@ const modules = import.meta.glob('@/views/**/*.vue')
 // 3. 引入 ParentView 组件 (确保你已经创建了这个文件)
 const AppParentView = () => import('@/components/layout/AppParentView.vue')
 
-export function transformMenusToRoutes(menus: Menu[]): RouteRecordRaw[] {
+export function transformMenusToRoutes(menus: Menu[] = []): RouteRecordRaw[] {
   return menus.map((menu) => {
     const fullPath = menu.menuPath
 

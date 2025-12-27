@@ -46,23 +46,27 @@ router.beforeEach(async (to, _from, next) => {
   } else {
     if (hasToken) {
       try {
-        if (!userStore.userInfo) {
-          const userInfo = await getUserInfoApi()
-          userStore.setUserInfo(userInfo)
-        }
+        // 🔧 调整：每次进入路由都重新获取一次用户信息，保证菜单最新
+        const userInfo = await getUserInfoApi()
+        userStore.setUserInfo(userInfo)
 
-        // 🔧 调整：menuStore 只存动态菜单，不再拼接 demoRoutes
-        if (menuStore.menus.length === 0 && userStore.userInfo) {
-          const dynamicRoutes = transformMenusToRoutes(userStore.userInfo.menus)
-          menuStore.setMenus(dynamicRoutes)
+        // 🔧 调整：每次刷新都重建菜单
+        const dynamicRoutes = transformMenusToRoutes(userInfo.menus)
+        menuStore.setMenus(dynamicRoutes)
 
-          dynamicRoutes.forEach((route) => {
-            router.addRoute('RootLayout', route)
-          })
-          //  关键：只有在当前路由还没匹配到组件时才重新进入当前路由，确保匹配到新加的路由
-          if (to.matched.length === 0) {
-            return next({ ...to, replace: true })
-          }
+        // 清理旧的动态路由（可选）
+        // router.getRoutes().forEach(r => {
+        //   if (r.name && r.name !== 'RootLayout' && r.name !== 'Login') {
+        //     router.removeRoute(r.name)
+        //   }
+        // })
+
+        dynamicRoutes.forEach((route) => {
+          router.addRoute('RootLayout', route)
+        })
+
+        if (to.matched.length === 0) {
+          return next({ ...to, replace: true })
         }
       } catch (e: unknown) {
         userStore.logout()
