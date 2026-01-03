@@ -60,6 +60,9 @@
         <template #default="scope">
           <el-button type="primary" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="warning" size="small" @click="openAssignRoleDialog(scope.row)"
+            >分配角色
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -84,11 +87,12 @@
     >
       <template #form-fields="{ form }">
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="form.username" placeholder="请输入用户名" />
-        </el-form-item>
+        <el-input v-model="form.username" placeholder="请输入用户名" autocomplete="off" />
+      </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="form.password" type="password" placeholder="请输入密码" />
+          <el-input v-model="form.password" type="password" placeholder="请输入密码" autocomplete="new-password" />
         </el-form-item>
+
         <el-form-item label="昵称" prop="nickname">
           <el-input v-model="form.nickname" placeholder="请输入昵称" />
         </el-form-item>
@@ -142,6 +146,47 @@
         </el-form-item>
       </template>
     </FormDialog>
+
+    <!-- 分配角色弹窗 -->
+    <FormDialog
+      v-model="assignRoleDialogVisible"
+      title="分配角色"
+      :form="assignRoleForm"
+      :rules="assignRoleRules"
+      @submit="submitAssignRoles"
+    >
+      <template #form-fields="{ form }">
+        <el-form-item label="用户名">
+          <el-input v-model="form.username" disabled />
+        </el-form-item>
+
+        <el-form-item label="角色" prop="roleIds">
+          <!-- 当角色数量少于10时用复选框，否则用下拉 -->
+          <template v-if="roles.length <= 10">
+            <el-checkbox-group v-model="form.roleIds">
+              <el-checkbox
+                v-for="role in roles"
+                :key="role.id"
+                :label="role.id"
+              >
+                {{ role.roleName }}
+              </el-checkbox>
+            </el-checkbox-group>
+          </template>
+          <template v-else>
+            <el-select v-model="form.roleIds" multiple placeholder="请选择角色">
+              <el-option
+                v-for="role in roles"
+                :key="role.id"
+                :label="role.roleName"
+                :value="role.id"
+              />
+            </el-select>
+          </template>
+        </el-form-item>
+      </template>
+    </FormDialog>
+
   </el-card>
 </template>
 
@@ -158,6 +203,9 @@ import type { PageQuery } from '@/types/common.ts'
 import dayjs from 'dayjs'
 import { ElMessage, ElMessageBox, type FormRules } from 'element-plus'
 import FormDialog from '@/components/dialog/FormDialog.vue'
+import type { SysRoleVO } from '@/types/system/role.ts'
+import { getRoleListApi } from '@/api/modules/role/role.ts'
+import { bindUserRolesApi, getRolesByUserIdApi } from '@/api/modules/userrole/userrole.ts'
 
 // 用户数据
 const users = ref<SysUserVO[]>([])
@@ -165,6 +213,9 @@ const total = ref<number>(0)
 const page = ref<number>(1)
 const pageSize = ref<number>(10)
 const loading = ref<boolean>(false)
+
+const assignRoleDialogVisible = ref(false)
+const roles = ref<SysRoleVO[]>([])
 
 // 查询条件
 const queryForm = reactive<PageQuery>({
@@ -288,6 +339,32 @@ const fetchUsers = async () => {
   users.value = res.records
   total.value = res.total
   loading.value = false
+}
+
+const assignRoleForm = reactive({
+  userId: undefined as number | undefined,
+  username: '',
+  roleIds: [] as number[]
+})
+const assignRoleRules: FormRules = {
+  roleIds: [{ required: true, message: '请选择至少一个角色', trigger: 'change' }]
+}
+/** 打开分配角色弹窗 */
+const openAssignRoleDialog = async (row: SysUserVO) => {
+  assignRoleForm.userId = row.id
+  assignRoleForm.username = row.username ?? ''
+  // 获取所有角色
+  roles.value = await getRoleListApi()
+  // 获取用户已有角色
+  const userRoles = await getRolesByUserIdApi(row.id!)
+  assignRoleForm.roleIds = userRoles.map((r) => r.roleId)
+  assignRoleDialogVisible.value = true
+}
+/** 提交分配角色 */
+const submitAssignRoles = async (form: typeof assignRoleForm) => {
+  const result = await bindUserRolesApi(form.userId!, form.roleIds)
+  ElMessage.success(`角色分配成功，新增 ${result.addedCount} 条，删除 ${result.removedCount} 条`)
+  assignRoleDialogVisible.value = false
 }
 
 /** 查询 */

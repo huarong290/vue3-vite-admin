@@ -20,3 +20,7 @@ export const updateRoleApi = (data: SysRoleDTO) => {
 export const deleteRoleApi = (id: number) => {
   return request.delete(`/role/deleteRole/${id}`)
 }
+// 查询所有角色
+export const getRoleListApi = () => {
+  return request.get<SysRoleVO[]>('/role/getRoleList')
+}

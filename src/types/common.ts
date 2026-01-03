@@ -42,3 +42,11 @@ export interface PageQuery {
   // 允许额外字段（可选），但不要用 unknown
   [key: string]: string | number | boolean | undefined
 }
+
+/** * 通用绑定结果 DTO * 对应后端 BindResultDTO */
+export interface BindResultDTO {
+  /** 新增的数量 */
+  addedCount: number
+  /** 删除的数量 */
+  removedCount: number
+}
