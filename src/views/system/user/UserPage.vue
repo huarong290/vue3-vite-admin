@@ -56,13 +56,13 @@
           {{ dayjs(scope.row.updateTime).format('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="160" fixed="right">
+      <el-table-column label="操作" width="220" fixed="right">
         <template #default="scope">
           <el-button type="primary" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
           <el-button type="warning" size="small" @click="openAssignRoleDialog(scope.row)"
-            >分配角色
-          </el-button>
+            >分配角色</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -146,47 +146,24 @@
         </el-form-item>
       </template>
     </FormDialog>
-
-    <!-- 分配角色弹窗 -->
     <FormDialog
       v-model="assignRoleDialogVisible"
       title="分配角色"
       :form="assignRoleForm"
       :rules="assignRoleRules"
+      submitText="保存"
       @submit="submitAssignRoles"
     >
       <template #form-fields="{ form }">
-        <el-form-item label="用户名">
-          <el-input v-model="form.username" disabled />
-        </el-form-item>
-
         <el-form-item label="角色" prop="roleIds">
-          <!-- 当角色数量少于10时用复选框，否则用下拉 -->
-          <template v-if="roles.length <= 10">
-            <el-checkbox-group v-model="form.roleIds">
-              <el-checkbox
-                v-for="role in roles"
-                :key="role.id"
-                :label="role.id"
-              >
-                {{ role.roleName }}
-              </el-checkbox>
-            </el-checkbox-group>
-          </template>
-          <template v-else>
-            <el-select v-model="form.roleIds" multiple placeholder="请选择角色">
-              <el-option
-                v-for="role in roles"
-                :key="role.id"
-                :label="role.roleName"
-                :value="role.id"
-              />
-            </el-select>
-          </template>
+          <el-checkbox-group v-model="form.roleIds">
+            <el-checkbox v-for="role in allRoles" :key="role.id" :label="role.id">
+              {{ role.roleName }}
+            </el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
       </template>
     </FormDialog>
-
   </el-card>
 </template>
 
