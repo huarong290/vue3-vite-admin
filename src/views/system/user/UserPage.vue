@@ -167,7 +167,7 @@
           <!-- 当角色数量少于10时用复选框，否则用下拉 -->
           <template v-if="roles.length <= 10">
             <el-checkbox-group v-model="form.roleIds">
-              <el-checkbox v-for="role in roles" :key="role.id" :label="role.id">
+              <el-checkbox v-for="role in roles" :key="role.id" :value="role.id">
                 {{ role.roleName }}
               </el-checkbox>
             </el-checkbox-group>
