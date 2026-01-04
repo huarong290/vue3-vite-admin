@@ -87,10 +87,15 @@
     >
       <template #form-fields="{ form }">
         <el-form-item label="用户名" prop="username">
-        <el-input v-model="form.username" placeholder="请输入用户名" autocomplete="off" />
-      </el-form-item>
+          <el-input v-model="form.username" placeholder="请输入用户名" autocomplete="off" />
+        </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="form.password" type="password" placeholder="请输入密码" autocomplete="new-password" />
+          <el-input
+            v-model="form.password"
+            type="password"
+            placeholder="请输入密码"
+            autocomplete="new-password"
+          />
         </el-form-item>
 
         <el-form-item label="昵称" prop="nickname">
@@ -162,11 +167,7 @@
           <!-- 当角色数量少于10时用复选框，否则用下拉 -->
           <template v-if="roles.length <= 10">
             <el-checkbox-group v-model="form.roleIds">
-              <el-checkbox
-                v-for="role in roles"
-                :key="role.id"
-                :label="role.id"
-              >
+              <el-checkbox v-for="role in roles" :key="role.id" :label="role.id">
                 {{ role.roleName }}
               </el-checkbox>
             </el-checkbox-group>
@@ -184,7 +185,6 @@
         </el-form-item>
       </template>
     </FormDialog>
-
   </el-card>
 </template>
 

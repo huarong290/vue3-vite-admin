@@ -9,7 +9,7 @@ import type { BindResultDTO } from '@/types/common.ts'
  * GET /api/userRole/{userId}/roles
  */
 export const getRolesByUserIdApi = (userId: number) => {
-    return request.get<SysUserRoleVO[]>(`/userRole/getRolesByUserId/${userId}`)
+  return request.get<SysUserRoleVO[]>(`/userRole/getRolesByUserId/${userId}`)
 }
 
 /**
@@ -19,7 +19,7 @@ export const getRolesByUserIdApi = (userId: number) => {
  * @param roleIds 角色ID集合
  */
 export const bindUserRolesApi = (userId: number, roleIds: number[]) => {
-    return request.post<BindResultDTO>(`//bindUserRoles/${userId}`, roleIds)
+  return request.post<BindResultDTO>(`//bindUserRoles/${userId}`, roleIds)
 }
 
 /**
@@ -27,7 +27,7 @@ export const bindUserRolesApi = (userId: number, roleIds: number[]) => {
  * POST /api/userRole
  */
 export const addUserRoleApi = (data: SysUserRoleDTO) => {
-    return request.post<number>(`/userRole/addUserRole`, data)
+  return request.post<number>(`/userRole/addUserRole`, data)
 }
 
 /**
@@ -35,5 +35,5 @@ export const addUserRoleApi = (data: SysUserRoleDTO) => {
  * DELETE /api/userRole/{id}
  */
 export const deleteUserRoleApi = (id: number) => {
-    return request.delete<number>(`/userRole/deleteUserRole/${id}`)
+  return request.delete<number>(`/userRole/deleteUserRole/${id}`)
 }
