@@ -47,6 +47,9 @@
         <template #default="scope">
           <el-button type="primary" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="success" size="small" @click="openAssignMenuDialog(scope.row)"
+            >分配菜单</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -114,6 +117,30 @@
         </el-form-item>
       </template>
     </FormDialog>
+
+    <!-- 分配菜单弹窗 -->
+    <FormDialog
+      v-model="assignMenuDialogVisible"
+      title="分配菜单"
+      :form="assignMenuForm"
+      :rules="assignMenuRules"
+      submit-text="保存"
+      @submit="submitAssignMenus"
+    >
+      <template #form-fields="{ form }">
+        <el-form-item label="菜单" prop="menuIds">
+          <el-tree
+            ref="menuTreeRef"
+            :data="menuTree"
+            show-checkbox
+            node-key="id"
+            default-expand-all
+            :props="{ label: 'menuName', children: 'children' }"
+            :default-checked-keys="form.menuIds"
+          />
+        </el-form-item>
+      </template>
+    </FormDialog>
   </el-card>
 </template>
 
@@ -130,6 +157,9 @@ import type { PageQuery } from '@/types/common.ts'
 import dayjs from 'dayjs'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import FormDialog from '@/components/dialog/FormDialog.vue'
+import { bindRoleMenusApi, getMenusByRoleIdApi } from '@/api/modules/rolemenu/rolemenu.ts'
+import { getMenuTreeApi } from '@/api/modules/menu/menu.ts'
+import type { Menu } from '@/types/system/menu.ts'
 
 // 角色数据
 const roles = ref<SysRoleVO[]>([])
@@ -138,6 +168,8 @@ const page = ref<number>(1)
 const pageSize = ref<number>(10)
 const loading = ref<boolean>(false)
 
+const assignMenuDialogVisible = ref(false)
+const assignMenuForm = reactive({ roleId: 0, menuIds: [] as number[] })
 // 查询条件
 const queryForm = reactive<PageQuery>({
   page: 1,
@@ -235,7 +267,29 @@ const fetchRoles = async () => {
   total.value = res.total
   loading.value = false
 }
+const assignMenuRules = {
+  menuIds: [{ required: true, message: '请选择菜单', trigger: 'change' }]
+}
+const menuTree = ref<Menu[]>([])
+const menuTreeRef = ref()
 
+// 打开分配菜单弹窗
+const openAssignMenuDialog = async (row: SysRoleVO) => {
+  assignMenuForm.roleId = row.id!
+  // 获取菜单树
+  menuTree.value = await getMenuTreeApi()
+  // 获取角色已绑定的菜单
+  const roleMenus = await getMenusByRoleIdApi(row.id!)
+  assignMenuForm.menuIds = roleMenus.map((m) => m.menuId)
+  assignMenuDialogVisible.value = true
+}
+// 提交分配菜单
+const submitAssignMenus = async (form: typeof assignMenuForm) => {
+  const checkedKeys = menuTreeRef.value.getCheckedKeys()
+  await bindRoleMenusApi(form.roleId, checkedKeys)
+  ElMessage.success('菜单分配成功')
+  assignMenuDialogVisible.value = false
+}
 // 查询
 const search = () => {
   page.value = 1

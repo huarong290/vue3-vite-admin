@@ -63,6 +63,7 @@ declare module 'vue' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    ElTree: typeof import('element-plus/es')['ElTree']
     ElTreeSelect: typeof import('element-plus/es')['ElTreeSelect']
     FormDialog: typeof import('./../components/dialog/FormDialog.vue')['default']
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
