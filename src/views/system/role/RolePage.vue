@@ -117,7 +117,6 @@
         </el-form-item>
       </template>
     </FormDialog>
-
     <!-- 分配菜单弹窗 -->
     <FormDialog
       v-model="assignMenuDialogVisible"
@@ -125,18 +124,18 @@
       :form="assignMenuForm"
       :rules="assignMenuRules"
       submit-text="保存"
+      :loading="assignLoading"
       @submit="submitAssignMenus"
     >
-      <template #form-fields="{ form }">
+      <template #form-fields>
         <el-form-item label="菜单" prop="menuIds">
           <el-tree
             ref="menuTreeRef"
             :data="menuTree"
             show-checkbox
             node-key="id"
-            default-expand-all
             :props="{ label: 'menuName', children: 'children' }"
-            :default-checked-keys="form.menuIds"
+            :default-expanded-keys="menuTree.map((item) => item.id)"
           />
         </el-form-item>
       </template>
@@ -145,7 +144,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, nextTick, watch } from 'vue'
 import {
   addRoleApi,
   deleteRoleApi,
@@ -168,8 +167,6 @@ const page = ref<number>(1)
 const pageSize = ref<number>(10)
 const loading = ref<boolean>(false)
 
-const assignMenuDialogVisible = ref(false)
-const assignMenuForm = reactive({ roleId: 0, menuIds: [] as number[] })
 // 查询条件
 const queryForm = reactive<PageQuery>({
   page: 1,
@@ -267,11 +264,19 @@ const fetchRoles = async () => {
   total.value = res.total
   loading.value = false
 }
+
+// 分配菜单相关状态
+const assignMenuDialogVisible = ref(false)
+const assignMenuForm = reactive({
+  roleId: 0,
+  menuIds: [] as number[]
+})
 const assignMenuRules = {
   menuIds: [{ required: true, message: '请选择菜单', trigger: 'change' }]
 }
 const menuTree = ref<Menu[]>([])
 const menuTreeRef = ref()
+const assignLoading = ref(false)
 
 // 打开分配菜单弹窗
 const openAssignMenuDialog = async (row: SysRoleVO) => {
@@ -281,15 +286,32 @@ const openAssignMenuDialog = async (row: SysRoleVO) => {
   // 获取角色已绑定的菜单
   const roleMenus = await getMenusByRoleIdApi(row.id!)
   assignMenuForm.menuIds = roleMenus.map((m) => m.menuId)
+  // 打开弹窗
   assignMenuDialogVisible.value = true
 }
+
+// 监听弹窗打开，确保树渲染完成后再设置选中
+watch(assignMenuDialogVisible, async (visible) => {
+  if (visible) {
+    await nextTick()
+    menuTreeRef.value?.setCheckedKeys(assignMenuForm.menuIds)
+  }
+})
+
 // 提交分配菜单
 const submitAssignMenus = async (form: typeof assignMenuForm) => {
-  const checkedKeys = menuTreeRef.value.getCheckedKeys()
-  await bindRoleMenusApi(form.roleId, checkedKeys)
-  ElMessage.success('菜单分配成功')
-  assignMenuDialogVisible.value = false
+  assignLoading.value = true
+  try {
+    const checkedKeys = menuTreeRef.value?.getCheckedKeys() || []
+    const halfCheckedKeys = menuTreeRef.value?.getHalfCheckedKeys() || []
+    await bindRoleMenusApi(form.roleId, [...checkedKeys, ...halfCheckedKeys])
+    ElMessage.success('菜单分配成功')
+    assignMenuDialogVisible.value = false
+  } finally {
+    assignLoading.value = false
+  }
 }
+
 // 查询
 const search = () => {
   page.value = 1
