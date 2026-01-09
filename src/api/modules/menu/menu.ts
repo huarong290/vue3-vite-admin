@@ -51,3 +51,8 @@ export const deleteMenuApi = (id: number) => {
 // export const getMenuDetailApi = (id: number): Promise<Menu> => {
 //   return request.get<Menu>(`/system/menu/${id}`)
 // }
+
+// 懒加载获取某个父节点的子菜单
+export const getMenusByParentIdApi = (parentId: number) => {
+  return request.get<Menu[]>(`/menu/getMenusByParentId/${parentId}`)
+}

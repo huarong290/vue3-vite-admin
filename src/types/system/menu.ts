@@ -65,6 +65,9 @@ export interface Menu {
   meta?: Meta
   createTime?: string //  可选
   updateTime?: string //  可选
+
+  /** 是否叶子节点，用于懒加载树 */
+  isLeaf?: boolean
 }
 
 // src/types/system/menu.ts
@@ -89,4 +92,7 @@ export interface MenuNode {
   label?: string // 用于 el-tree-select 显示的文本
   value?: number // 用于 el-tree-select 绑定的值
   disabled?: boolean // 控制节点是否可选
+
+  /** 是否叶子节点，用于懒加载树 */
+  isLeaf?: boolean
 }

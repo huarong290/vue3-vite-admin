@@ -43,7 +43,7 @@
       </el-table-column>
 
       <!-- 操作列 -->
-      <el-table-column label="操作" width="160" fixed="right">
+      <el-table-column label="操作" width="220" fixed="right">
         <template #default="scope">
           <el-button type="primary" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope.row)">删除</el-button>
@@ -117,7 +117,7 @@
         </el-form-item>
       </template>
     </FormDialog>
-    <!-- 分配菜单弹窗 -->
+
     <FormDialog
       v-model="assignMenuDialogVisible"
       title="分配菜单"
@@ -129,13 +129,20 @@
     >
       <template #form-fields>
         <el-form-item label="菜单" prop="menuIds">
+          <!-- 搜索框 -->
+          <el-input v-model="menuFilterText" placeholder="搜索菜单" clearable class="mb-2" />
+
+          <!-- 懒加载树 -->
           <el-tree
             ref="menuTreeRef"
             :data="menuTree"
             show-checkbox
             node-key="id"
-            :props="{ label: 'menuName', children: 'children' }"
-            :default-expanded-keys="menuTree.map((item) => item.id)"
+            lazy
+            :load="loadMenuNode"
+            :props="{ label: 'menuName', children: 'children', isLeaf: 'isLeaf' }"
+            :filter-node-method="filterNode"
+            :default-expanded-keys="expandedKeys"
           />
         </el-form-item>
       </template>
@@ -154,10 +161,15 @@ import {
 import { type SysRoleDTO, type SysRoleVO } from '@/types/system/role.ts'
 import type { PageQuery } from '@/types/common.ts'
 import dayjs from 'dayjs'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import {
+  ElMessage,
+  ElMessageBox,
+  type FilterNodeMethodFunction,
+  type LoadFunction
+} from 'element-plus'
 import FormDialog from '@/components/dialog/FormDialog.vue'
 import { bindRoleMenusApi, getMenusByRoleIdApi } from '@/api/modules/rolemenu/rolemenu.ts'
-import { getMenuTreeApi } from '@/api/modules/menu/menu.ts'
+import { getMenuTreeApi, getMenusByParentIdApi } from '@/api/modules/menu/menu.ts'
 import type { Menu } from '@/types/system/menu.ts'
 
 // 角色数据
@@ -267,30 +279,32 @@ const fetchRoles = async () => {
 
 // 分配菜单相关状态
 const assignMenuDialogVisible = ref(false)
-const assignMenuForm = reactive({
-  roleId: 0,
-  menuIds: [] as number[]
-})
+const assignMenuForm = reactive({ roleId: 0, menuIds: [] as number[] })
 const assignMenuRules = {
   menuIds: [{ required: true, message: '请选择菜单', trigger: 'change' }]
 }
 const menuTree = ref<Menu[]>([])
 const menuTreeRef = ref()
 const assignLoading = ref(false)
+const menuFilterText = ref('')
+const expandedKeys = ref<number[]>([])
 
 // 打开分配菜单弹窗
 const openAssignMenuDialog = async (row: SysRoleVO) => {
   assignMenuForm.roleId = row.id!
-  // 获取菜单树
+  // 获取根菜单（懒加载）
   menuTree.value = await getMenuTreeApi()
   // 获取角色已绑定的菜单
   const roleMenus = await getMenusByRoleIdApi(row.id!)
   assignMenuForm.menuIds = roleMenus.map((m) => m.menuId)
-  // 打开弹窗
+
+  // 默认展开到已选节点
+  expandedKeys.value = [...assignMenuForm.menuIds]
+
   assignMenuDialogVisible.value = true
 }
 
-// 监听弹窗打开，确保树渲染完成后再设置选中
+// 监听弹窗打开，设置选中
 watch(assignMenuDialogVisible, async (visible) => {
   if (visible) {
     await nextTick()
@@ -298,7 +312,26 @@ watch(assignMenuDialogVisible, async (visible) => {
   }
 })
 
-// 提交分配菜单
+const loadMenuNode: LoadFunction = async (node, resolve) => {
+  if (node.level === 0) {
+    resolve(menuTree.value)
+  } else {
+    const children = await getMenusByParentIdApi((node.data as { id: number }).id)
+    resolve(children)
+  }
+}
+
+// 搜索过滤
+watch(menuFilterText, (val) => {
+  menuTreeRef.value?.filter(val)
+})
+// 搜索过滤方法（使用 Element Plus 提供的 FilterNodeMethodFunction 类型）
+const filterNode: FilterNodeMethodFunction = (value, data) => {
+  if (!value) return true
+  return (data as Menu).menuName.includes(value)
+}
+
+// 提交分配菜单（支持半选）
 const submitAssignMenus = async (form: typeof assignMenuForm) => {
   assignLoading.value = true
   try {
