@@ -128,6 +128,21 @@
       @submit="submitAssignMenus"
     >
       <template #form-fields>
+        <el-form-item label="分配模式">
+          <el-select v-model="assignMode" placeholder="请选择分配模式" class="mb-2">
+            <el-option label="只提交叶子节点" value="leaf" />
+            <el-option label="严格勾选模式" value="strict" />
+            <el-option label="父子联动(不提交半选)" value="normal" />
+          </el-select>
+          <!-- 模式说明 -->
+          <div class="mode-hint">
+            <p v-if="assignMode === 'leaf'"> 只提交叶子节点：只分配具体功能菜单，不会包含父级目录。</p>
+            <p v-else-if="assignMode === 'strict'"> 严格勾选模式：勾选谁就分配谁，父子不联动。</p>
+            <p v-else> 父子联动模式：勾选父节点会自动勾选子节点，但不会提交半选状态。</p>
+          </div>
+        </el-form-item>
+
+
         <el-form-item label="菜单" prop="menuIds">
           <!-- 搜索框 -->
           <el-input v-model="menuFilterText" placeholder="搜索菜单" clearable class="mb-2" />
@@ -143,10 +158,13 @@
             :props="{ label: 'menuName', children: 'children', isLeaf: 'isLeaf' }"
             :filter-node-method="filterNode"
             :default-expanded-keys="expandedKeys"
+            :check-strictly="assignMode === 'strict'"
+            @check="handleTreeCheck"
           />
         </el-form-item>
       </template>
     </FormDialog>
+
   </el-card>
 </template>
 
@@ -291,6 +309,7 @@ const expandedKeys = ref<number[]>([])
 
 // 打开分配菜单弹窗
 const openAssignMenuDialog = async (row: SysRoleVO) => {
+  // assignMode.value = 'leaf' // 或 'strict' / 'normal'
   assignMenuForm.roleId = row.id!
   // 获取根菜单（懒加载）
   menuTree.value = await getMenuTreeApi()
@@ -330,20 +349,41 @@ const filterNode: FilterNodeMethodFunction = (value, data) => {
   if (!value) return true
   return (data as Menu).menuName.includes(value)
 }
+// 分配模式: 'leaf' | 'strict' | 'normal'
+const assignMode = ref<'leaf' | 'strict' | 'normal'>('leaf')
 
-// 提交分配菜单（支持半选）
+// 树勾选事件
+const handleTreeCheck = () => {
+  if (assignMode.value === 'leaf') {
+    // 只取叶子节点
+    const leafCheckedNodes = menuTreeRef.value?.getCheckedNodes(true, false) || []
+    assignMenuForm.menuIds = leafCheckedNodes.map((n: { id: number }) => n.id)
+  } else if (assignMode.value === 'strict') {
+    // 严格勾选模式，只取勾选节点
+    const checkedKeys = menuTreeRef.value?.getCheckedKeys() || []
+    assignMenuForm.menuIds = checkedKeys
+  } else {
+    // normal 模式，父子联动，但不提交半选
+    const checkedKeys = menuTreeRef.value?.getCheckedKeys() || []
+    assignMenuForm.menuIds = checkedKeys
+  }
+}
+
+// 提交
 const submitAssignMenus = async (form: typeof assignMenuForm) => {
   assignLoading.value = true
   try {
-    const checkedKeys = menuTreeRef.value?.getCheckedKeys() || []
-    const halfCheckedKeys = menuTreeRef.value?.getHalfCheckedKeys() || []
-    await bindRoleMenusApi(form.roleId, [...checkedKeys, ...halfCheckedKeys])
+    await bindRoleMenusApi(form.roleId, form.menuIds)
     ElMessage.success('菜单分配成功')
     assignMenuDialogVisible.value = false
   } finally {
     assignLoading.value = false
   }
 }
+
+
+
+
 
 // 查询
 const search = () => {
@@ -376,4 +416,11 @@ onMounted(() => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.mode-hint {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+</style>
