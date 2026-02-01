@@ -57,6 +57,6 @@ export function buildClientInfo(): ClientInfo {
     deviceId: getDeviceId(),
     clientType: 'WEB',
     os: getOS(),
-    browser: getBrowser(),
+    browser: getBrowser()
   }
 }

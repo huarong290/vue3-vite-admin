@@ -10,6 +10,6 @@ import { buildClientInfo } from '@/utils/clientInfoUtil.ts'
 export function buildLoginRequest(form: LoginForm): LoginRequest {
   return {
     ...form,
-    clientInfo: buildClientInfo(),
+    clientInfo: buildClientInfo()
   }
 }

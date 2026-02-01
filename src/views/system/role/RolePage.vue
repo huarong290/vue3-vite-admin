@@ -136,12 +136,13 @@
           </el-select>
           <!-- 模式说明 -->
           <div class="mode-hint">
-            <p v-if="assignMode === 'leaf'"> 只提交叶子节点：只分配具体功能菜单，不会包含父级目录。</p>
-            <p v-else-if="assignMode === 'strict'"> 严格勾选模式：勾选谁就分配谁，父子不联动。</p>
-            <p v-else> 父子联动模式：勾选父节点会自动勾选子节点，但不会提交半选状态。</p>
+            <p v-if="assignMode === 'leaf'">
+              只提交叶子节点：只分配具体功能菜单，不会包含父级目录。
+            </p>
+            <p v-else-if="assignMode === 'strict'">严格勾选模式：勾选谁就分配谁，父子不联动。</p>
+            <p v-else>父子联动模式：勾选父节点会自动勾选子节点，但不会提交半选状态。</p>
           </div>
         </el-form-item>
-
 
         <el-form-item label="菜单" prop="menuIds">
           <!-- 搜索框 -->
@@ -164,7 +165,6 @@
         </el-form-item>
       </template>
     </FormDialog>
-
   </el-card>
 </template>
 
@@ -381,10 +381,6 @@ const submitAssignMenus = async (form: typeof assignMenuForm) => {
   }
 }
 
-
-
-
-
 // 查询
 const search = () => {
   page.value = 1
@@ -422,5 +418,4 @@ onMounted(() => {
   color: #666;
   margin-top: 4px;
 }
-
 </style>

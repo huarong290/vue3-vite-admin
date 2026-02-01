@@ -189,9 +189,7 @@ async function handleLogin() {
 
     loading.value = true
     try {
-      const res = await loginApi(
-        buildLoginRequest(loginForm.value)
-      )
+      const res = await loginApi(buildLoginRequest(loginForm.value))
 
       userStore.setToken(res)
 
@@ -209,7 +207,6 @@ async function handleLogin() {
     }
   })
 }
-
 
 // 忘记密码处理
 function handleForgot() {

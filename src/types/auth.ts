@@ -27,7 +27,6 @@ export interface LoginForm {
 
   /** 是否记住我 (前端扩展字段，后端可选处理) */
   rememberMe?: boolean
-
 }
 /**
  * 客户端环境信息
