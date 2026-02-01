@@ -79,7 +79,7 @@
 
         <!-- 记住我和忘记密码 -->
         <div class="form-row">
-          <el-checkbox v-model="loginForm.remember">记住我</el-checkbox>
+          <el-checkbox v-model="loginForm.rememberMe">记住我</el-checkbox>
           <a class="forgot" @click.prevent="handleForgot">忘记密码？</a>
         </div>
 
@@ -121,6 +121,7 @@ import { useThemeStore } from '@/stores/modules/theme/theme'
 import { Sunny, Moon, User, Lock, View, Hide } from '@element-plus/icons-vue'
 import { getCaptchaApi, getUserInfoApi, loginApi } from '@/api/modules/auth/auth'
 import { useUserStore } from '@/stores/modules/user/user'
+import { buildLoginRequest } from '@/utils/loginBuilderUtil.ts'
 
 const router = useRouter()
 const themeStore = useThemeStore()
@@ -133,7 +134,7 @@ const showPassword = ref(false)
 const loginForm = ref({
   username: '',
   password: '',
-  remember: false,
+  rememberMe: false,
   captchaId: '',
   captchaCode: ''
 })
@@ -157,7 +158,7 @@ onMounted(() => {
       const parsed = JSON.parse(saved)
       if (parsed.username) loginForm.value.username = parsed.username
       if (parsed.password) loginForm.value.password = parsed.password
-      loginForm.value.remember = true
+      loginForm.value.rememberMe = true
     } catch (e) {
       console.warn('读取保存的账号失败', e)
     }
@@ -185,38 +186,30 @@ function toggleShowPassword() {
 async function handleLogin() {
   loginFormRef.value.validate(async (valid: boolean) => {
     if (!valid) return
+
     loading.value = true
     try {
-      const res = await loginApi({
-        username: loginForm.value.username,
-        password: loginForm.value.password,
-        captchaId: loginForm.value.captchaId,
-        captchaCode: loginForm.value.captchaCode,
-        rememberMe: loginForm.value.remember
-      })
-      // // 登录成功逻辑
-      // localStorage.setItem('token', res.accessToken)
-      // if (loginForm.value.remember) {
-      //   localStorage.setItem('lp_saved', JSON.stringify(loginForm.value))
-      // } else {
-      //   localStorage.removeItem('lp_saved')
-      // }
-      // 保存 Token
+      const res = await loginApi(
+        buildLoginRequest(loginForm.value)
+      )
+
       userStore.setToken(res)
-      // 获取用户信息
+
       const userInfo = await getUserInfoApi()
       userStore.setUserInfo(userInfo)
+
       ElMessage.success('登录成功')
       router.push('/')
     } catch (e) {
       ElMessage.error('登录失败，请检查账号或验证码')
-      console.warn('登录失败，请检查账号或验证码', e)
-      loadCaptcha() // 登录失败时刷新验证码
+      console.warn('登录失败', e)
+      loadCaptcha()
     } finally {
       loading.value = false
     }
   })
 }
+
 
 // 忘记密码处理
 function handleForgot() {
